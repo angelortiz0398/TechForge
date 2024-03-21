@@ -1,0 +1,14 @@
+<h4 mat-dialog-title>¿Qué columnas quieres que se vean?</h4>
+<mat-dialog-content>
+  <form [formGroup]="options" style="width: 100%;">
+    <div style="overflow-x: auto; overflow-y: hidden; width: 100%;" *ngFor="let column of this.data.columnSelected; index as i">
+      <mat-checkbox [formControl]="isVisibleColumnControl" [(ngModel)]="this.data.columnSelectedBoolean[i]">
+        {{column}}
+      </mat-checkbox>
+    </div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-raised-button color="warn" (click)="onNoClick()">Cancelar</button>
+  <button mat-raised-button color="primary" (click)="onClick()" cdkFocusInitial>Guardar</button>
+</mat-dialog-actions>
