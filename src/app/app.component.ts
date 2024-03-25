@@ -9,11 +9,17 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatButtonModule} from '@angular/material/button';
 import {MatToolbarModule} from '@angular/material/toolbar';
-
+import {MatGridListModule} from '@angular/material/grid-list';
+export interface Tile {
+  color: string;
+  cols: number;
+  rows: number;
+  text?: string;
+}
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [MatToolbarModule, RouterOutlet, HomepageModule, MainLayoutComponent, FooterComponent, MatSidenavModule,MatButtonModule, MatDividerModule, MatIconModule],
+  imports: [MatToolbarModule, RouterOutlet, HomepageModule, MainLayoutComponent, FooterComponent, MatSidenavModule,MatButtonModule, MatDividerModule, MatIconModule, MatGridListModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
   providers: [DropfileDirective]
@@ -24,7 +30,9 @@ export class AppComponent {
   sidenav!: MatSidenav;
 
   reason = '';
-
+  tiles: Tile[] = [
+    {cols: 1, rows: 1, color: 'lightblue'},
+  ];
   close(reason: string) {
     this.reason = reason;
     this.sidenav.close();

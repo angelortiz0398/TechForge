@@ -1,38 +1,48 @@
-<mat-toolbar>
-  <button mat-icon-button (click)="sidenav.open()">
-    <mat-icon>menu</mat-icon>
-  </button>
-  <span>Convertidor de XML (CFDI) a XLSX</span>
-  <span class="example-spacer"></span>
-  <button mat-icon-button class="example-icon favorite-icon">
-    <mat-icon>favorite</mat-icon>
-  </button>
-  <button mat-icon-button class="example-icon">
-    <mat-icon>share</mat-icon>
-  </button>
-</mat-toolbar>
-<mat-sidenav-container  (backdropClick)="close('backdrop')" style="background-color: white;">
-  <mat-sidenav #sidenav (keydown.escape)="close('escape')" disableClose>
-    <div style="margin: 16px;">
-      <p>
-        <button mat-icon-button (click)="close('toggle button')">
-          <mat-icon>menu</mat-icon>
-        </button>
-      </p>
-      <p>
-        <button mat-button class="example-icon">
-            <a><h4>Convertidor de XML (CFDI) a XLSX</h4></a>
-        </button>
-      </p>
-      <p>
-        <button mat-button class="example-icon">
-          <a><h4>Convertidor de XLSX a XML (CFDI)</h4></a>
-        </button>
-      </p>
-    </div>
-  </mat-sidenav>
-  <mat-sidenav-content>
-    <app-main-layout></app-main-layout>
-  </mat-sidenav-content>
-</mat-sidenav-container>
+
+    <mat-toolbar>
+      <button mat-icon-button (click)="sidenav.open()">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span>Convertidor de facturas (CFDI) a XLSX</span>
+      <span class="example-spacer"></span>
+      <button mat-icon-button class="example-icon favorite-icon">
+        <mat-icon>favorite</mat-icon>
+      </button>
+      <button mat-icon-button class="example-icon">
+        <mat-icon>share</mat-icon>
+      </button>
+    </mat-toolbar>
+    <mat-sidenav-container  (backdropClick)="close('backdrop')" style="background-color: white;">
+      <mat-sidenav #sidenav (keydown.escape)="close('escape')" disableClose>
+        <div style="margin: 16px;">
+          <p>
+            <button mat-button class="example-icon">
+                <a><h4>Convertidor de XML (CFDI) a XLSX</h4></a>
+            </button>
+          </p>
+          <p>
+            <button mat-button class="example-icon">
+              <a><h4>Convertidor de XLSX a XML (CFDI)</h4></a>
+            </button>
+          </p>
+        </div>
+      </mat-sidenav>
+      <mat-sidenav-content>
+        <!-- <mat-grid-list cols="1">
+          @for (tile of tiles; track tile) {
+            <mat-grid-tile
+            [colspan]="tile.cols"
+            [rowspan]="tile.rows"
+            [style.background]="tile.color">
+          </mat-grid-tile>
+        }
+      </mat-grid-list> -->
+      <!-- <mat-grid-list [cols]="12" rowHeight="1200px">
+        <mat-grid-tile colspan="12"> -->
+          <app-main-layout></app-main-layout>
+        <!-- </mat-grid-tile>
+      </mat-grid-list> -->
+    </mat-sidenav-content>
+  </mat-sidenav-container>
 <app-footer></app-footer>
+

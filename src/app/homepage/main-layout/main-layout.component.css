@@ -2,8 +2,8 @@ p {
   font-family: Lato;
 }
 .dropzone {
-  min-height: 400px;
-  min-width: 400px;
+  min-height: 300px;
+  min-width: 200px;
   display: table;
   width: 100%;
   background-color: #eee;
@@ -33,11 +33,14 @@ p {
 .containermainlayout{
   padding: 16px;
   margin: 8px;
+  align-items: center;
+  align-content: center;
 }
 
 /* Establece un ancho máximo para la tabla */
 .mat-table {
   max-width: 800px; /* Puedes ajustar este valor según tus necesidades */
+  min-width: 300px;
   margin: auto; /* Centra la tabla horizontalmente */
 }
 
