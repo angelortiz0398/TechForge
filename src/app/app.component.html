@@ -1,8 +1,12 @@
 
     <mat-toolbar>
-      <button mat-icon-button (click)="sidenav.open()">
+      <img class="docs-footer-angular-logo"
+      src="../../../assets/img/logo.png"
+      width="36px"
+      alt="Angular icon">
+      <!-- <button mat-icon-button (click)="sidenav.open()">
         <mat-icon>menu</mat-icon>
-      </button>
+      </button> -->
       <span>Convertidor de facturas (CFDI) a XLSX</span>
       <span class="example-spacer"></span>
       <button mat-icon-button class="example-icon favorite-icon">
@@ -13,7 +17,7 @@
       </button>
     </mat-toolbar>
     <mat-sidenav-container  (backdropClick)="close('backdrop')" style="background-color: white;">
-      <mat-sidenav #sidenav (keydown.escape)="close('escape')" disableClose>
+      <!-- <mat-sidenav #sidenav (keydown.escape)="close('escape')" disableClose>
         <div style="margin: 16px;">
           <p>
             <button mat-button class="example-icon">
@@ -26,7 +30,7 @@
             </button>
           </p>
         </div>
-      </mat-sidenav>
+      </mat-sidenav> -->
       <mat-sidenav-content>
         <!-- <mat-grid-list cols="1">
           @for (tile of tiles; track tile) {

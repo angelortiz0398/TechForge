@@ -1539,27 +1539,27 @@ export class MainLayoutComponent implements AfterViewInit {
 
     // Crear una nueva hoja de trabajo con los datos filtrados de nominas
     if(this.dataSource.data.length > 0){
-      createSheet(this.dataSource.data, 'Nóminas', this.displayedColumnsNominaSelected);
+      createSheet(datosFiltradosNomina, 'Nóminas', this.displayedColumnsNominaSelected);
     }
     // Crear una nueva hoja de trabajo con los datos filtrados de ingresos
     if(this.dataSource_Ingreso.data.length > 0){
-      createSheet(this.dataSource_Ingreso.data, 'Ingresos', this.displayedColumnsIngresoSelected);
+      createSheet(datosFiltradosIngreso, 'Ingresos', this.displayedColumnsIngresoSelected);
     }
     // Crear una nueva hoja de trabajo con los datos filtrados de egresos
     if(this.dataSource_Egreso.data.length > 0){
-      createSheet(this.dataSource_Egreso.data, 'Egresos', this.displayedColumnsEgresoSelected);
+      createSheet(datosFiltradosEgreso, 'Egresos', this.displayedColumnsEgresoSelected);
     }
     // Crear una nueva hoja de trabajo con los datos filtrados de traslados
     if(this.dataSource_Traslado.data.length > 0){
-      createSheet(this.dataSource_Traslado.data, 'Traslados', this.displayedColumnsTrasladoSelected);
+      createSheet(datosFiltradosTraslado, 'Traslados', this.displayedColumnsTrasladoSelected);
     }
     // Crear una nueva hoja de trabajo con los datos filtrados de retenciones
     if(this.dataSource_Retencion.data.length > 0){
-      createSheet(this.dataSource_Retencion.data, 'Retenciones', this.displayedColumnsRetencionSelected);
+      createSheet(datosFiltradosRetencion, 'Retenciones', this.displayedColumnsRetencionSelected);
     }
     // Crear una nueva hoja de trabajo con los datos filtrados de recepcion de pagos
     if(this.dataSource_Recepcion_Pagos.data.length > 0){
-      createSheet(this.dataSource_Recepcion_Pagos.data, 'Recepción de pagos', this.displayedColumnsRecepcionPagoSelected);
+      createSheet(datosFiltradosRecepcionPago, 'Recepción de pagos', this.displayedColumnsRecepcionPagoSelected);
     }
     // Guardar el libro de Excel
     XLSX.writeFile(wb, fileName);

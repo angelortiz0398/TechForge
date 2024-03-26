@@ -1,6 +1,13 @@
 .docs-footer {
   padding: 12px;
   font-size: 12px;
+  .version {
+    margin: 0 40px;
+    color: white;
+  }
+  @media (min-width: 885px) {
+    margin-top: 0;
+  }
 }
 
 .docs-footer-list {
