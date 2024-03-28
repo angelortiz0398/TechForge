@@ -739,6 +739,7 @@
         <!-- Definiciones de columnas -->
         <ng-container *ngFor="let col of displayedColumnsRetencionSelected" [matColumnDef]="col">
           <th mat-header-cell *matHeaderCellDef>{{ col }}</th>
+          <!-- <td mat-cell *matCellDef="let element">{{ getElementValue(element, col) }}</td> -->
           <td mat-cell *matCellDef="let element">{{ getElementValue(element, col) }}</td>
         </ng-container>
 
@@ -758,5 +759,3 @@
     <button mat-raised-button type="button" style="margin-left: 8px;" color="primary" (click)="exportToExcel()" *ngIf="files.length > 0">Descargar XLSX</button>
   </div>
 </div>
-
-

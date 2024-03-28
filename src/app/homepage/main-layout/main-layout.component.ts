@@ -22,6 +22,7 @@ import { Ingreso } from '../../entities/Ingreso';
 import { RecepcionPago } from '../../entities/RecepcionPago';
 import { Retenciones } from '../../entities/Retenciones';
 import { Traslado } from '../../entities/Traslado';
+import { RouterOutlet } from '@angular/router';
 
 interface Columna {
   nombre: string;
@@ -35,6 +36,7 @@ interface Fila {
   selector: 'app-main-layout',
   standalone: true,
   imports: [
+    RouterOutlet,
     ProgressComponent,
     CommonModule,
     MatTableModule,
@@ -478,74 +480,74 @@ export class MainLayoutComponent implements AfterViewInit {
   ];
   displayedColumnsRetencion: string[] = [
     'id',
-    'retenciones:Retenciones:xmlns:retenciones',
-    'retenciones:Retenciones:xmlns:xsi',
-    'retenciones:Retenciones:xmlns:plataformasTecnologicas',
-    'retenciones:Retenciones:xsi:schemaLocation',
-    'retenciones:Retenciones:Version',
-    'retenciones:Retenciones:FolioInt',
-    'retenciones:Retenciones:FechaExp',
-    'retenciones:Retenciones:CveRetenc',
-    'retenciones:Retenciones:LugarExpRetenc',
-    'retenciones:Retenciones:Certificado',
-    'retenciones:Retenciones:NoCertificado',
-    'retenciones:Retenciones:Sello',
-    'retenciones:Retenciones:retenciones:Emisor:RfcE',
-    'retenciones:Retenciones:retenciones:Emisor:NomDenRazSocE',
-    'retenciones:Retenciones:retenciones:Emisor:RegimenFiscalE',
-    'retenciones:Retenciones:retenciones:Receptor:NacionalidadR',
-    'retenciones:Retenciones:retenciones:Receptor:retenciones:Nacional:RfcR',
-    'retenciones:Retenciones:retenciones:Receptor:retenciones:Nacional:NomDenRazSocR',
-    'retenciones:Retenciones:retenciones:Receptor:retenciones:Nacional:DomicilioFiscalR',
-    'retenciones:Retenciones:retenciones:Periodo:MesIni',
-    'retenciones:Retenciones:retenciones:Periodo:MesFin',
-    'retenciones:Retenciones:retenciones:Periodo:Ejercicio',
-    'retenciones:Retenciones:retenciones:Totales:MontoTotOperacion',
-    'retenciones:Retenciones:retenciones:Totales:MontoTotGrav',
-    'retenciones:Retenciones:retenciones:Totales:MontoTotExent',
-    'retenciones:Retenciones:retenciones:Totales:MontoTotRet',
-    'retenciones:Retenciones:retenciones:Totales:retenciones:ImpRetenidos:0:BaseRet',
-    'retenciones:Retenciones:retenciones:Totales:retenciones:ImpRetenidos:0:ImpuestoRet',
-    'retenciones:Retenciones:retenciones:Totales:retenciones:ImpRetenidos:0:MontoRet',
-    'retenciones:Retenciones:retenciones:Totales:retenciones:ImpRetenidos:0:TipoPagoRet',
-    'retenciones:Retenciones:retenciones:Totales:retenciones:ImpRetenidos:1:BaseRet',
-    'retenciones:Retenciones:retenciones:Totales:retenciones:ImpRetenidos:1:ImpuestoRet',
-    'retenciones:Retenciones:retenciones:Totales:retenciones:ImpRetenidos:1:MontoRet',
-    'retenciones:Retenciones:retenciones:Totales:retenciones:ImpRetenidos:1:TipoPagoRet',
-    'retenciones:Retenciones:retenciones:Complemento:plataformasTecnologicas:ServiciosPlataformasTecnologicas:Version',
-    'retenciones:Retenciones:retenciones:Complemento:plataformasTecnologicas:ServiciosPlataformasTecnologicas:Periodicidad',
-    'retenciones:Retenciones:retenciones:Complemento:plataformasTecnologicas:ServiciosPlataformasTecnologicas:NumServ',
-    'retenciones:Retenciones:retenciones:Complemento:plataformasTecnologicas:ServiciosPlataformasTecnologicas:MonTotServSIVA',
-    'retenciones:Retenciones:retenciones:Complemento:plataformasTecnologicas:ServiciosPlataformasTecnologicas:TotalIVATrasladado',
-    'retenciones:Retenciones:retenciones:Complemento:plataformasTecnologicas:ServiciosPlataformasTecnologicas:TotalIVARetenido',
-    'retenciones:Retenciones:retenciones:Complemento:plataformasTecnologicas:ServiciosPlataformasTecnologicas:TotalISRRetenido',
-    'retenciones:Retenciones:retenciones:Complemento:plataformasTecnologicas:ServiciosPlataformasTecnologicas:DifIVAEntregadoPrestServ',
-    'retenciones:Retenciones:retenciones:Complemento:plataformasTecnologicas:ServiciosPlataformasTecnologicas:MonTotalporUsoPlataforma',
-    // 'retenciones:Retenciones:retenciones:Complemento:plataformasTecnologicas:ServiciosPlataformasTecnologicas:plataformasTecnologicas:Servicios:plataformasTecnologicas:DetallesDelServicio:0:FormaPagoServ',
-    // 'retenciones:Retenciones:retenciones:Complemento:plataformasTecnologicas:ServiciosPlataformasTecnologicas:plataformasTecnologicas:Servicios:plataformasTecnologicas:DetallesDelServicio:0:TipoDeServ',
-    // 'retenciones:Retenciones:retenciones:Complemento:plataformasTecnologicas:ServiciosPlataformasTecnologicas:plataformasTecnologicas:Servicios:plataformasTecnologicas:DetallesDelServicio:0:SubTipServ',
-    // 'retenciones:Retenciones:retenciones:Complemento:plataformasTecnologicas:ServiciosPlataformasTecnologicas:plataformasTecnologicas:Servicios:plataformasTecnologicas:DetallesDelServicio:0:FechaServ',
-    // 'retenciones:Retenciones:retenciones:Complemento:plataformasTecnologicas:ServiciosPlataformasTecnologicas:plataformasTecnologicas:Servicios:plataformasTecnologicas:DetallesDelServicio:0:PrecioServSinIVA',
-    // 'retenciones:Retenciones:retenciones:Complemento:plataformasTecnologicas:ServiciosPlataformasTecnologicas:plataformasTecnologicas:Servicios:plataformasTecnologicas:DetallesDelServicio:0:plataformasTecnologicas:ImpuestosTrasladadosdelServicio:Base',
-    // 'retenciones:Retenciones:retenciones:Complemento:plataformasTecnologicas:ServiciosPlataformasTecnologicas:plataformasTecnologicas:Servicios:plataformasTecnologicas:DetallesDelServicio:0:plataformasTecnologicas:ImpuestosTrasladadosdelServicio:Impuesto',
-    // 'retenciones:Retenciones:retenciones:Complemento:plataformasTecnologicas:ServiciosPlataformasTecnologicas:plataformasTecnologicas:Servicios:plataformasTecnologicas:DetallesDelServicio:0:plataformasTecnologicas:ImpuestosTrasladadosdelServicio:TipoFactor',
-    // 'retenciones:Retenciones:retenciones:Complemento:plataformasTecnologicas:ServiciosPlataformasTecnologicas:plataformasTecnologicas:Servicios:plataformasTecnologicas:DetallesDelServicio:0:plataformasTecnologicas:ImpuestosTrasladadosdelServicio:TasaCuota',
-    // 'retenciones:Retenciones:retenciones:Complemento:plataformasTecnologicas:ServiciosPlataformasTecnologicas:plataformasTecnologicas:Servicios:plataformasTecnologicas:DetallesDelServicio:0:plataformasTecnologicas:ImpuestosTrasladadosdelServicio:Importe',
-    // 'retenciones:Retenciones:retenciones:Complemento:plataformasTecnologicas:ServiciosPlataformasTecnologicas:plataformasTecnologicas:Servicios:plataformasTecnologicas:DetallesDelServicio:0:plataformasTecnologicas:ComisionDelServicio:Importe',
-    // 'retenciones:Retenciones:retenciones:Complemento:plataformasTecnologicas:ServiciosPlataformasTecnologicas:plataformasTecnologicas:Servicios:plataformasTecnologicas:DetallesDelServicio:1:FormaPagoServ',
-    // 'retenciones:Retenciones:retenciones:Complemento:plataformasTecnologicas:ServiciosPlataformasTecnologicas:plataformasTecnologicas:Servicios:plataformasTecnologicas:DetallesDelServicio:1:TipoDeServ',
-    // 'retenciones:Retenciones:retenciones:Complemento:plataformasTecnologicas:ServiciosPlataformasTecnologicas:plataformasTecnologicas:Servicios:plataformasTecnologicas:DetallesDelServicio:1:SubTipServ',
-    // 'retenciones:Retenciones:retenciones:Complemento:plataformasTecnologicas:ServiciosPlataformasTecnologicas:plataformasTecnologicas:Servicios:plataformasTecnologicas:DetallesDelServicio:1:FechaServ',
-    // 'retenciones:Retenciones:retenciones:Complemento:plataformasTecnologicas:ServiciosPlataformasTecnologicas:plataformasTecnologicas:Servicios:plataformasTecnologicas:DetallesDelServicio:1:PrecioServSinIVA',
-    'retenciones:Retenciones:retenciones:Complemento:tfd:TimbreFiscalDigital:xmlns:tfd',
-    'retenciones:Retenciones:retenciones:Complemento:tfd:TimbreFiscalDigital:xsi:schemaLocation',
-    'retenciones:Retenciones:retenciones:Complemento:tfd:TimbreFiscalDigital:Version',
-    'retenciones:Retenciones:retenciones:Complemento:tfd:TimbreFiscalDigital:SelloCFD',
-    'retenciones:Retenciones:retenciones:Complemento:tfd:TimbreFiscalDigital:NoCertificadoSAT',
-    'retenciones:Retenciones:retenciones:Complemento:tfd:TimbreFiscalDigital:RfcProvCertif',
-    'retenciones:Retenciones:retenciones:Complemento:tfd:TimbreFiscalDigital:UUID',
-    'retenciones:Retenciones:retenciones:Complemento:tfd:TimbreFiscalDigital:FechaTimbrad',
-    'retenciones:Retenciones:retenciones:Complemento:tfd:TimbreFiscalDigital:SelloSAT'
+    'xmlns:retenciones',
+    'xmlns:xsi',
+    'xmlns:plataformasTecnologicas',
+    'xsi:schemaLocation',
+    'Version',
+    'FolioInt',
+    'FechaExp',
+    'CveRetenc',
+    'LugarExpRetenc',
+    'Certificado',
+    'NoCertificado',
+    'Sello',
+    'retenciones:Emisor:RfcE',
+    'retenciones:Emisor:NomDenRazSocE',
+    'retenciones:Emisor:RegimenFiscalE',
+    'retenciones:Receptor:NacionalidadR',
+    'retenciones:Receptor:retenciones:Nacional:RfcR',
+    'retenciones:Receptor:retenciones:Nacional:NomDenRazSocR',
+    'retenciones:Receptor:retenciones:Nacional:DomicilioFiscalR',
+    'retenciones:Periodo:MesIni',
+    'retenciones:Periodo:MesFin',
+    'retenciones:Periodo:Ejercicio',
+    'retenciones:Totales:MontoTotOperacion',
+    'retenciones:Totales:MontoTotGrav',
+    'retenciones:Totales:MontoTotExent',
+    'retenciones:Totales:MontoTotRet',
+    // 'retenciones:Totales:retenciones:ImpRetenidos:0:BaseRet',
+    // 'retenciones:Totales:retenciones:ImpRetenidos:0:ImpuestoRet',
+    // 'retenciones:Totales:retenciones:ImpRetenidos:0:MontoRet',
+    // 'retenciones:Totales:retenciones:ImpRetenidos:0:TipoPagoRet',
+    // 'retenciones:Totales:retenciones:ImpRetenidos:1:BaseRet',
+    // 'retenciones:Totales:retenciones:ImpRetenidos:1:ImpuestoRet',
+    // 'retenciones:Totales:retenciones:ImpRetenidos:1:MontoRet',
+    // 'retenciones:Totales:retenciones:ImpRetenidos:1:TipoPagoRet',
+    'retenciones:Complemento:plataformasTecnologicas:ServiciosPlataformasTecnologicas:Version',
+    'retenciones:Complemento:plataformasTecnologicas:ServiciosPlataformasTecnologicas:Periodicidad',
+    'retenciones:Complemento:plataformasTecnologicas:ServiciosPlataformasTecnologicas:NumServ',
+    'retenciones:Complemento:plataformasTecnologicas:ServiciosPlataformasTecnologicas:MonTotServSIVA',
+    'retenciones:Complemento:plataformasTecnologicas:ServiciosPlataformasTecnologicas:TotalIVATrasladado',
+    'retenciones:Complemento:plataformasTecnologicas:ServiciosPlataformasTecnologicas:TotalIVARetenido',
+    'retenciones:Complemento:plataformasTecnologicas:ServiciosPlataformasTecnologicas:TotalISRRetenido',
+    'retenciones:Complemento:plataformasTecnologicas:ServiciosPlataformasTecnologicas:DifIVAEntregadoPrestServ',
+    'retenciones:Complemento:plataformasTecnologicas:ServiciosPlataformasTecnologicas:MonTotalporUsoPlataforma',
+    // 'retenciones:Complemento:plataformasTecnologicas:ServiciosPlataformasTecnologicas:plataformasTecnologicas:Servicios:plataformasTecnologicas:DetallesDelServicio:0:FormaPagoServ',
+    // 'retenciones:Complemento:plataformasTecnologicas:ServiciosPlataformasTecnologicas:plataformasTecnologicas:Servicios:plataformasTecnologicas:DetallesDelServicio:0:TipoDeServ',
+    // 'retenciones:Complemento:plataformasTecnologicas:ServiciosPlataformasTecnologicas:plataformasTecnologicas:Servicios:plataformasTecnologicas:DetallesDelServicio:0:SubTipServ',
+    // 'retenciones:Complemento:plataformasTecnologicas:ServiciosPlataformasTecnologicas:plataformasTecnologicas:Servicios:plataformasTecnologicas:DetallesDelServicio:0:FechaServ',
+    // 'retenciones:Complemento:plataformasTecnologicas:ServiciosPlataformasTecnologicas:plataformasTecnologicas:Servicios:plataformasTecnologicas:DetallesDelServicio:0:PrecioServSinIVA',
+    // 'retenciones:Complemento:plataformasTecnologicas:ServiciosPlataformasTecnologicas:plataformasTecnologicas:Servicios:plataformasTecnologicas:DetallesDelServicio:0:plataformasTecnologicas:ImpuestosTrasladadosdelServicio:Base',
+    // 'retenciones:Complemento:plataformasTecnologicas:ServiciosPlataformasTecnologicas:plataformasTecnologicas:Servicios:plataformasTecnologicas:DetallesDelServicio:0:plataformasTecnologicas:ImpuestosTrasladadosdelServicio:Impuesto',
+    // 'retenciones:Complemento:plataformasTecnologicas:ServiciosPlataformasTecnologicas:plataformasTecnologicas:Servicios:plataformasTecnologicas:DetallesDelServicio:0:plataformasTecnologicas:ImpuestosTrasladadosdelServicio:TipoFactor',
+    // 'retenciones:Complemento:plataformasTecnologicas:ServiciosPlataformasTecnologicas:plataformasTecnologicas:Servicios:plataformasTecnologicas:DetallesDelServicio:0:plataformasTecnologicas:ImpuestosTrasladadosdelServicio:TasaCuota',
+    // 'retenciones:Complemento:plataformasTecnologicas:ServiciosPlataformasTecnologicas:plataformasTecnologicas:Servicios:plataformasTecnologicas:DetallesDelServicio:0:plataformasTecnologicas:ImpuestosTrasladadosdelServicio:Importe',
+    // 'retenciones:Complemento:plataformasTecnologicas:ServiciosPlataformasTecnologicas:plataformasTecnologicas:Servicios:plataformasTecnologicas:DetallesDelServicio:0:plataformasTecnologicas:ComisionDelServicio:Importe',
+    // 'retenciones:Complemento:plataformasTecnologicas:ServiciosPlataformasTecnologicas:plataformasTecnologicas:Servicios:plataformasTecnologicas:DetallesDelServicio:1:FormaPagoServ',
+    // 'retenciones:Complemento:plataformasTecnologicas:ServiciosPlataformasTecnologicas:plataformasTecnologicas:Servicios:plataformasTecnologicas:DetallesDelServicio:1:TipoDeServ',
+    // 'retenciones:Complemento:plataformasTecnologicas:ServiciosPlataformasTecnologicas:plataformasTecnologicas:Servicios:plataformasTecnologicas:DetallesDelServicio:1:SubTipServ',
+    // 'retenciones:Complemento:plataformasTecnologicas:ServiciosPlataformasTecnologicas:plataformasTecnologicas:Servicios:plataformasTecnologicas:DetallesDelServicio:1:FechaServ',
+    // 'retenciones:Complemento:plataformasTecnologicas:ServiciosPlataformasTecnologicas:plataformasTecnologicas:Servicios:plataformasTecnologicas:DetallesDelServicio:1:PrecioServSinIVA',
+    'retenciones:Complemento:tfd:TimbreFiscalDigital:xmlns:tfd',
+    'retenciones:Complemento:tfd:TimbreFiscalDigital:xsi:schemaLocation',
+    'retenciones:Complemento:tfd:TimbreFiscalDigital:Version',
+    'retenciones:Complemento:tfd:TimbreFiscalDigital:SelloCFD',
+    'retenciones:Complemento:tfd:TimbreFiscalDigital:NoCertificadoSAT',
+    'retenciones:Complemento:tfd:TimbreFiscalDigital:RfcProvCertif',
+    'retenciones:Complemento:tfd:TimbreFiscalDigital:UUID',
+    'retenciones:Complemento:tfd:TimbreFiscalDigital:FechaTimbrado',
+    'retenciones:Complemento:tfd:TimbreFiscalDigital:SelloSAT'
   ];
   displayedColumnsNominaSelected: string[] = this.displayedColumnsNomina;
   displayedColumnsEgresoSelected: string[] = this.displayedColumnsEgreso;
@@ -1438,17 +1440,18 @@ export class MainLayoutComponent implements AfterViewInit {
                           }
                         ]
                       }
-                  },
-                  "tfd:TimbreFiscalDigital":{
-                    "xmlns:tfd": dato['retenciones:Complemento:tfd:TimbreFiscalDigital:xmlns:tfd'],
+                    },
+                    "tfd:TimbreFiscalDigital":{
                     "xsi:schemaLocation": dato['retenciones:Complemento:tfd:TimbreFiscalDigital:xsi:schemaLocation'],
                     Version: dato['retenciones:Complemento:tfd:TimbreFiscalDigital:Version'],
-                    SelloCFD: dato['retenciones:Complemento:tfd:TimbreFiscalDigital:SelloCFD'],
-                    NoCertificadoSAT: dato['retenciones:Complemento:tfd:TimbreFiscalDigital:NoCertificadoSAT'],
-                    RfcProvCertif: dato['retenciones:Complemento:tfd:TimbreFiscalDigital:RfcProvCertif'],
                     UUID: dato['retenciones:Complemento:tfd:TimbreFiscalDigital:UUID'],
                     FechaTimbrado: dato['retenciones:Complemento:tfd:TimbreFiscalDigital:FechaTimbrado'],
+                    RfcProvCertif: dato['retenciones:Complemento:tfd:TimbreFiscalDigital:RfcProvCertif'],
+                    SelloCFD: dato['retenciones:Complemento:tfd:TimbreFiscalDigital:SelloCFD'],
+                    NoCertificadoSAT: dato['retenciones:Complemento:tfd:TimbreFiscalDigital:NoCertificadoSAT'],
                     SelloSAT: dato['retenciones:Complemento:tfd:TimbreFiscalDigital:SelloSAT'],
+                    "xmlns:tfd": dato['retenciones:Complemento:tfd:TimbreFiscalDigital:xmlns:tfd'],
+                    "xmlns:xsi": dato['retenciones:Complemento:tfd:TimbreFiscalDigital:xmlns:xsi'],
                   }
               }
           };
@@ -1612,27 +1615,78 @@ export class MainLayoutComponent implements AfterViewInit {
   }
 
   getElementValue(element: any, col: string): any {
-    if (col.includes(':')) {
-      const props = col.split(':');
-      let value = element;
-      for (let i = 0; i < props.length - 1; i += 2) {
-        const propName = props[i];
-        const subPropName = props[i + 1];
-        if (value) {
-          value = value[propName];
-          if (value) {
-            value = value[subPropName];
-          } else {
-            return null;
-          }
-        } else {
-          return null;
-        }
+    /// Prueba 1
+    //   const parts = col.split(':'); // Dividir la cadena por ":"
+    //   const formattedParts: string[] = [];
+
+    //   for (let i = 0; i < parts.length; i += 2) {
+    //     if (i + 1 < parts.length) {
+    //       formattedParts.push(`['${parts[i]}${parts[i + 1].includes(':') ? ':' : ':'}${parts[i + 1]}']`);
+    //     } else {
+    //       formattedParts.push(parts[i]);
+    //     }
+    //   }
+
+    // var result = formattedParts.join('');
+    // result.replace(/\[(\d+)\]/g, '[$1]');
+    // var r = result.replace(/\]([^:]+)$/g, (match, group1) => `].${group1}`);
+
+    const PROPS = col.split(':');
+    const formattedParts: string[] = [];
+
+    for (let i = 0; i < PROPS.length; i += 2) {
+      if (i + 1 < PROPS.length) {
+        formattedParts.push(`${PROPS[i]}${PROPS[i + 1].includes(':') ? ':' : ':'}${PROPS[i + 1]}`);
+      } else {
+        formattedParts.push(PROPS[i]);
       }
-      return value;
-    } else {
-      return element[col];
     }
+    let value = element;
+    console.log("formattedParts: ", formattedParts)
+      // VERIFICAR SI LA PROPIEDAD CONTIENE UN ÍNDICE DE MATRIZ
+    if (formattedParts.length > 1) {
+      switch(formattedParts.length){
+        case 2:
+          if(formattedParts[1] in value[formattedParts[0]]){
+            return value[formattedParts[0]][formattedParts[1]];
+          }
+          break;
+        case 3:
+          if(formattedParts[2] in value[formattedParts[0]][formattedParts[1]]){
+            return value[formattedParts[0]][formattedParts[1]][formattedParts[2]];
+          }
+          break;
+        case 4:
+          if(formattedParts[3] in value[formattedParts[0]][formattedParts[1]][formattedParts[2]]){
+            return value[formattedParts[0]][formattedParts[1]][formattedParts[2]][formattedParts[3]];
+          }
+          break;
+        case 5:
+          if(formattedParts[4] in value[formattedParts[0]][formattedParts[1]][formattedParts[2]][formattedParts[3]]){
+            return value[formattedParts[0]][formattedParts[1]][formattedParts[2]][formattedParts[3]][formattedParts[4]];
+          }
+          break;
+        case 6:
+          if(formattedParts[5] in value[formattedParts[0]][formattedParts[1]][formattedParts[2]][formattedParts[3]][formattedParts[4]]){
+            return value[formattedParts[0]][formattedParts[1]][formattedParts[2]][formattedParts[3]][formattedParts[4]][formattedParts[5]];
+          }
+          break;
+        case 7:
+          if(formattedParts[6] in value[formattedParts[0]][formattedParts[1]][formattedParts[2]][formattedParts[3]][formattedParts[4]][formattedParts[5]]){
+            return value[formattedParts[0]][formattedParts[1]][formattedParts[2]][formattedParts[3]][formattedParts[4]][formattedParts[5]][formattedParts[6]];
+          }
+          break;
+      }
+    } else {
+      // ACCEDER NORMALMENTE A LA PROPIEDAD
+      if (value && value.hasOwnProperty(formattedParts[0])) {
+        value = value[formattedParts[0]];
+      } else {
+        return value[formattedParts[0]]; // DEVOLVER NULL SI LA PROPIEDAD NO ESTÁ DEFINIDA
+      }
+    }
+
+    return value;
   }
 }
 

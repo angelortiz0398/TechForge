@@ -1,3 +1,18 @@
 import { Routes } from '@angular/router';
+import { AppComponent } from './app.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
 
-export const routes: Routes = [];
+export const routes: Routes = [
+  {
+    path: 'conversion-xml-to-xlsx',
+    component: AppComponent
+  },
+  {
+    path: 'privacy-policy',
+    component: PrivacyPolicyComponent,
+    pathMatch: 'full'
+  },
+  { path: '',   redirectTo: 'conversion-xml-to-xlsx', pathMatch: 'full' },
+  { path: '**', component: PageNotFoundComponent, outlet: 'popup' }
+];

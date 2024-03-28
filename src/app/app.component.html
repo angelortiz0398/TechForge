@@ -49,4 +49,6 @@
     </mat-sidenav-content>
   </mat-sidenav-container>
 <app-footer></app-footer>
-
+<div *ngIf="this.routeActual !== 'conversion-xml-to-xlsx' && this.routeActual !== undefined">
+  <router-outlet name="popup"></router-outlet>
+</div>

@@ -102,13 +102,14 @@ export interface PlataformasTecnologicasComisionDelServicio {
 }
 
 export interface TfdTimbreFiscalDigital {
-  "xmlns:tfd": string
   "xsi:schemaLocation": string
   Version: string
-  SelloCFD: string
-  NoCertificadoSAT: string
-  RfcProvCertif: string
   UUID: string
   FechaTimbrado: string
+  RfcProvCertif: string
+  SelloCFD: string
+  NoCertificadoSAT: string
   SelloSAT: string
+  "xmlns:tfd": string
+  "xmlns:xsi": string
 }
