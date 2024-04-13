@@ -1,4 +1,12 @@
-<div class="progress-cont">
-  <div class="progress" [style.width]="progress + '%'">
-  </div>
-</div>
+<mat-card>
+  <mat-card-header>
+    <mat-card-subtitle>Espere un momento</mat-card-subtitle>
+    <mat-card-title>El contenido de los archivos está cargando</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <p>Progreso de lectura de facturas</p>
+    <mat-divider></mat-divider>
+    <mat-progress-bar mode="determinate" [value]="progress" autofocus ></mat-progress-bar>
+  </mat-card-content>
+</mat-card>
+

@@ -1,4 +1,4 @@
-<div class="containermainlayout">
+<div class="containermainlayout" >
   <div
     class="col-12 dropzone"
     appDropfile
@@ -18,7 +18,11 @@
     </div>
   </div>
 
-  <div class="mat-elevation-z8" *ngIf="files.length > 0" style="overflow-x: visible; margin-top: 16px;">
+  <div *ngIf="loading == true" style="margin-top: 16px; margin-bottom: 16px;">
+    <app-progress [progress]="progress" [loading]="loading"></app-progress>
+  </div>
+
+  <div class="mat-elevation-z8" *ngIf="files.length > 0 && loading == false" style="overflow-x: visible; margin-top: 16px;">
     <mat-card>
       <mat-card-content>
         <h4>Contenido de los archivos</h4>
@@ -30,7 +34,7 @@
     </pre>
   </div>
 
-  <div *ngIf="files.length > 0">
+  <div *ngIf="files.length > 0 && loading == false">
     <mat-card  style="margin-top: 16px;"  *ngIf="this.dataSource_Ingreso.data.length > 0">
       <mat-card-content style="display: flex; flex-direction: row; justify-content: space-between;">
         <h4>Tabla para Ingresos</h4>
@@ -41,7 +45,6 @@
     </mat-card>
     <div class="mat-elevation-z8 mat-table-wrapper" *ngIf="this.dataSource_Ingreso.data.length > 0">
       <table mat-table [dataSource]="dataSource_Ingreso">
-
         <!-- Definiciones de columnas -->
         <ng-container *ngFor="let col of displayedColumnsIngresoSelected" [matColumnDef]="col">
           <th mat-header-cell *matHeaderCellDef>{{ col }}</th>
@@ -53,9 +56,15 @@
 
         <!-- Filas de datos -->
         <tr mat-row *matRowDef="let row; columns: displayedColumnsIngresoSelected;"></tr>
-
       </table>
-
+      <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+        [pageSize]="5"
+        showFirstLastButtons
+        aria-label="Seleccione la pagina de los ingresos"
+        [length]="this.ELEMENT_DATA_INGRESO.length"
+        (page)="handlePageEvent($event, 'Ingreso')"
+        >
+      </mat-paginator>
     </div>
 
     <mat-card  style="margin-top: 16px;"  *ngIf="this.dataSource_Egreso.data.length > 0">
@@ -82,6 +91,13 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumnsEgresoSelected;"></tr>
 
       </table>
+      <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+      [pageSize]="5"
+      showFirstLastButtons
+      aria-label="Seleccione la pagina de los egresos"
+      [length]="this.ELEMENT_DATA_EGRESO.length"
+      (page)="handlePageEvent($event, 'Egreso')">
+    </mat-paginator>
     </div>
 
     <mat-card  style="margin-top: 16px;"  *ngIf="this.dataSource_Traslado.data.length > 0">
@@ -108,6 +124,13 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumnsTrasladoSelected;"></tr>
 
       </table>
+      <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+      [pageSize]="5"
+      showFirstLastButtons
+      aria-label="Seleccione la pagina de los traslados"
+      [length]="this.ELEMENT_DATA_TRASLADO.length"
+      (page)="handlePageEvent($event, 'Traslado')">
+    </mat-paginator>
     </div>
 
     <mat-card  style="margin-top: 16px;" *ngIf="this.dataSource.data.length > 0">
@@ -697,6 +720,13 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumnsNominaSelected"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumnsNominaSelected"></tr>
       </table>
+      <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+      [pageSize]="5"
+      showFirstLastButtons
+      aria-label="Seleccione la pagina de las nominas"
+      [length]="this.ELEMENT_DATA.length"
+      (page)="handlePageEvent($event, 'Nomina')">
+    </mat-paginator>
     </div>
 
     <mat-card  style="margin-top: 16px;" *ngIf="this.dataSource_Recepcion_Pagos.data.length > 0">
@@ -723,6 +753,13 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumnsRecepcionPagoSelected;"></tr>
 
       </table>
+      <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+      [pageSize]="5"
+      showFirstLastButtons
+      aria-label="Seleccione la pagina de la  recepción de pagos"
+      [length]="this.ELEMENT_DATA_RECEPCION_PAGO.length"
+      (page)="handlePageEvent($event, 'RecepcionPago')">
+    </mat-paginator>
     </div>
 
     <mat-card  style="margin-top: 16px;" *ngIf="this.dataSource_Retencion.data.length > 0">
@@ -750,6 +787,13 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumnsRetencionSelected;"></tr>
 
       </table>
+      <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+      [pageSize]="5"
+      showFirstLastButtons
+      aria-label="Seleccione la pagina de las retenciones"
+      [length]="this.ELEMENT_DATA_RETENCION.length"
+      (page)="handlePageEvent($event, 'Retencion')">
+    </mat-paginator>
     </div>
   </div>
 

@@ -1,0 +1,4 @@
+.blurred {
+  filter: blur(5px); /* Aplicar desenfoque */
+  pointer-events: none; /* Deshabilitar eventos de ratón y teclado */
+}

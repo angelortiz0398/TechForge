@@ -6,7 +6,6 @@ import { ProgressComponent } from '../progress/progress.component';
 import { CommonModule } from '@angular/common';
 import { SafeUrl } from '@angular/platform-browser';
 import * as xml2js from 'xml2js';
-import { MatPaginator } from '@angular/material/paginator';
 import { MatButtonModule } from '@angular/material/button';
 import * as XLSX from 'xlsx';
 import { MatDividerModule } from '@angular/material/divider';
@@ -23,6 +22,7 @@ import { RecepcionPago } from '../../entities/RecepcionPago';
 import { Retenciones } from '../../entities/Retenciones';
 import { Traslado } from '../../entities/Traslado';
 import { RouterOutlet } from '@angular/router';
+import { MatPaginator, MatPaginatorModule, PageEvent} from '@angular/material/paginator';
 
 interface Columna {
   nombre: string;
@@ -46,22 +46,38 @@ interface Fila {
     MatDividerModule,
     MatCardModule,
     DialogSelectorColumnComponent,
-    MatIconModule
+    MatIconModule,
+    MatPaginatorModule,
+    ProgressComponent
   ],
   templateUrl: './main-layout.component.html',
   styleUrl: './main-layout.component.css',
 })
 export class MainLayoutComponent implements AfterViewInit {
+
+  @ViewChild(MatPaginator) paginatorIngresos!: MatPaginator;
+  @ViewChild(MatPaginator) paginatorEgresos!: MatPaginator;
+  @ViewChild(MatPaginator) paginatorTraslados!: MatPaginator;
+  @ViewChild(MatPaginator) paginatorNominas!: MatPaginator;
+  @ViewChild(MatPaginator) paginatorRetenciones!: MatPaginator;
+  @ViewChild(MatPaginator) paginatorRecepcionPagos!: MatPaginator;
   @ViewChild('fileInput', { static: false }) fileInput!: ElementRef;
-  @ViewChild(MatPaginator)
-  paginator!: MatPaginator;
-  dataSource = new MatTableDataSource<Nomina>(ELEMENT_DATA);
-  dataSource_Ingreso = new MatTableDataSource<Ingreso>(ELEMENT_DATA_INGRESO);
-  dataSource_Egreso = new MatTableDataSource<Egreso>(ELEMENT_DATA_EGRESO);
-  dataSource_Traslado = new MatTableDataSource<Traslado>(ELEMENT_DATA_TRASLADO);
-  dataSource_Retencion = new MatTableDataSource<Retenciones>(ELEMENT_DATA_RETENCION);
-  dataSource_Nomina = new MatTableDataSource<Nomina>(ELEMENT_DATA_NOMINA);
-  dataSource_Recepcion_Pagos = new MatTableDataSource<RecepcionPago>(ELEMENT_DATA_RECEPCION_PAGO);
+
+  ELEMENT_DATA: Nomina[] = [];
+  ELEMENT_DATA_EGRESO: Egreso[] = [];
+  ELEMENT_DATA_INGRESO: Ingreso[] = [];
+  ELEMENT_DATA_NOMINA: Nomina[] = [];
+  ELEMENT_DATA_RECEPCION_PAGO: RecepcionPago[] = [];
+  ELEMENT_DATA_RETENCION: Retenciones[] = [];
+  ELEMENT_DATA_TRASLADO: Traslado[] = [];
+
+  dataSource = new MatTableDataSource<Nomina>(this.ELEMENT_DATA);
+  dataSource_Ingreso = new MatTableDataSource<Ingreso>(this.ELEMENT_DATA_INGRESO);
+  dataSource_Egreso = new MatTableDataSource<Egreso>(this.ELEMENT_DATA_EGRESO);
+  dataSource_Traslado = new MatTableDataSource<Traslado>(this.ELEMENT_DATA_TRASLADO);
+  dataSource_Retencion = new MatTableDataSource<Retenciones>(this.ELEMENT_DATA_RETENCION);
+  dataSource_Nomina = new MatTableDataSource<Nomina>(this.ELEMENT_DATA_NOMINA);
+  dataSource_Recepcion_Pagos = new MatTableDataSource<RecepcionPago>(this.ELEMENT_DATA_RECEPCION_PAGO);
   bodyXML: any;
   files: FileHandle[] = [];
   sanitizer: any;
@@ -77,9 +93,10 @@ export class MainLayoutComponent implements AfterViewInit {
   datosTraslado: Fila[] = []; // Lista de datos
   datosRetenciones: Fila[] = []; // Lista de datos
   datos: Fila[] = []; // Lista de datos para nomina Recepción de Pagos
-
+  progress : number = 0;
+  loading: boolean = false;
   displayedColumnsNomina: string[] = [
-    'id',
+    // 'id',
     'xmlns:xsi',
     'xsi:schemaLocation',
     'xmlns:cfdi',
@@ -175,7 +192,7 @@ export class MainLayoutComponent implements AfterViewInit {
     'cfdi:Complemento:tfd:TimbreFiscalDigital:SelloSAT',
   ];
   displayedColumnsEgreso: string[] = [
-    'id',
+    // 'id',
     'xmlns:cfdi',
     'xmlns:xsi',
     'xsi:schemaLocation',
@@ -226,7 +243,7 @@ export class MainLayoutComponent implements AfterViewInit {
     'cfdi:Impuestos:cfdi:Traslados:cfdi:Traslado:TipoFactor'
   ];
   displayedColumnsIngreso: string[] = [
-    'id',
+    // 'id',
     'xmlns:cfdi',
     'xmlns:xsi',
     'xsi:schemaLocation',
@@ -287,7 +304,7 @@ export class MainLayoutComponent implements AfterViewInit {
     'cfdi:Complemento:tfd:TimbreFiscalDigital:SelloSAT'
   ];
   displayedColumnsRecepcionPago: string[] = [
-    'id',
+    // 'id',
     'xsi:schemaLocation',
     'Version',
     'Serie',
@@ -434,7 +451,7 @@ export class MainLayoutComponent implements AfterViewInit {
     'cfdi:Addenda:if:DocumentoInterfactura:if:Encabezado:if:Pagos:if:pago20Pago:pagoNomBancoOrdExt'
   ];
   displayedColumnsTraslado: string[] = [
-    'id',
+    // 'id',
     'xmlns:cfdi',
     'xmlns:xsi',
     'xsi:schemaLocation',
@@ -479,7 +496,7 @@ export class MainLayoutComponent implements AfterViewInit {
     'cfdi:Complemento:tfd:TimbreFiscalDigital:SelloSAT'
   ];
   displayedColumnsRetencion: string[] = [
-    'id',
+    // 'id',
     'xmlns:retenciones',
     'xmlns:xsi',
     'xmlns:plataformasTecnologicas',
@@ -564,13 +581,18 @@ export class MainLayoutComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
     this.displayedColumnsNominaSelected = this.displayedColumnsNomina;
     this.displayedColumnsEgresoSelected = this.displayedColumnsEgreso;
     this.displayedColumnsIngresoSelected = this.displayedColumnsIngreso;
     this.displayedColumnsRecepcionPagoSelected = this.displayedColumnsRecepcionPago;
     this.displayedColumnsTrasladoSelected = this.displayedColumnsTraslado;
     this.displayedColumnsRetencionSelected = this.displayedColumnsRetencion;
+    this.dataSource_Ingreso.paginator = this.paginatorIngresos;
+    this.dataSource_Egreso.paginator = this.paginatorEgresos;
+    this.dataSource.paginator = this.paginatorNominas;
+    this.dataSource_Recepcion_Pagos.paginator = this.paginatorRecepcionPagos;
+    this.dataSource_Retencion.paginator = this.paginatorRetenciones;
+    this.dataSource_Traslado.paginator = this.paginatorTraslados;
   }
 
   filesDropped(files: any): void {
@@ -590,37 +612,115 @@ export class MainLayoutComponent implements AfterViewInit {
   }
 
   CargarArchivos(event: any): void {
+    this.loading = true;
     const url: SafeUrl = '';
-    // Se asignan los archivos fisicos a la lista de files
+    // Agrega los archivos fisicos a una lista de FileHandle
     for (const archivo of event.target.files) {
       const fileHandle: FileHandle = { file: archivo, url: url };
       this.files.push(fileHandle);
     }
+    const filesArray: File[] = Array.from(event.target.files); // Convertir FileList a Array
+    this.processFiles(filesArray);
+    setTimeout(() => {
+      this.paginarTablas();
+    },1000);
+  }
 
-    for (let index = 0; index < event.target.files.length; index++) {
-      const lector: FileReader = new FileReader();
-      lector.onload = (e) => {
-        const contenido: string = e.target!.result as string;
-        this.bodyXML += "\n====== " + event.target.files[index].name + "======\n";
-        this.bodyXML += contenido;
-        // Ahora que tenemos el contenido del archivo, lo pasamos al parser xml2js
-        const parser = new xml2js.Parser({
-          explicitArray: false,
-          mergeAttrs: true,
-        });
-        parser.parseString(contenido, (error, resultado) => {
-          if (error) {
-            console.error('Error al analizar el XML:', error);
-          } else {
-            console.log('Objeto JavaScript generado:', resultado);
-            // Aquí puedes procesar el objeto JavaScript como desees
-            this.procesarDatos(resultado);
-          }
-        });
-      };
-      lector.readAsText(event.target.files[index]);
+  processFiles(files: File[]): void {
+    // Procesar los archivos por lotes
+    const batchSize = 1; // Puedes ajustar este valor según tus necesidades
+    let index = 0;
+    const processBatch = async (): Promise<void> => {
+      const batchFiles = files.slice(index, index + batchSize);
+      if (batchFiles.length > 0) {
+        for (const archivo of batchFiles) {
+          const contenido: string = await new Promise<string>((resolve, reject) => {
+            const lector: FileReader = new FileReader();
+            lector.onload = (e) => {
+              resolve(e.target!.result as string);
+            };
+            lector.onerror = (e) => {
+              reject(e.target!.error);
+            };
+            lector.readAsText(archivo);
+          });
+          this.bodyXML += `\n====== ${archivo.name}======\n`;
+          this.bodyXML += contenido;
+          const parser = new xml2js.Parser({
+            explicitArray: false,
+            mergeAttrs: true,
+          });
+          const resultado = await new Promise<any>((resolve, reject) => {
+            parser.parseString(contenido, (error, result) => {
+              if (error) {
+                reject(error);
+              } else {
+                resolve(result);
+              }
+            });
+          });
+          this.procesarDatos(resultado);
+          this.progress = ((index + batchFiles.length) / files.length) * 100;
+        }
+        index += batchSize;
+        await new Promise((resolve) => setTimeout(resolve, 100)); // Procesar el próximo lote en el siguiente ciclo de eventos
+        await processBatch();
+      } else {
+        // Todos los archivos han sido procesados
+        this.loading = false;
+        // Actualizar paginadores u otras operaciones después de la carga de archivos
+      }
+    };
+
+    processBatch();
+  }
+
+
+
+
+  paginarTablas(): void {
+    if(this.ELEMENT_DATA_INGRESO.length > 0){
+      this.dataSource_Ingreso.data = this.ELEMENT_DATA_INGRESO.slice(0,5);
+      // this.paginatorIngresos.length = this.ELEMENT_DATA_INGRESO.length;
+      // this.displayedColumnsIngresoSelected.pop();
+      // this.displayedColumnsIngresoSelected = this.displayedColumnsIngreso;
+      // console.info("this.ELEMENT_DATA_INGRESO: ", this.ELEMENT_DATA_INGRESO)
     }
-    console.log("archivos: ",event.target.files)
+    if(this.ELEMENT_DATA_EGRESO.length > 0){
+
+      this.dataSource_Egreso.data = this.ELEMENT_DATA_EGRESO.slice(0,5);
+      // this.paginatorEgresos.length = this.ELEMENT_DATA_EGRESO.length;
+      // this.displayedColumnsEgresoSelected.pop();
+      // this.displayedColumnsEgresoSelected = this.displayedColumnsEgreso;
+    }
+    if(this.ELEMENT_DATA_TRASLADO.length > 0){
+      this.dataSource_Traslado.data = this.ELEMENT_DATA_TRASLADO.slice(0, 5);
+      // this.paginatorTraslados.length = this.ELEMENT_DATA_TRASLADO.length;
+      // this.displayedColumnsTrasladoSelected.pop();
+      // this.displayedColumnsTrasladoSelected = this.displayedColumnsTraslado;
+    }
+
+    if(this.ELEMENT_DATA_NOMINA.length > 0){
+      this.dataSource.data = this.ELEMENT_DATA_NOMINA.slice(0, 5);
+      // this.paginatorNominas.length = this.ELEMENT_DATA_NOMINA.length;
+      // this.displayedColumnsNominaSelected.pop();
+      // this.displayedColumnsNominaSelected = this.displayedColumnsNomina;
+    }
+
+    if(this.ELEMENT_DATA_RECEPCION_PAGO.length > 0){
+      this.dataSource_Recepcion_Pagos.data = this.ELEMENT_DATA_RECEPCION_PAGO.slice(0, 5);
+      // this.paginatorRecepcionPagos.length = this.ELEMENT_DATA_RECEPCION_PAGO.length;
+      // this.displayedColumnsRecepcionPagoSelected.pop();
+      // this.displayedColumnsRecepcionPagoSelected = this.displayedColumnsRecepcionPago;
+    }
+
+    if(this.ELEMENT_DATA_RETENCION.length > 0){
+      this.dataSource_Retencion.data = this.ELEMENT_DATA_RETENCION.slice(0, 5);
+      // this.paginatorRetenciones.length = this.ELEMENT_DATA_RETENCION.length;
+      // this.displayedColumnsRetencionSelected.pop();
+      // this.displayedColumnsRetencionSelected = this.displayedColumnsRetencion;
+    }
+
   }
 
   procesarDatos(datosXML: any): void {
@@ -706,54 +806,139 @@ export class MainLayoutComponent implements AfterViewInit {
           } else {
             switch (subcadenas.length) {
               case 1:
-                fila[columna.nombre] =
-                  datosXML[propiedadPadre][subcadenas[0]];
+                let temp1 = datosXML[propiedadPadre];
+                for (let i = 0; i < 1; i++) {
+                  if (temp1[subcadenas[i]]) {
+                    temp1 = temp1[subcadenas[i]];
+                  } else {
+                    // Si una de las propiedades intermedias no existe, asignamos undefined y salimos del bucle
+                    temp1 = undefined;
+                    break;
+                  }
+                }
+                if (temp1 !== undefined) {
+                  fila[columna.nombre] = temp1;
+                }
                 break;
               case 2:
-                fila[columna.nombre] =
-                  datosXML[propiedadPadre][subcadenas[0]][subcadenas[1]];
+                let temp2 = datosXML[propiedadPadre];
+                for (let i = 0; i < 2; i++) {
+                  if (temp2[subcadenas[i]]) {
+                    temp2 = temp2[subcadenas[i]];
+                  } else {
+                    // Si una de las propiedades intermedias no existe, asignamos undefined y salimos del bucle
+                    temp2 = undefined;
+                    break;
+                  }
+                }
+                if (temp2 !== undefined) {
+                  fila[columna.nombre] = temp2;
+                }
                 break;
               case 3:
-                fila[columna.nombre] =
-                  datosXML[propiedadPadre][subcadenas[0]][subcadenas[1]][
-                    subcadenas[2]
-                  ];
+                let temp3 = datosXML[propiedadPadre];
+                for (let i = 0; i < 3; i++) {
+                  if (temp3[subcadenas[i]]) {
+                    temp3 = temp3[subcadenas[i]];
+                  } else {
+                    // Si una de las propiedades intermedias no existe, asignamos undefined y salimos del bucle
+                    temp3 = undefined;
+                    break;
+                  }
+                }
+                if (temp3 !== undefined) {
+                  fila[columna.nombre] = temp3;
+                }
                 break;
               case 4:
-                fila[columna.nombre] =
-                  datosXML[propiedadPadre][subcadenas[0]][subcadenas[1]][
-                    subcadenas[2]
-                  ][subcadenas[3]];
+                let temp4 = datosXML[propiedadPadre];
+                for (let i = 0; i < 4; i++) {
+                  if (temp4[subcadenas[i]]) {
+                    temp4 = temp4[subcadenas[i]];
+                  } else {
+                    // Si una de las propiedades intermedias no existe, asignamos undefined y salimos del bucle
+                    temp4 = undefined;
+                    break;
+                  }
+                }
+                if (temp4 !== undefined) {
+                  fila[columna.nombre] = temp4;
+                }
                 break;
               case 5:
-                fila[columna.nombre] =
-                  datosXML[propiedadPadre][subcadenas[0]][subcadenas[1]][
-                    subcadenas[2]
-                  ][subcadenas[3]][subcadenas[4]];
+                let temp5 = datosXML[propiedadPadre];
+                for (let i = 0; i < 5; i++) {
+                  if (temp5[subcadenas[i]]) {
+                    temp5 = temp5[subcadenas[i]];
+                  } else {
+                    // Si una de las propiedades intermedias no existe, asignamos undefined y salimos del bucle
+                    temp5 = undefined;
+                    break;
+                  }
+                }
+                if (temp5 !== undefined) {
+                  fila[columna.nombre] = temp5;
+                }
                 break;
-              case 6:
-                fila[columna.nombre] =
-                  datosXML[propiedadPadre][subcadenas[0]][subcadenas[1]][
-                    subcadenas[2]
-                  ][subcadenas[3]][subcadenas[4]][subcadenas[5]];
-                break;
+                case 6:
+                  let temp = datosXML[propiedadPadre];
+                  for (let i = 0; i < 6; i++) {
+                    if (temp[subcadenas[i]]) {
+                      temp = temp[subcadenas[i]];
+                    } else {
+                      // Si una de las propiedades intermedias no existe, asignamos undefined y salimos del bucle
+                      temp = undefined;
+                      break;
+                    }
+                  }
+                  if (temp !== undefined) {
+                    fila[columna.nombre] = temp;
+                  }
+                  break;
               case 7:
-                fila[columna.nombre] =
-                  datosXML[propiedadPadre][subcadenas[0]][subcadenas[1]][
-                    subcadenas[2]
-                  ][subcadenas[3]][subcadenas[4]][subcadenas[5]][subcadenas[6]];
+                let temp7 = datosXML[propiedadPadre];
+                for (let i = 0; i < 7; i++) {
+                  if (temp7[subcadenas[i]]) {
+                    temp7 = temp7[subcadenas[i]];
+                  } else {
+                    // Si una de las propiedades intermedias no existe, asignamos undefined y salimos del bucle
+                    temp7 = undefined;
+                    break;
+                  }
+                }
+                if (temp7 !== undefined) {
+                  fila[columna.nombre] = temp7;
+                }
                 break;
               case 8:
-                fila[columna.nombre] =
-                  datosXML[propiedadPadre][subcadenas[0]][subcadenas[1]][
-                    subcadenas[2]
-                  ][subcadenas[3]][subcadenas[4]][subcadenas[5]][subcadenas[6]][subcadenas[7]];
+                let temp8 = datosXML[propiedadPadre];
+                for (let i = 0; i < 8; i++) {
+                  if (temp8[subcadenas[i]]) {
+                    temp8 = temp8[subcadenas[i]];
+                  } else {
+                    // Si una de las propiedades intermedias no existe, asignamos undefined y salimos del bucle
+                    temp8 = undefined;
+                    break;
+                  }
+                }
+                if (temp8 !== undefined) {
+                  fila[columna.nombre] = temp8;
+                }
                 break;
               case 9:
-                fila[columna.nombre] =
-                  datosXML[propiedadPadre][subcadenas[0]][subcadenas[1]][
-                    subcadenas[2]
-                  ][subcadenas[3]][subcadenas[4]][subcadenas[5]][subcadenas[6]][subcadenas[7]][subcadenas[8]];
+                let temp9 = datosXML[propiedadPadre];
+                for (let i = 0; i < 9; i++) {
+                  if (temp9[subcadenas[i]]) {
+                    temp9 = temp9[subcadenas[i]];
+                  } else {
+                    // Si una de las propiedades intermedias no existe, asignamos undefined y salimos del bucle
+                    temp9 = undefined;
+                    break;
+                  }
+                }
+                if (temp9 !== undefined) {
+                  fila[columna.nombre] = temp9;
+                }
                 break;
             }
           }
@@ -761,12 +946,12 @@ export class MainLayoutComponent implements AfterViewInit {
         this.datos.push(fila);
       }
     }
-    console.log('columnas: ', this.columnas);
-    console.log('datos: ', this.datos);
+    // console.log('columnas: ', this.columnas);
+    // console.log('datos: ', this.datos);
 
     this.datos.forEach((dato) => {
-      console.log("propiedadPadre: ", propiedadPadre)
-      console.log("tipoDocumento: ", tipoDocumento)
+      // console.log("propiedadPadre: ", propiedadPadre)
+      // console.log("tipoDocumento: ", tipoDocumento)
       if(propiedadPadre == 'cfdi:Comprobante')
       {
         switch(tipoDocumento)
@@ -977,7 +1162,7 @@ export class MainLayoutComponent implements AfterViewInit {
                 }
               }
                   };
-            ELEMENT_DATA_RECEPCION_PAGO.push(objetoRecepcionPago);
+            this.ELEMENT_DATA_RECEPCION_PAGO.push(objetoRecepcionPago);
             this.displayedColumnsRecepcionPagoSelected.pop();
             this.displayedColumnsRecepcionPagoSelected = this.displayedColumnsRecepcionPago;
             break;
@@ -1059,7 +1244,7 @@ export class MainLayoutComponent implements AfterViewInit {
                   }
               }
             };
-            ELEMENT_DATA_EGRESO.push(objetoEgresos);
+            this.ELEMENT_DATA_EGRESO.push(objetoEgresos);
             this.displayedColumnsEgresoSelected.pop();
             this.displayedColumnsEgresoSelected = this.displayedColumnsEgreso;
             break;
@@ -1123,7 +1308,7 @@ export class MainLayoutComponent implements AfterViewInit {
                   }
               }
             };
-            ELEMENT_DATA_TRASLADO.push(objTraslado);
+            this.ELEMENT_DATA_TRASLADO.push(objTraslado);
             this.displayedColumnsTrasladoSelected.pop();
             this.displayedColumnsTrasladoSelected = this.displayedColumnsTraslado;
             break;
@@ -1217,7 +1402,7 @@ export class MainLayoutComponent implements AfterViewInit {
                     }
                   }
                 };
-            ELEMENT_DATA_INGRESO.push(objetoIngreso);
+            this.ELEMENT_DATA_INGRESO.push(objetoIngreso);
             this.displayedColumnsIngresoSelected.pop();
             this.displayedColumnsIngresoSelected = this.displayedColumnsIngreso;
             break;
@@ -1349,8 +1534,8 @@ export class MainLayoutComponent implements AfterViewInit {
                   }
                 }
               };
-            ELEMENT_DATA.push(objetoNomina);
-            ELEMENT_DATA_NOMINA.push(objetoNomina);
+            this.ELEMENT_DATA.push(objetoNomina);
+            this.ELEMENT_DATA_NOMINA.push(objetoNomina);
             this.displayedColumnsNominaSelected.pop();
             this.displayedColumnsNominaSelected = this.displayedColumnsNomina;
             // this.dataSource.data.push(objetoNomina);
@@ -1455,12 +1640,12 @@ export class MainLayoutComponent implements AfterViewInit {
                   }
               }
           };
-          ELEMENT_DATA_RETENCION.push(objetoRetencion);
+          this.ELEMENT_DATA_RETENCION.push(objetoRetencion);
           this.displayedColumnsRetencionSelected.pop();
           this.displayedColumnsRetencionSelected = this.displayedColumnsRetencion;
         }
     });
-    console.log("this.dataSource_Retencion.data", this.dataSource_Retencion.data)
+
   }
 
   exportToExcel(): void {
@@ -1469,41 +1654,47 @@ export class MainLayoutComponent implements AfterViewInit {
     const fileName = nombreArchivo + '.xlsx';
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
     // Datos de la tabla de nomina
-    const datosNomina = this.dataSource.data;
+    const datosNomina = this.ELEMENT_DATA;
     // Datos de la tabla de ingresos
-    const datosIngreso = this.dataSource_Ingreso.data;
+    const datosIngreso = this.ELEMENT_DATA_INGRESO;
     // Datos de la tabla de egresos
-    const datosEgreso = this.dataSource_Egreso.data;
+    const datosEgreso = this.ELEMENT_DATA_EGRESO;
     // Datos de la tabla de traslados
-    const datosTraslado = this.dataSource_Traslado.data;
+    const datosTraslado = this.ELEMENT_DATA_TRASLADO;
     // Datos de la tabla de retenciones
-    const datosRetencion = this.dataSource_Retencion.data;
+    const datosRetencion = this.ELEMENT_DATA_RETENCION;
     // Datos de la tabla de recepcion de pagos
-    const datosRecepcionPago = this.dataSource_Recepcion_Pagos.data;
+    const datosRecepcionPago = this.ELEMENT_DATA_RECEPCION_PAGO;
 
     // Filtrar solo las columnas que deseas imprimir de nominas
     const datosFiltradosNomina = datosNomina.map(item => {
         const newItem: any = {};
         this.displayedColumnsNominaSelected.forEach(columna => {
-          newItem[columna as keyof typeof item] = item[columna as keyof typeof item];
+          newItem[columna as keyof typeof item] = this.getElementValue(item, columna);
         });
         return newItem;
     });
+    // const datosFiltradosNomina = datosNomina;
 
     // Filtrar solo las columnas que deseas imprimir de ingresos
     const datosFiltradosIngreso = datosIngreso.map(item => {
+        // var newItem: any[] = [];
         const newItem: any = {};
+
         this.displayedColumnsIngresoSelected.forEach(columna => {
-          newItem[columna as keyof typeof item] = item[columna as keyof typeof item];
+          newItem[columna as keyof typeof item] = this.getElementValue(item, columna);
+          // newItem.push(this.getElementValue(item, columna))
         });
         return newItem;
     });
+    // const datosFiltradosIngreso = datosIngreso;
+
 
     // Filtrar solo las columnas que deseas imprimir de egresos
     const datosFiltradosEgreso = datosEgreso.map(item => {
       const newItem: any = {};
       this.displayedColumnsEgresoSelected.forEach(columna => {
-        newItem[columna as keyof typeof item] = item[columna as keyof typeof item];
+        newItem[columna as keyof typeof item] = this.getElementValue(item, columna);
       });
       return newItem;
     });
@@ -1511,7 +1702,7 @@ export class MainLayoutComponent implements AfterViewInit {
     const datosFiltradosTraslado = datosTraslado.map(item => {
       const newItem: any = {};
       this.displayedColumnsTrasladoSelected.forEach(columna => {
-        newItem[columna as keyof typeof item] = item[columna as keyof typeof item];
+        newItem[columna as keyof typeof item] = this.getElementValue(item, columna);
       });
       return newItem;
     });
@@ -1519,7 +1710,7 @@ export class MainLayoutComponent implements AfterViewInit {
     const datosFiltradosRetencion = datosRetencion.map(item => {
       const newItem: any = {};
       this.displayedColumnsRetencionSelected.forEach(columna => {
-        newItem[columna as keyof typeof item] = item[columna as keyof typeof item];
+        newItem[columna as keyof typeof item] = this.getElementValue(item, columna);
       });
       return newItem;
     });
@@ -1527,7 +1718,7 @@ export class MainLayoutComponent implements AfterViewInit {
     const datosFiltradosRecepcionPago = datosRecepcionPago.map(item => {
       const newItem: any = {};
       this.displayedColumnsRecepcionPagoSelected.forEach(columna => {
-        newItem[columna as keyof typeof item] = item[columna as keyof typeof item];
+        newItem[columna as keyof typeof item] = this.getElementValue(item, columna);
       });
       return newItem;
     });
@@ -1535,33 +1726,34 @@ export class MainLayoutComponent implements AfterViewInit {
     // Define una función para crear hojas de cálculo
     const createSheet = (data: any[], sheetName: string, displayedColumns: string[]) => {
       if (data.length > 0) {
-        const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
+        const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data, { cellStyles: true});
         XLSX.utils.book_append_sheet(wb, ws, sheetName);
       }
     };
 
+
     // Crear una nueva hoja de trabajo con los datos filtrados de nominas
-    if(this.dataSource.data.length > 0){
+    if(this.ELEMENT_DATA.length > 0){
       createSheet(datosFiltradosNomina, 'Nóminas', this.displayedColumnsNominaSelected);
     }
     // Crear una nueva hoja de trabajo con los datos filtrados de ingresos
-    if(this.dataSource_Ingreso.data.length > 0){
+    if(this.ELEMENT_DATA_INGRESO.length > 0){
       createSheet(datosFiltradosIngreso, 'Ingresos', this.displayedColumnsIngresoSelected);
     }
     // Crear una nueva hoja de trabajo con los datos filtrados de egresos
-    if(this.dataSource_Egreso.data.length > 0){
+    if(this.ELEMENT_DATA_EGRESO.length > 0){
       createSheet(datosFiltradosEgreso, 'Egresos', this.displayedColumnsEgresoSelected);
     }
     // Crear una nueva hoja de trabajo con los datos filtrados de traslados
-    if(this.dataSource_Traslado.data.length > 0){
+    if(this.ELEMENT_DATA_TRASLADO.length > 0){
       createSheet(datosFiltradosTraslado, 'Traslados', this.displayedColumnsTrasladoSelected);
     }
     // Crear una nueva hoja de trabajo con los datos filtrados de retenciones
-    if(this.dataSource_Retencion.data.length > 0){
+    if(this.ELEMENT_DATA_RETENCION.length > 0){
       createSheet(datosFiltradosRetencion, 'Retenciones', this.displayedColumnsRetencionSelected);
     }
     // Crear una nueva hoja de trabajo con los datos filtrados de recepcion de pagos
-    if(this.dataSource_Recepcion_Pagos.data.length > 0){
+    if(this.ELEMENT_DATA_RECEPCION_PAGO.length > 0){
       createSheet(datosFiltradosRecepcionPago, 'Recepción de pagos', this.displayedColumnsRecepcionPagoSelected);
     }
     // Guardar el libro de Excel
@@ -1642,7 +1834,7 @@ export class MainLayoutComponent implements AfterViewInit {
       }
     }
     let value = element;
-    console.log("formattedParts: ", formattedParts)
+    // console.log("formattedParts: ", formattedParts)
       // VERIFICAR SI LA PROPIEDAD CONTIENE UN ÍNDICE DE MATRIZ
     if (formattedParts.length > 1) {
       switch(formattedParts.length){
@@ -1676,6 +1868,16 @@ export class MainLayoutComponent implements AfterViewInit {
             return value[formattedParts[0]][formattedParts[1]][formattedParts[2]][formattedParts[3]][formattedParts[4]][formattedParts[5]][formattedParts[6]];
           }
           break;
+        case 8:
+          if(formattedParts[7] in value[formattedParts[0]][formattedParts[1]][formattedParts[2]][formattedParts[3]][formattedParts[4]][formattedParts[5]][formattedParts[6]]){
+            return value[formattedParts[0]][formattedParts[1]][formattedParts[2]][formattedParts[3]][formattedParts[4]][formattedParts[5]][formattedParts[6]][formattedParts[7]];
+          }
+          break;
+        case 9:
+          if(formattedParts[8] in value[formattedParts[0]][formattedParts[1]][formattedParts[2]][formattedParts[3]][formattedParts[4]][formattedParts[5]][formattedParts[6]][formattedParts[7]]){
+            return value[formattedParts[0]][formattedParts[1]][formattedParts[2]][formattedParts[3]][formattedParts[4]][formattedParts[5]][formattedParts[6]][formattedParts[7]][formattedParts[8]];
+          }
+          break;
       }
     } else {
       // ACCEDER NORMALMENTE A LA PROPIEDAD
@@ -1688,12 +1890,77 @@ export class MainLayoutComponent implements AfterViewInit {
 
     return value;
   }
+  handlePageEvent($event: PageEvent, tipoFactura : string) {
+    switch (tipoFactura) {
+      case 'Ingreso':
+        if(this.ELEMENT_DATA_INGRESO.length > 0){
+          const startIndex = $event.pageIndex * $event.pageSize;
+          const endIndex = startIndex + $event.pageSize;
+          this.dataSource_Ingreso.data = this.ELEMENT_DATA_INGRESO.slice(startIndex, endIndex);
+          this.paginatorIngresos.length = this.ELEMENT_DATA_INGRESO.length;
+          this.displayedColumnsIngresoSelected.pop();
+          this.displayedColumnsIngresoSelected = this.displayedColumnsIngreso;
+          // console.log("this.dataSource_Ingreso.data: ", this.dataSource_Ingreso.data)
+        }
+        break;
+        case 'Egreso':
+          if(this.ELEMENT_DATA_EGRESO.length > 0){
+            const startIndex = $event.pageIndex * $event.pageSize;
+            const endIndex = startIndex + $event.pageSize;
+            this.dataSource_Egreso.data = this.ELEMENT_DATA_EGRESO.slice(startIndex, endIndex);
+            this.paginatorEgresos.length = this.ELEMENT_DATA_EGRESO.length;
+            this.displayedColumnsEgresoSelected.pop();
+            this.displayedColumnsEgresoSelected = this.displayedColumnsEgreso;
+            // console.log("this.dataSource_Egreso.data: ", this.dataSource_Egreso.data)
+          }
+          break;
+        case 'Traslado':
+          if(this.ELEMENT_DATA_TRASLADO.length > 0){
+            const startIndex = $event.pageIndex * $event.pageSize;
+            const endIndex = startIndex + $event.pageSize;
+            this.dataSource_Traslado.data = this.ELEMENT_DATA_TRASLADO.slice(startIndex, endIndex);
+            this.paginatorTraslados.length = this.ELEMENT_DATA_TRASLADO.length;
+            this.displayedColumnsTrasladoSelected.pop();
+            this.displayedColumnsTrasladoSelected = this.displayedColumnsTraslado;
+            // console.log("this.dataSource_Traslado.data: ", this.dataSource_Traslado.data)
+          }
+          break;
+        case 'Nomina':
+          if(this.ELEMENT_DATA_NOMINA.length > 0){
+            const startIndex = $event.pageIndex * $event.pageSize;
+            const endIndex = startIndex + $event.pageSize;
+            this.dataSource.data = this.ELEMENT_DATA_NOMINA.slice(startIndex, endIndex);
+            this.paginatorNominas.length = this.ELEMENT_DATA_NOMINA.length;
+            this.displayedColumnsNominaSelected.pop();
+            this.displayedColumnsNominaSelected = this.displayedColumnsNomina;
+            // console.log("this.dataSource.data: ", this.dataSource.data)
+          }
+          break;
+          case 'RecepcionPago':
+            if(this.ELEMENT_DATA_RECEPCION_PAGO.length > 0){
+              const startIndex = $event.pageIndex * $event.pageSize;
+              const endIndex = startIndex + $event.pageSize;
+              this.dataSource_Recepcion_Pagos.data = this.ELEMENT_DATA_RECEPCION_PAGO.slice(startIndex, endIndex);
+              this.paginatorRecepcionPagos.length = this.ELEMENT_DATA_RECEPCION_PAGO.length;
+              this.displayedColumnsRecepcionPagoSelected.pop();
+              this.displayedColumnsRecepcionPagoSelected = this.displayedColumnsRecepcionPago;
+              // console.log("this.dataSource_Recepcion_Pagos.data: ", this.dataSource_Recepcion_Pagos.data)
+            }
+            break;
+          case 'Retencion':
+            if(this.ELEMENT_DATA_RETENCION.length > 0){
+              const startIndex = $event.pageIndex * $event.pageSize;
+              const endIndex = startIndex + $event.pageSize;
+              this.dataSource_Retencion.data = this.ELEMENT_DATA_RETENCION.slice(startIndex, endIndex);
+              this.paginatorRetenciones.length = this.ELEMENT_DATA_RETENCION.length;
+              this.displayedColumnsRetencionSelected.pop();
+              this.displayedColumnsRetencionSelected = this.displayedColumnsRetencion;
+              // console.log("this.dataSource_Retencion.data: ", this.dataSource_Retencion.data)
+            }
+            break;
+      default:
+        break;
+    }
+  }
 }
 
-var ELEMENT_DATA: Nomina[] = [];
-var ELEMENT_DATA_EGRESO: Egreso[] = [];
-var ELEMENT_DATA_INGRESO: Ingreso[] = [];
-var ELEMENT_DATA_NOMINA: Nomina[] = [];
-var ELEMENT_DATA_RECEPCION_PAGO: RecepcionPago[] = [];
-var ELEMENT_DATA_RETENCION: Retenciones[] = [];
-var ELEMENT_DATA_TRASLADO: Traslado[] = [];
