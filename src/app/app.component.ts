@@ -13,6 +13,7 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import { CommonModule } from '@angular/common';
 import { PreloadingStrategy, Route } from '@angular/router';
 import { Observable, of } from 'rxjs';
+import {MatSnackBar} from '@angular/material/snack-bar';
 export interface Tile {
   color: string;
   cols: number;
@@ -30,7 +31,7 @@ export interface Tile {
 })
 export class AppComponent  implements PreloadingStrategy, OnInit {
   routeA : ActivatedRoute | undefined;
-  constructor(_routeA: ActivatedRoute) {
+  constructor(_routeA: ActivatedRoute, private _snackBar: MatSnackBar) {
     this.routeA = _routeA;
   }
   ngOnInit(): void {
@@ -68,5 +69,36 @@ export class AppComponent  implements PreloadingStrategy, OnInit {
   close(reason: string) {
     this.reason = reason;
     this.sidenav.close();
+  }
+
+
+  Compartir() {
+    // Obtenemos la URL actual del navegador
+    const currentURL = window.location.href;
+
+    // Creamos un elemento temporal de tipo input
+    const tempInput = document.createElement('input');
+
+    // Asignamos la URL actual como valor al elemento temporal
+    tempInput.value = currentURL;
+
+    // Añadimos el elemento temporal al DOM
+    document.body.appendChild(tempInput);
+
+    // Seleccionamos el contenido del input
+    tempInput.select();
+
+    // Copiamos el contenido seleccionado al portapapeles
+    document.execCommand('copy');
+
+    // Eliminamos el elemento temporal del DOM
+    document.body.removeChild(tempInput);
+
+    // Notificamos al usuario que la URL ha sido copiada
+    this._snackBar.open('URL copiada al portapapeles: ' + currentURL, 'Cerrar', {
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
+    });
+    // alert('URL copiada al portapapeles: ' + currentURL);
   }
 }

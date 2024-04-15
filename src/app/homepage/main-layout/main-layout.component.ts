@@ -700,8 +700,8 @@ export class MainLayoutComponent implements AfterViewInit {
       // this.displayedColumnsTrasladoSelected = this.displayedColumnsTraslado;
     }
 
-    if(this.ELEMENT_DATA_NOMINA.length > 0){
-      this.dataSource.data = this.ELEMENT_DATA_NOMINA.slice(0, 5);
+    if(this.ELEMENT_DATA.length > 0){
+      this.dataSource.data = this.ELEMENT_DATA.slice(0, 5);
       // this.paginatorNominas.length = this.ELEMENT_DATA_NOMINA.length;
       // this.displayedColumnsNominaSelected.pop();
       // this.displayedColumnsNominaSelected = this.displayedColumnsNomina;

@@ -3,6 +3,7 @@ import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule } from '@ang
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
+import {CdkDragDrop, CdkDropList, CdkDrag, moveItemInArray} from '@angular/cdk/drag-drop';
 import {
   MAT_DIALOG_DATA,
   MatDialogRef,
@@ -42,6 +43,8 @@ export interface DialogData {
     MatInputModule,
     MatSelectModule,
     MatIconModule,
+    CdkDropList,
+    CdkDrag
   ],
   templateUrl: './dialog-selector-column.component.html',
   styleUrl: './dialog-selector-column.component.css'
@@ -72,4 +75,9 @@ export class DialogSelectorColumnComponent {
     });
     this.dialogRef.close(auxColumnSelected);
   }
+
+  drop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.data.columnSelected, event.previousIndex, event.currentIndex);
+  }
+
 }

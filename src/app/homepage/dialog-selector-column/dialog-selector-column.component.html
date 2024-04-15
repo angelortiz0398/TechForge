@@ -1,11 +1,15 @@
 <h4 mat-dialog-title>¿Qué columnas quieres que se vean?</h4>
 <mat-dialog-content>
   <form [formGroup]="options" style="width: 100%;">
+    <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
     <div style="overflow-x: auto; overflow-y: hidden; width: 100%;" *ngFor="let column of this.data.columnSelected; index as i">
-      <mat-checkbox [formControl]="isVisibleColumnControl" [(ngModel)]="this.data.columnSelectedBoolean[i]">
-        {{column}}
-      </mat-checkbox>
-    </div>
+          <div class="example-box" cdkDrag>
+            <mat-checkbox [formControl]="isVisibleColumnControl" [(ngModel)]="this.data.columnSelectedBoolean[i]">
+              {{column}}
+            </mat-checkbox>
+          </div>
+        </div>
+      </div>
   </form>
 </mat-dialog-content>
 <mat-dialog-actions>
