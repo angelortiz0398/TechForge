@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, RouterOutlet } from '@angular/router';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import { HomepageModule } from './homepage/homepage.module';
 import { MainLayoutComponent } from './homepage/main-layout/main-layout.component';
 import { FooterComponent } from './homepage/footer/footer.component';
@@ -10,10 +10,12 @@ import {MatDividerModule} from '@angular/material/divider';
 import {MatButtonModule} from '@angular/material/button';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatGridListModule} from '@angular/material/grid-list';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DOCUMENT } from '@angular/common';
 import { PreloadingStrategy, Route } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {MatMenuModule} from '@angular/material/menu';
 export interface Tile {
   color: string;
   cols: number;
@@ -24,19 +26,22 @@ export interface Tile {
   selector: 'app-root',
   standalone: true,
   imports: [MatToolbarModule, RouterOutlet, HomepageModule, MainLayoutComponent, FooterComponent, MatSidenavModule,
-    MatButtonModule, MatDividerModule, MatIconModule, MatGridListModule, CommonModule],
+    MatButtonModule, MatDividerModule, MatIconModule, MatGridListModule, CommonModule, MatSlideToggleModule, MatMenuModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
   providers: [DropfileDirective]
 })
 export class AppComponent  implements PreloadingStrategy, OnInit {
+
   routeA : ActivatedRoute | undefined;
-  constructor(_routeA: ActivatedRoute, private _snackBar: MatSnackBar) {
+  OscuroActivado = true;
+  constructor(_routeA: ActivatedRoute, private _snackBar: MatSnackBar, private router: Router, @Inject(DOCUMENT) private document: Document) {
     this.routeA = _routeA;
   }
   ngOnInit(): void {
     // console.log('this.routeA!.routeConfig?.path: ', this.routeA);
     this.routeActual = this.routeA!.routeConfig?.path as string;
+    this.CambioModoOscuro();
   }
 
 
@@ -61,13 +66,7 @@ export class AppComponent  implements PreloadingStrategy, OnInit {
   sidenav!: MatSidenav;
   public route: Route | undefined;
 
-
-  reason = '';
-  tiles: Tile[] = [
-    {cols: 1, rows: 1, color: 'lightblue'},
-  ];
   close(reason: string) {
-    this.reason = reason;
     this.sidenav.close();
   }
 
@@ -100,5 +99,19 @@ export class AppComponent  implements PreloadingStrategy, OnInit {
       verticalPosition: 'top',
     });
     // alert('URL copiada al portapapeles: ' + currentURL);
+  }
+  CambioModoOscuro() {
+    this.OscuroActivado = !this.OscuroActivado;
+    if (this.OscuroActivado) {
+      this.document.documentElement.style.colorScheme = 'light';
+    } else {
+      this.document.documentElement.style.colorScheme = 'dark';
+    }
+  }
+  redireccionarHome() {
+    window.location.replace('/home');
+  }
+  redireccionarConversorXMLToXLSX() {
+    window.location.replace('/conversion-xml-to-xlsx');
   }
 }

@@ -1,25 +1,19 @@
 <footer class="docs-footer" style="background-color: black;">
-  <div class="docs-footer-list">
-    <div class="docs-footer-logo">
+  <mat-grid-list cols="3" rowHeight="80px">
+    <mat-grid-tile>
       <button mat-button (click)="CargarDonaciones()">
         <img class="docs-footer-angular-logo"
         src="../../../assets/img/logoSinFondo.png"
-        alt="Angular icon">
+        alt="Angular icon"
+        width="48px">
       </button>
-      <span class="version">¿Quieres apoyarme para seguir haciendo contenido como este?</span>
-    </div>
-
-    <div class="docs-footer-version">
-      <img src="../../../assets/img/github.svg" class="docs-footer-angular-logo" alt="github">
-      <span class="version">Repositorio de: <a href="https://github.com/angelortiz0398/TechForge">github</a></span>
-    </div>
-
-    <div class="docs-footer-copyright">
-      <div>
-        <span>Powered by Google LLC ©2010-2024.</span>
-        <a href="https://github.com/angular/components/blob/main/LICENSE">Code licensed under an MIT-style License.</a>
-        <span style="color: white;">¿Quieres contactarme? Hazlo con este email: <b> angelortiz&#64;techforge.website </b></span>
-      </div>
-    </div>
-  </div>
+      <h4 style="color: white;">Presiona en el logo para apoyarme y seguir haciendo contenido así</h4>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <h4 style="color: white;">Repositorio de GitHub: <a href="https://github.com/angelortiz0398/TechForge">TechForge</a></h4>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <h4 style="color: white;">¿Quieres contactarme? Hazlo con este email: <b> angelortiz&#64;techforge.website </b></h4>
+    </mat-grid-tile>
+  </mat-grid-list>
 </footer>

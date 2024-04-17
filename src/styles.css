@@ -2,3 +2,22 @@
 
 html, body { height: 100%; overflow-x: hidden;}
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;}
+:root{
+  color-scheme: light dark;
+  --background-color: light-dark(black,white );
+  --mat-toolbar-container-background-color: light-dark(#d7e3ff,#cfcfcf);
+  --text-color: light-dark(white,black );
+  --accent-color: light-dark(#f44336, #cecece);
+  --mat-table-background-color: light-dark(white,dark);
+  --mat-paginator-container-background-color: light-dark(white,dark);
+  --mdc-dialog-container-color: light-dark(white,black);
+  --mdc-form-field-label-text-color: light-dark(white,white);
+  --mdc-dialog-subhead-color: light-dark(black,white);
+  --mat-table-row-item-outline-width-background-color: light-dark(white,rgb(56, 53, 53));
+  --mat-table-header-headline-color: light-dark(black,white);
+  --mat-table-row-item-label-text-color: light-dark(black,white);
+  --mat-paginator-container-text-color: light-dark(black,white);
+  label{
+    color: light-dark(black,white);
+  }
+}

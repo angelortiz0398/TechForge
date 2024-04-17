@@ -1,17 +1,23 @@
 .example-spacer {
   flex: 1 1 auto;
 }
-.example-container {
-  position: static;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-}
 
-.sidenav-Content{
-  height: 100% !important;
-    display: contents;
+main {
+  min-height: 60%; /* El contenido de main ocupa el 100% del alto disponible */
+  height: 71%;
+  margin: 0 auto; /* Centra el contenido horizontalmente */
+  margin-bottom: 10%;
 }
 
 
+.toolbar-fixed {
+  position: fixed; /* Fija el div en la pantalla */
+  z-index: 9999; /* Asegura que esté por encima del contenido */
+  pointer-events: none; /* Evita que los eventos de clic y toque se propaguen al toolbar */
+  height: 50px;
+}
+
+/* Estilo opcional para los elementos hijos del toolbar que necesitan ser clicables */
+.toolbar-fixed button, .toolbar-fixed a {
+  pointer-events: auto; /* Habilita los eventos de clic y toque en los elementos hijos */
+}

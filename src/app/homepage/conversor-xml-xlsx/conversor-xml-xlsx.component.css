@@ -41,7 +41,7 @@ p {
 .container {
   height: 10%; /* Ajusta la altura según tus necesidades */
   margin-top: 16px;
-  margin-bottom: 16px;
+  margin-bottom: 15%;
   display: flex;
   justify-content: center; /* Centra horizontalmente */
   align-items: center; /* Centra verticalmente */
@@ -64,7 +64,7 @@ p {
 
 .fab-button {
   position: fixed;
-  bottom: 20px;
+  bottom: 15%;
   right: 20px;
 }
 /* Habilita el desplazamiento horizontal */

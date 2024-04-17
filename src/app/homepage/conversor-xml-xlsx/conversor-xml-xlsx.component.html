@@ -1,0 +1,811 @@
+<div class="containermainlayout" >
+  <div
+    [ngClass]="{'dropzone-max': files.length == 0, 'dropzone': files.length > 0}"
+    appDropfile
+    (files)="filesDropped($event)"
+  >
+    <div id="popupFiles" class="text-wrapper" (click)="AbrirPopupFiles()">
+      <div class="centered">Suelta tus archivos aqui!</div>
+      <input
+        id="fileInput"
+        type="file"
+        #fileInput
+        (change)="CargarArchivos($event)"
+        multiple
+        accept=".xml"
+        hidden
+      />
+    </div>
+  </div>
+
+  <div *ngIf="loading == true" style="margin-top: 16px; margin-bottom: 16px;">
+    <app-progress
+      [ngClass]="{'': files.length == 0, 'progress-max': files.length > 0}"
+      [progress]="progress"
+      [loading]="loading">
+    </app-progress>
+  </div>
+
+  <div id="Contenido" class="mat-elevation-z8" *ngIf="files.length > 0 && loading == false" style="overflow-x: visible; margin-top: 16px;">
+    <div style="margin: 8px;">
+      <h4>Contenido de los archivos</h4>
+    </div>
+    <mat-divider></mat-divider>
+    <pre style="overflow: auto; max-height: 500px;">
+        {{bodyXML}}
+    </pre>
+  </div>
+
+  <div *ngIf="files.length > 0 && loading == false">
+    <div style="margin-top: 16px;"  *ngIf="this.dataSource_Ingreso.data.length > 0">
+      <div style="margin: 8px; display: flex; flex-direction: row; justify-content: space-between;">
+        <h4>Tabla para Ingresos</h4>
+        <button mat-icon-button color="primary" title="Elegir las columnas a mostrar para la tabla" (click)="openDialog(displayedColumnsIngreso, 'Ingreso')">
+          <mat-icon>checklist</mat-icon>
+        </button>
+      </div>
+    </div>
+    <div class="mat-elevation-z8 mat-table-wrapper" *ngIf="this.dataSource_Ingreso.data.length > 0">
+      <table mat-table [dataSource]="dataSource_Ingreso">
+        <!-- Definiciones de columnas -->
+        <ng-container *ngFor="let col of displayedColumnsIngresoSelected" [matColumnDef]="col">
+          <th mat-header-cell *matHeaderCellDef>{{ col }}</th>
+          <td mat-cell *matCellDef="let element">{{ getElementValue(element, col) }}</td>
+        </ng-container>
+
+        <!-- Encabezados de columnas -->
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsIngresoSelected"></tr>
+
+        <!-- Filas de datos -->
+        <tr mat-row *matRowDef="let row; columns: displayedColumnsIngresoSelected;"></tr>
+      </table>
+      <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+        [pageSize]="5"
+        showFirstLastButtons
+        aria-label="Seleccione la pagina de los ingresos"
+        [length]="this.ELEMENT_DATA_INGRESO.length"
+        (page)="handlePageEvent($event, 'Ingreso')"
+        >
+      </mat-paginator>
+    </div>
+
+    <div style="margin-top: 16px;"  *ngIf="this.dataSource_Egreso.data.length > 0">
+      <div style="display: flex; flex-direction: row; justify-content: space-between;">
+        <h4>Tabla para Egresos</h4>
+        <button mat-icon-button color="primary" title="Elegir las columnas a mostrar para la tabla" (click)="openDialog(displayedColumnsEgreso, 'Egreso')">
+          <mat-icon>checklist</mat-icon>
+        </button>
+      </div>
+    </div>
+    <div class="mat-elevation-z8 mat-table-wrapper" *ngIf="this.dataSource_Egreso.data.length > 0">
+      <table mat-table [dataSource]="dataSource_Egreso">
+
+        <!-- Definiciones de columnas -->
+        <ng-container *ngFor="let col of displayedColumnsEgresoSelected" [matColumnDef]="col">
+          <th mat-header-cell *matHeaderCellDef>{{ col }}</th>
+          <td mat-cell *matCellDef="let element">{{ getElementValue(element, col) }}</td>
+        </ng-container>
+
+        <!-- Encabezados de columnas -->
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsEgresoSelected"></tr>
+
+        <!-- Filas de datos -->
+        <tr mat-row *matRowDef="let row; columns: displayedColumnsEgresoSelected;"></tr>
+
+      </table>
+      <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+      [pageSize]="5"
+      showFirstLastButtons
+      aria-label="Seleccione la pagina de los egresos"
+      [length]="this.ELEMENT_DATA_EGRESO.length"
+      (page)="handlePageEvent($event, 'Egreso')">
+    </mat-paginator>
+    </div>
+
+    <div style="margin-top: 16px;"  *ngIf="this.dataSource_Traslado.data.length > 0">
+      <div style="display: flex; flex-direction: row; justify-content: space-between;">
+        <h4>Tabla para Ingresos Trasladados</h4>
+        <button mat-icon-button color="primary" title="Elegir las columnas a mostrar para la tabla" (click)="openDialog(displayedColumnsTraslado, 'Traslado')">
+          <mat-icon>checklist</mat-icon>
+        </button>
+      </div>
+    </div>
+    <div class="mat-elevation-z8 mat-table-wrapper" *ngIf="this.dataSource_Traslado.data.length > 0">
+      <table mat-table [dataSource]="dataSource_Traslado">
+
+        <!-- Definiciones de columnas -->
+        <ng-container *ngFor="let col of displayedColumnsTrasladoSelected" [matColumnDef]="col">
+          <th mat-header-cell *matHeaderCellDef>{{ col }}</th>
+          <td mat-cell *matCellDef="let element">{{ getElementValue(element, col) }}</td>
+        </ng-container>
+
+        <!-- Encabezados de columnas -->
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsTrasladoSelected"></tr>
+
+        <!-- Filas de datos -->
+        <tr mat-row *matRowDef="let row; columns: displayedColumnsTrasladoSelected;"></tr>
+
+      </table>
+      <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+      [pageSize]="5"
+      showFirstLastButtons
+      aria-label="Seleccione la pagina de los traslados"
+      [length]="this.ELEMENT_DATA_TRASLADO.length"
+      (page)="handlePageEvent($event, 'Traslado')">
+    </mat-paginator>
+    </div>
+
+    <div style="margin-top: 16px;" *ngIf="this.dataSource.data.length > 0">
+      <div style="display: flex; flex-direction: row; justify-content: space-between;">
+        <h4>Tabla para Nóminas</h4>
+        <button mat-icon-button color="primary" title="Elegir las columnas a mostrar para la tabla" (click)="openDialog(displayedColumnsNomina, 'Nomina')">
+          <mat-icon>checklist</mat-icon>
+        </button>
+      </div>
+    </div>
+    <div class="mat-elevation-z8 mat-table-wrapper" *ngIf="this.dataSource.data.length > 0">
+      <table mat-table [dataSource]="dataSource">
+        <!-- id Column -->
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef>Id</th>
+          <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+        </ng-container>
+
+        <!-- xmlns:xsi Column -->
+        <ng-container matColumnDef="xmlns:xsi">
+          <th mat-header-cell *matHeaderCellDef>xmlns:xsi</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element["xmlns:xsi"] }}
+          </td>
+        </ng-container>
+
+        <!-- xmlns:cfdi Column -->
+        <ng-container matColumnDef="xmlns:cfdi">
+          <th mat-header-cell *matHeaderCellDef>xmlns:cfdi</th>
+          <td mat-cell *matCellDef="let element">{{ element["xmlns:cfdi"] }}</td>
+        </ng-container>
+
+        <!-- xmlns:nomina12 Column -->
+        <ng-container matColumnDef="xmlns:nomina12">
+          <th mat-header-cell *matHeaderCellDef>xmlns:nomina12</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element["xmlns:nomina12"] }}
+          </td>
+        </ng-container>
+
+        <!-- Version Column -->
+        <ng-container matColumnDef="Version">
+          <th mat-header-cell *matHeaderCellDef>Version</th>
+          <td mat-cell *matCellDef="let element">{{ element.Version }}</td>
+        </ng-container>
+
+        <!-- Fecha Column -->
+        <ng-container matColumnDef="Fecha">
+          <th mat-header-cell *matHeaderCellDef>Fecha</th>
+          <td mat-cell *matCellDef="let element">{{ element.Fecha }}</td>
+        </ng-container>
+
+        <!-- Sello Column -->
+        <ng-container matColumnDef="Sello">
+          <th mat-header-cell *matHeaderCellDef>Sello</th>
+          <td mat-cell *matCellDef="let element">{{ element.Sello }}</td>
+        </ng-container>
+
+        <!-- NoCertificado Column -->
+        <ng-container matColumnDef="NoCertificado">
+          <th mat-header-cell *matHeaderCellDef>NoCertificado</th>
+          <td mat-cell *matCellDef="let element">{{ element.NoCertificado }}</td>
+        </ng-container>
+
+        <!-- Certificado Column -->
+        <ng-container matColumnDef="Certificado">
+          <th mat-header-cell *matHeaderCellDef>Certificado</th>
+          <td mat-cell *matCellDef="let element">{{ element.Certificado }}</td>
+        </ng-container>
+
+        <!-- Moneda Column -->
+        <ng-container matColumnDef="Moneda">
+          <th mat-header-cell *matHeaderCellDef>Moneda</th>
+          <td mat-cell *matCellDef="let element">{{ element.Moneda }}</td>
+        </ng-container>
+
+        <!-- TipoDeComprobante Column -->
+        <ng-container matColumnDef="TipoDeComprobante">
+          <th mat-header-cell *matHeaderCellDef>TipoDeComprobante</th>
+          <td mat-cell *matCellDef="let element">{{ element.TipoDeComprobante }}</td>
+        </ng-container>
+
+        <!-- Exportacion Column -->
+        <ng-container matColumnDef="Exportacion">
+          <th mat-header-cell *matHeaderCellDef>Exportacion</th>
+          <td mat-cell *matCellDef="let element">{{ element.Exportacion }}</td>
+        </ng-container>
+
+        <!-- MetodoPago Column -->
+        <ng-container matColumnDef="MetodoPago">
+          <th mat-header-cell *matHeaderCellDef>MetodoPago</th>
+          <td mat-cell *matCellDef="let element">{{ element.MetodoPago }}</td>
+        </ng-container>
+
+        <!-- Serie Column -->
+        <ng-container matColumnDef="Serie">
+          <th mat-header-cell *matHeaderCellDef>Serie</th>
+          <td mat-cell *matCellDef="let element">{{ element.Serie }}</td>
+        </ng-container>
+
+        <!-- Folio Column -->
+        <ng-container matColumnDef="Folio">
+          <th mat-header-cell *matHeaderCellDef>Folio</th>
+          <td mat-cell *matCellDef="let element">{{ element.Folio }}</td>
+        </ng-container>
+
+        <!-- LugarExpedicion Column -->
+        <ng-container matColumnDef="LugarExpedicion">
+          <th mat-header-cell *matHeaderCellDef>LugarExpedicion</th>
+          <td mat-cell *matCellDef="let element">{{ element.LugarExpedicion }}</td>
+        </ng-container>
+
+        <!-- SubTotal Column -->
+        <ng-container matColumnDef="SubTotal">
+          <th mat-header-cell *matHeaderCellDef>SubTotal</th>
+          <td mat-cell *matCellDef="let element">{{ element.SubTotal }}</td>
+        </ng-container>
+
+        <!-- Descuento Column -->
+        <ng-container matColumnDef="Descuento">
+          <th mat-header-cell *matHeaderCellDef>Descuento</th>
+          <td mat-cell *matCellDef="let element">{{ element.Descuento }}</td>
+        </ng-container>
+
+        <!-- Total Column -->
+        <ng-container matColumnDef="Total">
+          <th mat-header-cell *matHeaderCellDef>Total</th>
+          <td mat-cell *matCellDef="let element">{{ element.Total }}</td>
+        </ng-container>
+
+        <!-- Total Column -->
+        <ng-container matColumnDef="cfdi:Emisor:RegimenFiscal">
+          <th mat-header-cell *matHeaderCellDef>cfdi:Emisor:RegimenFiscal</th>
+          <td mat-cell *matCellDef="let element">{{ element['cfdi:Emisor'].RegimenFiscal }}</td>
+        </ng-container>
+
+        <!-- cfdi:Emisor:Rfc Column -->
+        <ng-container matColumnDef="cfdi:Emisor:Rfc">
+          <th mat-header-cell *matHeaderCellDef>cfdi:Emisor:Rfc</th>
+          <td mat-cell *matCellDef="let element">{{ element['cfdi:Emisor'].Rfc }}</td>
+        </ng-container>
+
+        <!-- cfdi:Emisor:Nombre Column -->
+        <ng-container matColumnDef="cfdi:Emisor:Nombre">
+          <th mat-header-cell *matHeaderCellDef>cfdi:Emisor:Nombre</th>
+          <td mat-cell *matCellDef="let element">{{ element['cfdi:Emisor'].Nombre }}</td>
+        </ng-container>
+
+        <!-- cfdi:Receptor:Rfc Column -->
+        <ng-container matColumnDef="cfdi:Receptor:Rfc">
+          <th mat-header-cell *matHeaderCellDef>cfdi:Receptor:Rfc</th>
+          <td mat-cell *matCellDef="let element">{{ element['cfdi:Receptor'].Rfc }}</td>
+        </ng-container>
+
+        <!-- cfdi:Receptor:Nombre Column -->
+        <ng-container matColumnDef="cfdi:Receptor:Nombre">
+          <th mat-header-cell *matHeaderCellDef>cfdi:Receptor:Nombre</th>
+          <td mat-cell *matCellDef="let element">{{ element['cfdi:Receptor'].Nombre }}</td>
+        </ng-container>
+
+        <!-- cfdi:Receptor:DomicilioFiscalReceptor Column -->
+        <ng-container matColumnDef="cfdi:Receptor:DomicilioFiscalReceptor">
+          <th mat-header-cell *matHeaderCellDef>cfdi:Receptor:DomicilioFiscalReceptor</th>
+          <td mat-cell *matCellDef="let element">{{ element['cfdi:Receptor'].DomicilioFiscalReceptor }}</td>
+        </ng-container>
+
+        <!-- cfdi:Receptor:RegimenFiscalReceptor Column -->
+        <ng-container matColumnDef="cfdi:Receptor:RegimenFiscalReceptor">
+          <th mat-header-cell *matHeaderCellDef>cfdi:Receptor:RegimenFiscalReceptor</th>
+          <td mat-cell *matCellDef="let element">{{ element['cfdi:Receptor'].RegimenFiscalReceptor }}</td>
+        </ng-container>
+
+        <!-- cfdi:Receptor:UsoCFDI Column -->
+        <ng-container matColumnDef="cfdi:Receptor:UsoCFDI">
+          <th mat-header-cell *matHeaderCellDef>cfdi:Receptor:UsoCFDI</th>
+          <td mat-cell *matCellDef="let element">{{ element['cfdi:Receptor'].UsoCFDI }}</td>
+        </ng-container>
+
+        <!-- cfdi:Conceptos:cfdi:Concepto:ClaveProdServ Column -->
+        <ng-container matColumnDef="cfdi:Conceptos:cfdi:Concepto:ClaveProdServ">
+          <th mat-header-cell *matHeaderCellDef>cfdi:Conceptos:cfdi:Concepto:ClaveProdServ</th>
+          <td mat-cell *matCellDef="let element">{{ element['cfdi:Conceptos']['cfdi:Concepto'].ClaveProdServ }}</td>
+        </ng-container>
+
+        <!-- cfdi:Conceptos:cfdi:Concepto:Cantidad Column -->
+        <ng-container matColumnDef="cfdi:Conceptos:cfdi:Concepto:Cantidad">
+          <th mat-header-cell *matHeaderCellDef>cfdi:Conceptos:cfdi:Concepto:Cantidad</th>
+          <td mat-cell *matCellDef="let element">{{ element['cfdi:Conceptos']['cfdi:Concepto'].Cantidad }}</td>
+        </ng-container>
+
+        <!-- cfdi:Conceptos:cfdi:Concepto:ClaveUnidad Column -->
+        <ng-container matColumnDef="cfdi:Conceptos:cfdi:Concepto:ClaveUnidad">
+          <th mat-header-cell *matHeaderCellDef>cfdi:Conceptos:cfdi:Concepto:ClaveUnidad</th>
+          <td mat-cell *matCellDef="let element">{{ element['cfdi:Conceptos']['cfdi:Concepto'].ClaveUnidad }}</td>
+        </ng-container>
+
+        <!-- cfdi:Conceptos:cfdi:Concepto:Descripcion Column -->
+        <ng-container matColumnDef="cfdi:Conceptos:cfdi:Concepto:Descripcion">
+          <th mat-header-cell *matHeaderCellDef>cfdi:Conceptos:cfdi:Concepto:Descripcion</th>
+          <td mat-cell *matCellDef="let element">{{ element['cfdi:Conceptos']['cfdi:Concepto'].Descripcion }}</td>
+        </ng-container>
+
+        <!-- cfdi:Conceptos:cfdi:Concepto:ObjetoImp Column -->
+        <ng-container matColumnDef="cfdi:Conceptos:cfdi:Concepto:ObjetoImp">
+          <th mat-header-cell *matHeaderCellDef>cfdi:Conceptos:cfdi:Concepto:ObjetoImp</th>
+          <td mat-cell *matCellDef="let element">{{ element['cfdi:Conceptos']['cfdi:Concepto'].ObjetoImp }}</td>
+        </ng-container>
+
+        <!-- cfdi:Conceptos:cfdi:Concepto:ValorUnitario Column -->
+        <ng-container matColumnDef="cfdi:Conceptos:cfdi:Concepto:ValorUnitario">
+          <th mat-header-cell *matHeaderCellDef>cfdi:Conceptos:cfdi:Concepto:ValorUnitario</th>
+          <td mat-cell *matCellDef="let element">{{ element['cfdi:Conceptos']['cfdi:Concepto'].ValorUnitario }}</td>
+        </ng-container>
+
+        <!-- cfdi:Conceptos:cfdi:Concepto:Importe Column -->
+        <ng-container matColumnDef="cfdi:Conceptos:cfdi:Concepto:Importe">
+          <th mat-header-cell *matHeaderCellDef>cfdi:Conceptos:cfdi:Concepto:Importe</th>
+          <td mat-cell *matCellDef="let element">{{ element['cfdi:Conceptos']['cfdi:Concepto'].Importe }}</td>
+        </ng-container>
+
+        <!-- cfdi:Conceptos:cfdi:Concepto:Descuento Column -->
+        <ng-container matColumnDef="cfdi:Conceptos:cfdi:Concepto:Descuento">
+          <th mat-header-cell *matHeaderCellDef>cfdi:Conceptos:cfdi:Concepto:Descuento</th>
+          <td mat-cell *matCellDef="let element">{{ element['cfdi:Conceptos']['cfdi:Concepto'].Descuento }}</td>
+        </ng-container>
+
+        <!-- cfdi:Complemento:nomina12:Nomina:Version Column -->
+        <ng-container matColumnDef="cfdi:Complemento:nomina12:Nomina:Version">
+          <th mat-header-cell *matHeaderCellDef>cfdi:Complemento:nomina12:Nomina:Version</th>
+          <td mat-cell *matCellDef="let element">{{ element['cfdi:Complemento']['nomina12:Nomina'].Version }}</td>
+        </ng-container>
+
+        <!-- cfdi:Complemento:nomina12:Nomina:TipoNomina Column -->
+        <ng-container matColumnDef="cfdi:Complemento:nomina12:Nomina:TipoNomina">
+          <th mat-header-cell *matHeaderCellDef>cfdi:Complemento:nomina12:Nomina:TipoNomina</th>
+          <td mat-cell *matCellDef="let element">{{ element['cfdi:Complemento']['nomina12:Nomina'].TipoNomina }}</td>
+        </ng-container>
+
+        <!-- cfdi:Complemento:nomina12:Nomina:FechaPago Column -->
+        <ng-container matColumnDef="cfdi:Complemento:nomina12:Nomina:FechaPago">
+          <th mat-header-cell *matHeaderCellDef>cfdi:Complemento:nomina12:Nomina:FechaPago</th>
+          <td mat-cell *matCellDef="let element">{{ element['cfdi:Complemento']['nomina12:Nomina'].FechaPago }}</td>
+        </ng-container>
+
+        <!-- cfdi:Complemento:nomina12:Nomina:FechaInicialPago Column -->
+        <ng-container matColumnDef="cfdi:Complemento:nomina12:Nomina:FechaInicialPago">
+          <th mat-header-cell *matHeaderCellDef>cfdi:Complemento:nomina12:Nomina:FechaInicialPago</th>
+          <td mat-cell *matCellDef="let element">{{ element['cfdi:Complemento']['nomina12:Nomina'].FechaInicialPago }}</td>
+        </ng-container>
+
+        <!-- cfdi:Complemento:nomina12:Nomina:FechaFinalPago Column -->
+        <ng-container matColumnDef="cfdi:Complemento:nomina12:Nomina:FechaFinalPago">
+          <th mat-header-cell *matHeaderCellDef>cfdi:Complemento:nomina12:Nomina:FechaFinalPago</th>
+          <td mat-cell *matCellDef="let element">{{ element['cfdi:Complemento']['nomina12:Nomina'].FechaFinalPago }}</td>
+        </ng-container>
+
+        <!-- cfdi:Complemento:nomina12:Nomina:NumDiasPagados Column -->
+        <ng-container matColumnDef="cfdi:Complemento:nomina12:Nomina:NumDiasPagados">
+          <th mat-header-cell *matHeaderCellDef>cfdi:Complemento:nomina12:Nomina:NumDiasPagados</th>
+          <td mat-cell *matCellDef="let element">{{ element['cfdi:Complemento']['nomina12:Nomina'].NumDiasPagados }}</td>
+        </ng-container>
+
+        <!-- cfdi:Complemento:nomina12:Nomina:TotalPercepciones Column -->
+        <ng-container matColumnDef="cfdi:Complemento:nomina12:Nomina:TotalPercepciones">
+          <th mat-header-cell *matHeaderCellDef>cfdi:Complemento:nomina12:Nomina:TotalPercepciones</th>
+          <td mat-cell *matCellDef="let element">{{ element['cfdi:Complemento']['nomina12:Nomina'].TotalPercepciones }}</td>
+        </ng-container>
+
+        <!-- cfdi:Complemento:nomina12:Nomina:TotalDeducciones Column -->
+        <ng-container matColumnDef="cfdi:Complemento:nomina12:Nomina:TotalDeducciones">
+          <th mat-header-cell *matHeaderCellDef>cfdi:Complemento:nomina12:Nomina:TotalDeducciones</th>
+          <td mat-cell *matCellDef="let element">{{ element['cfdi:Complemento']['nomina12:Nomina'].TotalDeducciones }}</td>
+        </ng-container>
+
+        <!-- cfdi:Complemento:nomina12:Nomina:TotalOtrosPagos Column -->
+        <ng-container matColumnDef="cfdi:Complemento:nomina12:Nomina:TotalOtrosPagos">
+          <th mat-header-cell *matHeaderCellDef>cfdi:Complemento:nomina12:Nomina:TotalOtrosPagos</th>
+          <td mat-cell *matCellDef="let element">{{ element['cfdi:Complemento']['nomina12:Nomina'].TotalOtrosPagos }}</td>
+        </ng-container>
+
+        <!-- cfdi:Complemento:nomina12:Nomina:nomina12:Emisor:RegistroPatronal Column -->
+        <ng-container matColumnDef="cfdi:Complemento:nomina12:Nomina:nomina12:Emisor:RegistroPatronal">
+          <th mat-header-cell *matHeaderCellDef>cfdi:Complemento:nomina12:Nomina:nomina12:Emisor:RegistroPatronal</th>
+          <td mat-cell *matCellDef="let element">{{ element['cfdi:Complemento']['nomina12:Nomina']['nomina12:Emisor'].RegistroPatronal }}</td>
+        </ng-container>
+
+        <!-- cfdi:Complemento:nomina12:Nomina:nomina12:Receptor:Curp Column -->
+        <ng-container matColumnDef="cfdi:Complemento:nomina12:Nomina:nomina12:Receptor:Curp">
+          <th mat-header-cell *matHeaderCellDef>cfdi:Complemento:nomina12:Nomina:nomina12:Receptor:Curp</th>
+          <td mat-cell *matCellDef="let element">{{ element['cfdi:Complemento']['nomina12:Nomina']['nomina12:Receptor'].Curp }}</td>
+        </ng-container>
+
+        <!-- cfdi:Complemento:nomina12:Nomina:nomina12:Receptor:NumSeguridadSocial Column -->
+        <ng-container matColumnDef="cfdi:Complemento:nomina12:Nomina:nomina12:Receptor:NumSeguridadSocial">
+          <th mat-header-cell *matHeaderCellDef>cfdi:Complemento:nomina12:Nomina:nomina12:Receptor:NumSeguridadSocial</th>
+          <td mat-cell *matCellDef="let element">{{ element['cfdi:Complemento']['nomina12:Nomina']['nomina12:Receptor'].NumSeguridadSocial }}</td>
+        </ng-container>
+
+        <!-- cfdi:Complemento:nomina12:Nomina:nomina12:Receptor:FechaInicioRelLaboral Column -->
+        <ng-container matColumnDef="cfdi:Complemento:nomina12:Nomina:nomina12:Receptor:FechaInicioRelLaboral">
+          <th mat-header-cell *matHeaderCellDef>cfdi:Complemento:nomina12:Nomina:nomina12:Receptor:FechaInicioRelLaboral</th>
+          <td mat-cell *matCellDef="let element">{{ element['cfdi:Complemento']['nomina12:Nomina']['nomina12:Receptor'].FechaInicioRelLaboral }}</td>
+        </ng-container>
+
+        <!-- cfdi:Complemento:nomina12:Nomina:nomina12:Receptor:Antigüedad Column -->
+        <ng-container matColumnDef="cfdi:Complemento:nomina12:Nomina:nomina12:Receptor:Antigüedad">
+          <th mat-header-cell *matHeaderCellDef>cfdi:Complemento:nomina12:Nomina:nomina12:Receptor:Antigüedad</th>
+          <td mat-cell *matCellDef="let element">{{ element['cfdi:Complemento']['nomina12:Nomina']['nomina12:Receptor']['Antigüedad'] }}</td>
+        </ng-container>
+
+        <!-- cfdi:Complemento:nomina12:Nomina:nomina12:Receptor:TipoContrato Column -->
+        <ng-container matColumnDef="cfdi:Complemento:nomina12:Nomina:nomina12:Receptor:TipoContrato">
+          <th mat-header-cell *matHeaderCellDef>cfdi:Complemento:nomina12:Nomina:nomina12:Receptor:TipoContrato</th>
+          <td mat-cell *matCellDef="let element">{{ element['cfdi:Complemento']['nomina12:Nomina']['nomina12:Receptor'].TipoContrato }}</td>
+        </ng-container>
+
+        <!-- cfdi:Complemento:nomina12:Nomina:nomina12:Receptor:Sindicalizado Column -->
+        <ng-container matColumnDef="cfdi:Complemento:nomina12:Nomina:nomina12:Receptor:Sindicalizado">
+          <th mat-header-cell *matHeaderCellDef>cfdi:Complemento:nomina12:Nomina:nomina12:Receptor:Sindicalizado</th>
+          <td mat-cell *matCellDef="let element">{{ element['cfdi:Complemento']['nomina12:Nomina']['nomina12:Receptor'].Sindicalizado }}</td>
+        </ng-container>
+
+        <!-- cfdi:Complemento:nomina12:Nomina:nomina12:Receptor:TipoJornada Column -->
+        <ng-container matColumnDef="cfdi:Complemento:nomina12:Nomina:nomina12:Receptor:TipoJornada">
+          <th mat-header-cell *matHeaderCellDef>cfdi:Complemento:nomina12:Nomina:nomina12:Receptor:TipoJornada</th>
+          <td mat-cell *matCellDef="let element">{{ element['cfdi:Complemento']['nomina12:Nomina']['nomina12:Receptor'].TipoJornada }}</td>
+        </ng-container>
+
+        <!-- cfdi:Complemento:nomina12:Nomina:nomina12:Receptor:TipoRegimen Column -->
+        <ng-container matColumnDef="cfdi:Complemento:nomina12:Nomina:nomina12:Receptor:TipoRegimen">
+          <th mat-header-cell *matHeaderCellDef>cfdi:Complemento:nomina12:Nomina:nomina12:Receptor:TipoRegimen</th>
+          <td mat-cell *matCellDef="let element">{{ element['cfdi:Complemento']['nomina12:Nomina']['nomina12:Receptor'].TipoRegimen }}</td>
+        </ng-container>
+
+        <!-- cfdi:Complemento:nomina12:Nomina:nomina12:Receptor:NumEmpleado Column -->
+        <ng-container matColumnDef="cfdi:Complemento:nomina12:Nomina:nomina12:Receptor:NumEmpleado">
+          <th mat-header-cell *matHeaderCellDef>cfdi:Complemento:nomina12:Nomina:nomina12:Receptor:NumEmpleado</th>
+          <td mat-cell *matCellDef="let element">{{ element['cfdi:Complemento']['nomina12:Nomina']['nomina12:Receptor'].NumEmpleado }}</td>
+        </ng-container>
+
+        <!-- cfdi:Complemento:nomina12:Nomina:nomina12:Receptor:Departamento Column -->
+        <ng-container matColumnDef="cfdi:Complemento:nomina12:Nomina:nomina12:Receptor:Departamento">
+          <th mat-header-cell *matHeaderCellDef>cfdi:Complemento:nomina12:Nomina:nomina12:Receptor:Departamento</th>
+          <td mat-cell *matCellDef="let element">{{ element['cfdi:Complemento']['nomina12:Nomina']['nomina12:Receptor'].Departamento }}</td>
+        </ng-container>
+
+        <!-- cfdi:Complemento:nomina12:Nomina:nomina12:Receptor:Puesto Column -->
+        <ng-container matColumnDef="cfdi:Complemento:nomina12:Nomina:nomina12:Receptor:Puesto">
+          <th mat-header-cell *matHeaderCellDef>cfdi:Complemento:nomina12:Nomina:nomina12:Receptor:Puesto</th>
+          <td mat-cell *matCellDef="let element">{{ element['cfdi:Complemento']['nomina12:Nomina']['nomina12:Receptor'].Puesto }}</td>
+        </ng-container>
+
+        <!-- cfdi:Complemento:nomina12:Nomina:nomina12:Receptor:RiesgoPuesto Column -->
+        <ng-container matColumnDef="cfdi:Complemento:nomina12:Nomina:nomina12:Receptor:RiesgoPuesto">
+          <th mat-header-cell *matHeaderCellDef>cfdi:Complemento:nomina12:Nomina:nomina12:Receptor:RiesgoPuesto</th>
+          <td mat-cell *matCellDef="let element">{{ element['cfdi:Complemento']['nomina12:Nomina']['nomina12:Receptor'].RiesgoPuesto }}</td>
+        </ng-container>
+
+        <!-- cfdi:Complemento:nomina12:Nomina:nomina12:Receptor:PeriodicidadPago Column -->
+        <ng-container matColumnDef="cfdi:Complemento:nomina12:Nomina:nomina12:Receptor:PeriodicidadPago">
+          <th mat-header-cell *matHeaderCellDef>cfdi:Complemento:nomina12:Nomina:nomina12:Receptor:PeriodicidadPago</th>
+          <td mat-cell *matCellDef="let element">{{ element['cfdi:Complemento']['nomina12:Nomina']['nomina12:Receptor'].PeriodicidadPago }}</td>
+        </ng-container>
+
+        <!-- cfdi:Complemento:nomina12:Nomina:nomina12:Receptor:SalarioBaseCotApor Column -->
+        <ng-container matColumnDef="cfdi:Complemento:nomina12:Nomina:nomina12:Receptor:SalarioBaseCotApor">
+          <th mat-header-cell *matHeaderCellDef>cfdi:Complemento:nomina12:Nomina:nomina12:Receptor:SalarioBaseCotApor</th>
+          <td mat-cell *matCellDef="let element">{{ element['cfdi:Complemento']['nomina12:Nomina']['nomina12:Receptor'].SalarioBaseCotApor }}</td>
+        </ng-container>
+
+        <!-- cfdi:Complemento:nomina12:Nomina:nomina12:Receptor:SalarioDiarioIntegrado Column -->
+        <ng-container matColumnDef="cfdi:Complemento:nomina12:Nomina:nomina12:Receptor:SalarioDiarioIntegrado">
+          <th mat-header-cell *matHeaderCellDef>cfdi:Complemento:nomina12:Nomina:nomina12:Receptor:SalarioDiarioIntegrado</th>
+          <td mat-cell *matCellDef="let element">{{ element['cfdi:Complemento']['nomina12:Nomina']['nomina12:Receptor'].SalarioDiarioIntegrado }}</td>
+        </ng-container>
+
+        <!-- cfdi:Complemento:nomina12:Nomina:nomina12:Receptor:ClaveEntFed Column -->
+        <ng-container matColumnDef="cfdi:Complemento:nomina12:Nomina:nomina12:Receptor:ClaveEntFed">
+          <th mat-header-cell *matHeaderCellDef>cfdi:Complemento:nomina12:Nomina:nomina12:Receptor:ClaveEntFed</th>
+          <td mat-cell *matCellDef="let element">{{ element['cfdi:Complemento']['nomina12:Nomina']['nomina12:Receptor'].ClaveEntFed }}</td>
+        </ng-container>
+
+        <!-- cfdi:Complemento:nomina12:Nomina:nomina12:Percepciones:TotalSueldo Column -->
+        <ng-container matColumnDef="cfdi:Complemento:nomina12:Nomina:nomina12:Percepciones:TotalSueldo">
+          <th mat-header-cell *matHeaderCellDef>cfdi:Complemento:nomina12:Nomina:nomina12:Percepciones:TotalSueldo</th>
+          <td mat-cell *matCellDef="let element">{{ element['cfdi:Complemento']['nomina12:Nomina']['nomina12:Percepciones'].TotalSueldo }}</td>
+        </ng-container>
+
+        <!-- cfdi:Complemento:nomina12:Nomina:nomina12:Percepciones:TotalGravado Column -->
+        <ng-container matColumnDef="cfdi:Complemento:nomina12:Nomina:nomina12:Percepciones:TotalGravado">
+          <th mat-header-cell *matHeaderCellDef>cfdi:Complemento:nomina12:Nomina:nomina12:Percepciones:TotalGravado</th>
+          <td mat-cell *matCellDef="let element">{{ element['cfdi:Complemento']['nomina12:Nomina']['nomina12:Percepciones'].TotalGravado }}</td>
+        </ng-container>
+
+        <!-- cfdi:Complemento:nomina12:Nomina:nomina12:Percepciones:TotalExento Column -->
+        <ng-container matColumnDef="cfdi:Complemento:nomina12:Nomina:nomina12:Percepciones:TotalExento">
+          <th mat-header-cell *matHeaderCellDef>cfdi:Complemento:nomina12:Nomina:nomina12:Percepciones:TotalExento</th>
+          <td mat-cell *matCellDef="let element">{{ element['cfdi:Complemento']['nomina12:Nomina']['nomina12:Percepciones'].TotalExento }}</td>
+        </ng-container>
+
+        <!-- cfdi:Complemento:nomina12:Nomina:nomina12:Percepciones:nomina12:Percepcion:TipoPercepcion Column -->
+        <ng-container matColumnDef="cfdi:Complemento:nomina12:Nomina:nomina12:Percepciones:nomina12:Percepcion:TipoPercepcion">
+          <th mat-header-cell *matHeaderCellDef>cfdi:Complemento:nomina12:Nomina:nomina12:Percepciones:nomina12:Percepcion:TipoPercepcion</th>
+          <td mat-cell *matCellDef="let element">{{ element['cfdi:Complemento']['nomina12:Nomina']['nomina12:Percepciones']['nomina12:Percepcion'].TipoPercepcion }}</td>
+        </ng-container>
+
+        <!-- cfdi:Complemento:nomina12:Nomina:nomina12:Percepciones:nomina12:Percepcion:Clave Column -->
+        <ng-container matColumnDef="cfdi:Complemento:nomina12:Nomina:nomina12:Percepciones:nomina12:Percepcion:Clave">
+          <th mat-header-cell *matHeaderCellDef>cfdi:Complemento:nomina12:Nomina:nomina12:Percepciones:nomina12:Percepcion:Clave</th>
+          <td mat-cell *matCellDef="let element">{{ element['cfdi:Complemento']['nomina12:Nomina']['nomina12:Percepciones']['nomina12:Percepcion'].Clave }}</td>
+        </ng-container>
+
+        <!-- cfdi:Complemento:nomina12:Nomina:nomina12:Percepciones:nomina12:Percepcion:Concepto Column -->
+        <ng-container matColumnDef="cfdi:Complemento:nomina12:Nomina:nomina12:Percepciones:nomina12:Percepcion:Concepto">
+          <th mat-header-cell *matHeaderCellDef>cfdi:Complemento:nomina12:Nomina:nomina12:Percepciones:nomina12:Percepcion:Concepto</th>
+          <td mat-cell *matCellDef="let element">{{ element['cfdi:Complemento']['nomina12:Nomina']['nomina12:Percepciones']['nomina12:Percepcion'].Concepto }}</td>
+        </ng-container>
+
+        <!-- cfdi:Complemento:nomina12:Nomina:nomina12:Percepciones:nomina12:Percepcion:ImporteGravado Column -->
+        <ng-container matColumnDef="cfdi:Complemento:nomina12:Nomina:nomina12:Percepciones:nomina12:Percepcion:ImporteGravado">
+          <th mat-header-cell *matHeaderCellDef>cfdi:Complemento:nomina12:Nomina:nomina12:Percepciones:nomina12:Percepcion:ImporteGravado</th>
+          <td mat-cell *matCellDef="let element">{{ element['cfdi:Complemento']['nomina12:Nomina']['nomina12:Percepciones']['nomina12:Percepcion'].ImporteGravado }}</td>
+        </ng-container>
+
+        <!-- cfdi:Complemento:nomina12:Nomina:nomina12:Percepciones:nomina12:Percepcion:ImporteExento Column -->
+        <ng-container matColumnDef="cfdi:Complemento:nomina12:Nomina:nomina12:Percepciones:nomina12:Percepcion:ImporteExento">
+          <th mat-header-cell *matHeaderCellDef>cfdi:Complemento:nomina12:Nomina:nomina12:Percepciones:nomina12:Percepcion:ImporteExento</th>
+          <td mat-cell *matCellDef="let element">{{ element['cfdi:Complemento']['nomina12:Nomina']['nomina12:Percepciones']['nomina12:Percepcion'].ImporteExento }}</td>
+        </ng-container>
+
+        <!-- cfdi:Complemento:nomina12:Nomina:nomina12:Deducciones:TotalOtrasDeducciones Column -->
+        <ng-container matColumnDef="cfdi:Complemento:nomina12:Nomina:nomina12:Deducciones:TotalOtrasDeducciones">
+          <th mat-header-cell *matHeaderCellDef>cfdi:Complemento:nomina12:Nomina:nomina12:Deducciones:TotalOtrasDeducciones</th>
+          <td mat-cell *matCellDef="let element">{{ element['cfdi:Complemento']['nomina12:Nomina']['nomina12:Deducciones'].TotalOtrasDeducciones }}</td>
+        </ng-container>
+        <!-- cfdi:Complemento:nomina12:Nomina:nomina12:Deducciones:TotalImpuestosRetenidos Column -->
+        <ng-container matColumnDef="cfdi:Complemento:nomina12:Nomina:nomina12:Deducciones:TotalImpuestosRetenidos">
+          <th mat-header-cell *matHeaderCellDef>cfdi:Complemento:nomina12:Nomina:nomina12:Deducciones:TotalImpuestosRetenidos</th>
+          <td mat-cell *matCellDef="let element">{{ element['cfdi:Complemento']['nomina12:Nomina']['nomina12:Deducciones'].TotalImpuestosRetenidos }}</td>
+        </ng-container>
+
+
+        <!-- cfdi:Complemento:nomina12:Nomina:nomina12:Deducciones:nomina12:Deduccion:0:TipoDeduccion Column -->
+        <!-- <ng-container matColumnDef="cfdi:Complemento:nomina12:Nomina:nomina12:Deducciones:nomina12:Deduccion:0:TipoDeduccion">
+          <th mat-header-cell *matHeaderCellDef>cfdi:Complemento:nomina12:Nomina:nomina12:Deducciones:nomina12:Deduccion:0:TipoDeduccion</th>
+          <td mat-cell *matCellDef="let element">{{ element['cfdi:Complemento']['nomina12:Nomina']['nomina12:Deducciones']['nomina12:Deduccion'][0].TipoDeduccion }}</td>
+        </ng-container> -->
+
+        <!-- cfdi:Complemento:nomina12:Nomina:nomina12:Deducciones:nomina12:Deduccion:0:Clave Column -->
+        <!-- <ng-container matColumnDef="cfdi:Complemento:nomina12:Nomina:nomina12:Deducciones:nomina12:Deduccion:0:Clave">
+          <th mat-header-cell *matHeaderCellDef>cfdi:Complemento:nomina12:Nomina:nomina12:Deducciones:nomina12:Deduccion:0:Clave</th>
+          <td mat-cell *matCellDef="let element">{{ element['cfdi:Complemento']['nomina12:Nomina']['nomina12:Deducciones']['nomina12:Deduccion'][0].Clave }}</td>
+        </ng-container> -->
+
+        <!-- cfdi:Complemento:nomina12:Nomina:nomina12:Deducciones:nomina12:Deduccion:0:Concepto Column -->
+        <!-- <ng-container matColumnDef="cfdi:Complemento:nomina12:Nomina:nomina12:Deducciones:nomina12:Deduccion:0:Concepto">
+          <th mat-header-cell *matHeaderCellDef>cfdi:Complemento:nomina12:Nomina:nomina12:Deducciones:nomina12:Deduccion:0:Concepto</th>
+          <td mat-cell *matCellDef="let element">{{ element['cfdi:Complemento']['nomina12:Nomina']['nomina12:Deducciones']['nomina12:Deduccion'][0].Concepto }}</td>
+        </ng-container> -->
+
+        <!-- cfdi:Complemento:nomina12:Nomina:nomina12:Deducciones:nomina12:Deduccion:0:Importe Column -->
+        <!-- <ng-container matColumnDef="cfdi:Complemento:nomina12:Nomina:nomina12:Deducciones:nomina12:Deduccion:0:Importe">
+          <th mat-header-cell *matHeaderCellDef>cfdi:Complemento:nomina12:Nomina:nomina12:Deducciones:nomina12:Deduccion:0:Importe</th>
+          <td mat-cell *matCellDef="let element">{{ element['cfdi:Complemento']['nomina12:Nomina']['nomina12:Deducciones']['nomina12:Deduccion'][0].Importe }}</td>
+        </ng-container> -->
+
+        <!-- cfdi:Complemento:nomina12:Nomina:nomina12:Deducciones:nomina12:Deduccion:1:TipoDeduccion Column -->
+        <!-- <ng-container matColumnDef="cfdi:Complemento:nomina12:Nomina:nomina12:Deducciones:nomina12:Deduccion:1:TipoDeduccion">
+          <th mat-header-cell *matHeaderCellDef>cfdi:Complemento:nomina12:Nomina:nomina12:Deducciones:nomina12:Deduccion:1:TipoDeduccion</th>
+          <td mat-cell *matCellDef="let element">{{ element['cfdi:Complemento']['nomina12:Nomina']['nomina12:Deducciones']['nomina12:Deduccion'][1].TipoDeduccion }}</td>
+        </ng-container> -->
+
+        <!-- cfdi:Complemento:nomina12:Nomina:nomina12:Deducciones:nomina12:Deduccion:1:Clave Column -->
+        <!-- <ng-container matColumnDef="cfdi:Complemento:nomina12:Nomina:nomina12:Deducciones:nomina12:Deduccion:1:Clave">
+          <th mat-header-cell *matHeaderCellDef>cfdi:Complemento:nomina12:Nomina:nomina12:Deducciones:nomina12:Deduccion:1:Clave</th>
+          <td mat-cell *matCellDef="let element">{{ element['cfdi:Complemento']['nomina12:Nomina']['nomina12:Deducciones']['nomina12:Deduccion'][1].Clave }}</td>
+        </ng-container> -->
+
+        <!-- cfdi:Complemento:nomina12:Nomina:nomina12:Deducciones:nomina12:Deduccion:1:Concepto Column -->
+        <!-- <ng-container matColumnDef="cfdi:Complemento:nomina12:Nomina:nomina12:Deducciones:nomina12:Deduccion:1:Concepto">
+          <th mat-header-cell *matHeaderCellDef>cfdi:Complemento:nomina12:Nomina:nomina12:Deducciones:nomina12:Deduccion:1:Concepto</th>
+          <td mat-cell *matCellDef="let element">{{ element['cfdi:Complemento']['nomina12:Nomina']['nomina12:Deducciones']['nomina12:Deduccion'][1].Concepto }}</td>
+        </ng-container> -->
+
+        <!-- cfdi:Complemento:nomina12:Nomina:nomina12:Deducciones:nomina12:Deduccion:1:Importe Column -->
+        <!-- <ng-container matColumnDef="cfdi:Complemento:nomina12:Nomina:nomina12:Deducciones:nomina12:Deduccion:1:Importe">
+          <th mat-header-cell *matHeaderCellDef>cfdi:Complemento:nomina12:Nomina:nomina12:Deducciones:nomina12:Deduccion:1:Importe</th>
+          <td mat-cell *matCellDef="let element">{{ element['cfdi:Complemento']['nomina12:Nomina']['nomina12:Deducciones']['nomina12:Deduccion'][1].Importe }}</td>
+        </ng-container> -->
+
+        <!-- cfdi:Complemento:nomina12:Nomina:nomina12:OtrosPagos:nomina12:OtroPago:TipoOtroPago Column -->
+        <ng-container matColumnDef="cfdi:Complemento:nomina12:Nomina:nomina12:OtrosPagos:nomina12:OtroPago:TipoOtroPago">
+          <th mat-header-cell *matHeaderCellDef>cfdi:Complemento:nomina12:Nomina:nomina12:OtrosPagos:nomina12:OtroPago:TipoOtroPago</th>
+          <td mat-cell *matCellDef="let element">{{ element['cfdi:Complemento']['nomina12:Nomina']['nomina12:OtrosPagos']['nomina12:OtroPago'].TipoOtroPago }}</td>
+        </ng-container>
+
+        <!-- cfdi:Complemento:nomina12:Nomina:nomina12:OtrosPagos:nomina12:OtroPago:Clave Column -->
+        <ng-container matColumnDef="cfdi:Complemento:nomina12:Nomina:nomina12:OtrosPagos:nomina12:OtroPago:Clave">
+          <th mat-header-cell *matHeaderCellDef>cfdi:Complemento:nomina12:Nomina:nomina12:OtrosPagos:nomina12:OtroPago:Clave</th>
+          <td mat-cell *matCellDef="let element">{{ element['cfdi:Complemento']['nomina12:Nomina']['nomina12:OtrosPagos']['nomina12:OtroPago'].Clave }}</td>
+        </ng-container>
+
+        <!-- cfdi:Complemento:nomina12:Nomina:nomina12:OtrosPagos:nomina12:OtroPago:Concepto Column -->
+        <ng-container matColumnDef="cfdi:Complemento:nomina12:Nomina:nomina12:OtrosPagos:nomina12:OtroPago:Concepto">
+          <th mat-header-cell *matHeaderCellDef>cfdi:Complemento:nomina12:Nomina:nomina12:OtrosPagos:nomina12:OtroPago:Concepto</th>
+          <td mat-cell *matCellDef="let element">{{ element['cfdi:Complemento']['nomina12:Nomina']['nomina12:OtrosPagos']['nomina12:OtroPago'].Concepto }}</td>
+        </ng-container>
+
+        <!-- cfdi:Complemento:nomina12:Nomina:nomina12:OtrosPagos:nomina12:OtroPago:Importe Column -->
+        <ng-container matColumnDef="cfdi:Complemento:nomina12:Nomina:nomina12:OtrosPagos:nomina12:OtroPago:Importe">
+          <th mat-header-cell *matHeaderCellDef>cfdi:Complemento:nomina12:Nomina:nomina12:OtrosPagos:nomina12:OtroPago:Importe</th>
+          <td mat-cell *matCellDef="let element">{{ element['cfdi:Complemento']['nomina12:Nomina']['nomina12:OtrosPagos']['nomina12:OtroPago'].Importe }}</td>
+        </ng-container>
+
+        <!-- cfdi:Complemento:nomina12:Nomina:nomina12:OtrosPagos:nomina12:OtroPago:nomina12:SubsidioAlEmpleo:SubsidioCausado Column -->
+        <ng-container matColumnDef="cfdi:Complemento:nomina12:Nomina:nomina12:OtrosPagos:nomina12:OtroPago:nomina12:SubsidioAlEmpleo:SubsidioCausado">
+          <th mat-header-cell *matHeaderCellDef>cfdi:Complemento:nomina12:Nomina:nomina12:OtrosPagos:nomina12:OtroPago:nomina12:SubsidioAlEmpleo:SubsidioCausado</th>
+          <td mat-cell *matCellDef="let element">{{ element['cfdi:Complemento']['nomina12:Nomina']['nomina12:OtrosPagos']['nomina12:OtroPago']['nomina12:SubsidioAlEmpleo'].SubsidioCausado }}</td>
+        </ng-container>
+
+        <!-- cfdi:Complemento:tfd:TimbreFiscalDigital:xmlns:tfd Column -->
+        <ng-container matColumnDef="cfdi:Complemento:tfd:TimbreFiscalDigital:xmlns:tfd">
+          <th mat-header-cell *matHeaderCellDef>cfdi:Complemento:tfd:TimbreFiscalDigital:xmlns:tfd</th>
+          <td mat-cell *matCellDef="let element">{{ element['cfdi:Complemento']['tfd:TimbreFiscalDigital']['xmlns:tfd'] }}</td>
+        </ng-container>
+
+        <!-- cfdi:Complemento:tfd:TimbreFiscalDigital:xsi:schemaLocation Column -->
+        <ng-container matColumnDef="cfdi:Complemento:tfd:TimbreFiscalDigital:xsi:schemaLocation">
+          <th mat-header-cell *matHeaderCellDef>cfdi:Complemento:tfd:TimbreFiscalDigital:xsi:schemaLocation</th>
+          <td mat-cell *matCellDef="let element">{{ element['cfdi:Complemento']['tfd:TimbreFiscalDigital']['xsi:schemaLocation'] }}</td>
+        </ng-container>
+
+        <!-- xsi:schemaLocation Column -->
+        <ng-container matColumnDef="xsi:schemaLocation">
+          <th mat-header-cell *matHeaderCellDef>xsi:schemaLocation</th>
+          <td mat-cell *matCellDef="let element">{{ element['xsi:schemaLocation'] }}</td>
+        </ng-container>
+
+        <!-- cfdi:Complemento:tfd:TimbreFiscalDigital:Version Column -->
+        <ng-container matColumnDef="cfdi:Complemento:tfd:TimbreFiscalDigital:Version">
+          <th mat-header-cell *matHeaderCellDef>cfdi:Complemento:tfd:TimbreFiscalDigital:Version</th>
+          <td mat-cell *matCellDef="let element">{{ element['cfdi:Complemento']['tfd:TimbreFiscalDigital'].Version }}</td>
+        </ng-container>
+
+        <!-- cfdi:Complemento:tfd:TimbreFiscalDigital:UUID Column -->
+        <ng-container matColumnDef="cfdi:Complemento:tfd:TimbreFiscalDigital:UUID">
+          <th mat-header-cell *matHeaderCellDef>cfdi:Complemento:tfd:TimbreFiscalDigital:UUID</th>
+          <td mat-cell *matCellDef="let element">{{ element['cfdi:Complemento']['tfd:TimbreFiscalDigital'].UUID }}</td>
+        </ng-container>
+
+        <!-- cfdi:Complemento:tfd:TimbreFiscalDigital:FechaTimbrado Column -->
+        <ng-container matColumnDef="cfdi:Complemento:tfd:TimbreFiscalDigital:FechaTimbrado">
+          <th mat-header-cell *matHeaderCellDef>cfdi:Complemento:tfd:TimbreFiscalDigital:FechaTimbrado</th>
+          <td mat-cell *matCellDef="let element">{{ element['cfdi:Complemento']['tfd:TimbreFiscalDigital'].FechaTimbrado }}</td>
+        </ng-container>
+
+        <!-- cfdi:Complemento:nomina12:Nomina:nomina12:Percepciones:TotalSueldos Column -->
+        <ng-container matColumnDef="cfdi:Complemento:nomina12:Nomina:nomina12:Percepciones:TotalSueldos">
+          <th mat-header-cell *matHeaderCellDef>cfdi:Complemento:nomina12:Nomina:nomina12:Percepciones:TotalSueldos</th>
+          <td mat-cell *matCellDef="let element">{{ element['cfdi:Complemento']['nomina12:Nomina']['nomina12:Percepciones'].TotalSueldos }}</td>
+        </ng-container>
+
+        <!-- cfdi:Complemento:tfd:TimbreFiscalDigital:RfcProvCertif Column -->
+        <ng-container matColumnDef="cfdi:Complemento:tfd:TimbreFiscalDigital:RfcProvCertif">
+          <th mat-header-cell *matHeaderCellDef>cfdi:Complemento:tfd:TimbreFiscalDigital:RfcProvCertif</th>
+          <td mat-cell *matCellDef="let element">{{ element['cfdi:Complemento']['tfd:TimbreFiscalDigital'].RfcProvCertif }}</td>
+        </ng-container>
+
+        <!-- cfdi:Complemento:tfd:TimbreFiscalDigital:SelloCFD Column -->
+        <ng-container matColumnDef="cfdi:Complemento:tfd:TimbreFiscalDigital:SelloCFD">
+          <th mat-header-cell *matHeaderCellDef>cfdi:Complemento:tfd:TimbreFiscalDigital:SelloCFD</th>
+          <td mat-cell *matCellDef="let element">{{ element['cfdi:Complemento']['tfd:TimbreFiscalDigital'].SelloCFD }}</td>
+        </ng-container>
+
+        <!-- cfdi:Complemento:tfd:TimbreFiscalDigital:NoCertificadoSAT Column -->
+        <ng-container matColumnDef="cfdi:Complemento:tfd:TimbreFiscalDigital:NoCertificadoSAT">
+          <th mat-header-cell *matHeaderCellDef>cfdi:Complemento:tfd:TimbreFiscalDigital:NoCertificadoSAT</th>
+          <td mat-cell *matCellDef="let element">{{ element['cfdi:Complemento']['tfd:TimbreFiscalDigital'].NoCertificadoSAT }}</td>
+        </ng-container>
+
+        <!-- cfdi:Complemento:tfd:TimbreFiscalDigital:SelloSAT Column -->
+        <ng-container matColumnDef="cfdi:Complemento:tfd:TimbreFiscalDigital:SelloSAT">
+          <th mat-header-cell *matHeaderCellDef>cfdi:Complemento:tfd:TimbreFiscalDigital:SelloSAT</th>
+          <td mat-cell *matCellDef="let element">{{ element['cfdi:Complemento']['tfd:TimbreFiscalDigital'].SelloSAT }}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsNominaSelected"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumnsNominaSelected"></tr>
+      </table>
+      <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+      [pageSize]="5"
+      showFirstLastButtons
+      aria-label="Seleccione la pagina de las nominas"
+      [length]="this.ELEMENT_DATA.length"
+      (page)="handlePageEvent($event, 'Nomina')">
+    </mat-paginator>
+    </div>
+
+    <div style="margin-top: 16px;" *ngIf="this.dataSource_Recepcion_Pagos.data.length > 0">
+      <div style="display: flex; flex-direction: row; justify-content: space-between;">
+        <h4>Recepción de Pagos</h4>
+        <button mat-icon-button color="primary" title="Elegir las columnas a mostrar para la tabla" (click)="openDialog(displayedColumnsRecepcionPago, 'RecepcionPago')">
+          <mat-icon>checklist</mat-icon>
+        </button>
+      </div>
+    </div>
+    <div class="mat-elevation-z8 mat-table-wrapper" *ngIf="this.dataSource_Recepcion_Pagos.data.length > 0">
+      <table mat-table [dataSource]="dataSource_Recepcion_Pagos">
+
+        <!-- Definiciones de columnas -->
+        <ng-container *ngFor="let col of displayedColumnsRecepcionPagoSelected" [matColumnDef]="col">
+          <th mat-header-cell *matHeaderCellDef>{{ col }}</th>
+          <td mat-cell *matCellDef="let element">{{ getElementValue(element, col) }}</td>
+        </ng-container>
+
+        <!-- Encabezados de columnas -->
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsRecepcionPagoSelected"></tr>
+
+        <!-- Filas de datos -->
+        <tr mat-row *matRowDef="let row; columns: displayedColumnsRecepcionPagoSelected;"></tr>
+
+      </table>
+      <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+      [pageSize]="5"
+      showFirstLastButtons
+      aria-label="Seleccione la pagina de la  recepción de pagos"
+      [length]="this.ELEMENT_DATA_RECEPCION_PAGO.length"
+      (page)="handlePageEvent($event, 'RecepcionPago')">
+    </mat-paginator>
+    </div>
+
+    <div style="margin-top: 16px;" *ngIf="this.dataSource_Retencion.data.length > 0">
+      <div style="display: flex; flex-direction: row; justify-content: space-between;">
+        <h4>Tabla para Retenciones e información de Pagos</h4>
+        <button mat-icon-button color="primary" title="Elegir las columnas a mostrar para la tabla" (click)="openDialog(displayedColumnsRetencion, 'Retencion')">
+          <mat-icon>checklist</mat-icon>
+        </button>
+      </div>
+    </div>
+    <div class="mat-elevation-z8 mat-table-wrapper" *ngIf="this.dataSource_Retencion.data.length > 0">
+      <table mat-table [dataSource]="dataSource_Retencion">
+
+        <!-- Definiciones de columnas -->
+        <ng-container *ngFor="let col of displayedColumnsRetencionSelected" [matColumnDef]="col">
+          <th mat-header-cell *matHeaderCellDef>{{ col }}</th>
+          <!-- <td mat-cell *matCellDef="let element">{{ getElementValue(element, col) }}</td> -->
+          <td mat-cell *matCellDef="let element">{{ getElementValue(element, col) }}</td>
+        </ng-container>
+
+        <!-- Encabezados de columnas -->
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsRetencionSelected"></tr>
+
+        <!-- Filas de datos -->
+        <tr mat-row *matRowDef="let row; columns: displayedColumnsRetencionSelected;"></tr>
+
+      </table>
+      <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+      [pageSize]="5"
+      showFirstLastButtons
+      aria-label="Seleccione la pagina de las retenciones"
+      [length]="this.ELEMENT_DATA_RETENCION.length"
+      (page)="handlePageEvent($event, 'Retencion')">
+    </mat-paginator>
+    </div>
+  </div>
+
+  <button mat-fab color="primary" class="fab-button" aria-label="Subir al inicio" (click)="scrollToTop()" *ngIf="files.length > 0">
+    <mat-icon>north</mat-icon>
+  </button>
+
+  <div class="container">
+    <button mat-raised-button type="button" (click)="AbrirPopupFiles()" *ngIf="files.length == 0">Cargar archivos</button>
+    <button mat-raised-button type="button" color="warn" (click)="CleanFiles()" *ngIf="files.length > 0">Limpiar archivos</button>
+    <button mat-raised-button type="button" style="margin-left: 8px;" color="primary" (click)="exportToExcel()" *ngIf="files.length > 0">Descargar XLSX</button>
+  </div>
+</div>
