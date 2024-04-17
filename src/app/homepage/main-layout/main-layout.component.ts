@@ -26,6 +26,7 @@ import { MatPaginator, MatPaginatorModule, PageEvent} from '@angular/material/pa
 import { Observable, of } from 'rxjs';
 import { HomeComponent } from '../home/home.component';
 import { ConversorXmlXlsxComponent } from '../conversor-xml-xlsx/conversor-xml-xlsx.component';
+import { ArrivalPageComponent } from '../arrival-page/arrival-page.component';
 
 
 interface Columna {
@@ -54,7 +55,8 @@ interface Fila {
     MatPaginatorModule,
     ProgressComponent,
     HomeComponent,
-    ConversorXmlXlsxComponent
+    ConversorXmlXlsxComponent,
+    ArrivalPageComponent
   ],
   templateUrl: './main-layout.component.html',
   styleUrl: './main-layout.component.css',

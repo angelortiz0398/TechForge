@@ -94,11 +94,11 @@ export class AppComponent  implements PreloadingStrategy, OnInit {
     document.body.removeChild(tempInput);
 
     // Notificamos al usuario que la URL ha sido copiada
-    this._snackBar.open('URL copiada al portapapeles: ' + currentURL, 'Cerrar', {
-      horizontalPosition: 'center',
-      verticalPosition: 'top',
-    });
-    // alert('URL copiada al portapapeles: ' + currentURL);
+    // this._snackBar.open('URL copiada al portapapeles: ' + currentURL, 'Cerrar', {
+    //   horizontalPosition: 'center',
+    //   verticalPosition: ''
+    // });
+    alert('URL copiada al portapapeles: ' + currentURL);
   }
   CambioModoOscuro() {
     this.OscuroActivado = !this.OscuroActivado;
@@ -109,9 +109,9 @@ export class AppComponent  implements PreloadingStrategy, OnInit {
     }
   }
   redireccionarHome() {
-    window.location.replace('/home');
+    window.location.replace('/home/');
   }
   redireccionarConversorXMLToXLSX() {
-    window.location.replace('/conversion-xml-to-xlsx');
+    window.location.replace('/conversion-xml-to-xlsx/');
   }
 }

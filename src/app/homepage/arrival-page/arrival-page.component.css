@@ -1,0 +1,50 @@
+.contenedor-imagen {
+  width: 100vw; /* 100% del ancho del contenedor */
+  height: 300px;
+  overflow: hidden; /* Oculta cualquier parte de la imagen que exceda la altura máxima */
+}
+
+.imagen {
+  position: relative; /* Establece la posición absoluta para la imagen */
+  width: 100%; /* 100% del ancho del contenedor */
+  height: auto; /* Altura automática para mantener el aspecto de la imagen */
+  top: 0; /* Coloca la imagen en el centro vertical */
+  left: 50%; /* Coloca la imagen en el centro horizontal */
+  transform: translate(-50%, -50%); /* Centra la imagen dentro del contenedor */
+}
+
+.contenedor-lateral-izquierdo{
+  background-color: var(--color-palette-primary);
+  width: 30%;
+  height: 70%;
+  padding: 2em;
+  margin-bottom: 3em;
+  h1, h2, p{
+    color: var(--color-palette-quinary);
+  }
+}
+.contenedor-lateral-derecho{
+  width: 70%;
+  height: 70%;
+  padding: 2em;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 3em;
+
+  h3, p{
+    color: var(--color-palette-primary) !important;
+  }
+  .celdas{
+    min-width: 15%;
+    max-width: 24%;
+    margin: 1em;
+    padding: 1em;
+    align-content: center;
+  }
+  h3{
+    margin: 1em;
+    width: 100%;
+  }
+}
