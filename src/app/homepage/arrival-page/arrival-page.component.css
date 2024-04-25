@@ -182,7 +182,8 @@
 }
 
 .contenedor-banner{
-  padding: 1em;
+  margin-top: 3.5em;
+  padding: 2em;
   width: 100%;
   height: 95%;
   background-image: url('../../../assets/img/homepage/BannerAlterno.jpg'); /* Ruta de la imagen de fondo */
@@ -243,10 +244,7 @@
   width: 95%;
   display: flex;
   margin: 1em;
-  padding: 1em;
-  top: 20%;
-  left: 0;
-  position: absolute;
+  padding: 1em 1em 1em 1.5em;
   list-style: none;
   border-radius: 1em;
   -webkit-backdrop-filter: blur(1.5rem);
@@ -268,8 +266,12 @@
   background-color: rgba(255, 255, 255, 0.5); /* Color blanco con una opacidad del 50% */
 }
 
-
-
+.logos{
+  img{
+    margin: 5px;
+    cursor: pointer;
+  };
+}
 
 section{
   display: flex;
@@ -342,17 +344,17 @@ mat-form-field{
   line-height: 1.2 !important;
   white-space: wrap;
   margin: 1em;
-  top: 6%;
+  /* top: 6%;
   left: 0;
-  position: absolute;
+  position: absolute; */
 }
 .fuente-slogan-titulo {
   color: white;
   font-size: 20px !important;
   line-height: 1.2 !important;
-  top: 30%;
+  /* top: 30%;
   left: 30%;
-  position: absolute;
+  position: absolute; */
   margin: 1em;
   display: block;
   white-space: nowrap;
@@ -388,12 +390,11 @@ mat-form-field{
 }
 
 @media screen and (max-width: 1280px) {
-  .formulario-banner{
-    top: 25%;
+  .fuente-mision {
+    font-size: 22px !important;
   }
   .fuente-slogan-titulo{
-    top: 50%;
-    left: 35%;
+    font-size: 20px !important;
   }
 }
 
@@ -410,31 +411,21 @@ mat-form-field{
     width: 85%;
     display: flex;
     flex-direction: column;
-    top: 20%;
-  }
-  .fuente-slogan-titulo{
-    top: 50%;
-    left: 20%;
   }
 }
 
-@media screen and (max-width: 700px) {
-  .formulario-banner{
+@media screen and (max-width: 650px) {
+  /* .formulario-banner{
     top: 25%;
-  }
-  .fuente-slogan-titulo{
-    top: 50%;
-    left: 20%;
-  }
+  } */
 }
 
-@media screen and (max-width: 470px) {
-  .formulario-banner{
-    top: 35%;
+@media screen and (max-width: 435px) {
+  .fuente-mision {
+    font-size: 18px !important;
   }
   .fuente-slogan-titulo{
-    top: 60%;
-    left: 10%;
+    font-size: 15px !important;
   }
 }
 
@@ -446,12 +437,5 @@ mat-form-field{
     h1{
       font-size: 1.5rem !important;
     }
-  }
-  .formulario-banner{
-    top: 45%;
-  }
-  .fuente-slogan-titulo{
-    top: 70%;
-    left: 0%;
   }
 }

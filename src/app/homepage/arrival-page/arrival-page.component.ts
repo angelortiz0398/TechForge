@@ -59,7 +59,7 @@ export class ArrivalPageComponent implements OnInit {
   errorMessage = '';
 
   // Variables generales
-  rowHeight = '80%';
+  rowHeight = '60%';
 
   colsPanServicios = 12;
   colsPanDescripcion = 12;
@@ -70,7 +70,7 @@ export class ArrivalPageComponent implements OnInit {
   colsPanLateralIzquierdo = 0;
   colsPanLateralDerecho = 0;
   colsPanComplementoFormulario = 6;
-
+  mostraImagenesLogos = true;
   constructor(private _formBuilder: FormBuilder) {
     merge(this.email.statusChanges, this.email.valueChanges)
       .pipe(takeUntilDestroyed())
@@ -105,7 +105,7 @@ export class ArrivalPageComponent implements OnInit {
   adjustStyles() {
     const grid = document.getElementById('grid') as any as MatGridList;
     if (window.innerWidth <= 430) {
-      this.rowHeight = '70%';
+      this.rowHeight = '50%';
       this.colsPanServicios = 12;
       this.colsPanDescripcion = 12;
       this.colsPanGaleria = 12;
@@ -114,8 +114,9 @@ export class ArrivalPageComponent implements OnInit {
       this.colsPanLateralIzquierdo = 0;
       this.colsPanLateralDerecho = 0;
       this.colsPanComplementoFormulario = 12;
-    } else {
-      this.rowHeight = '80%';
+      this.mostraImagenesLogos = false;
+    }else {
+      this.rowHeight = '60%';
 
       this.colsPanServicios = 12;
       this.colsPanDescripcion = 12;
@@ -125,6 +126,11 @@ export class ArrivalPageComponent implements OnInit {
       this.colsPanLateralIzquierdo = 0;
       this.colsPanLateralDerecho = 0;
       this.colsPanComplementoFormulario = 6;
+      this.mostraImagenesLogos = false;
+    }
+
+    if(window.innerWidth >= 1280) {
+      this.mostraImagenesLogos = true;
     }
   }
 }
