@@ -4,10 +4,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { ProgressComponent } from '../progress/progress.component';
 import { CommonModule, DOCUMENT } from '@angular/common';
-import { SafeUrl } from '@angular/platform-browser';
-import * as xml2js from 'xml2js';
 import { MatButtonModule } from '@angular/material/button';
-import * as XLSX from 'xlsx';
 import { MatDividerModule } from '@angular/material/divider';
 import {MatCardModule} from '@angular/material/card';
 import { DialogSelectorColumnComponent } from '../dialog-selector-column/dialog-selector-column.component';
@@ -15,12 +12,6 @@ import { MatIconModule } from '@angular/material/icon';
 import {
   MatDialog,
 } from '@angular/material/dialog';
-import { Nomina } from '../../entities/Nomina';
-import { Egreso } from '../../entities/Egreso';
-import { Ingreso } from '../../entities/Ingreso';
-import { RecepcionPago } from '../../entities/RecepcionPago';
-import { Retenciones } from '../../entities/Retenciones';
-import { Traslado } from '../../entities/Traslado';
 import { ActivatedRoute, PreloadingStrategy, Route, RouterOutlet } from '@angular/router';
 import { MatPaginator, MatPaginatorModule, PageEvent} from '@angular/material/paginator';
 import { Observable, of } from 'rxjs';

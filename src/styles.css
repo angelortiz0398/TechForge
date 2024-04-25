@@ -25,4 +25,16 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;}
   --color-palette-terciary: 	#0091e4;
   --color-palette-cuaternary: #0048a7;
   --color-palette-quinary: 		#00224f;
+
+  --color-palette-one: #f0f8fe;
+  --color-palette-two: #ddeffc;
+  --color-palette-three: #c3e4fa;
+  --color-palette-four: #9ad5f6;
+  --color-palette-five: #6bbcef;
+  --color-palette-six: #48a0e9;
+  --color-palette-seven: #3184dd;
+  --color-palette-eight: #2a6fcb;
+  --color-palette-nine: #254e83;
+  --color-palette-ten: #1b3050;
+
 }

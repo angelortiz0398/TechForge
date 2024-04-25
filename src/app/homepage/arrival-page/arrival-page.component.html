@@ -59,36 +59,117 @@
   </mat-grid-tile>
   <mat-grid-tile id="servicios" [colspan]="colsPanServicios" style="padding: 1em;">
     <div class="container-fluid contenedor-central">
-      <h1 style="font-size: 4.5rem;">Lo que ofrecemos</h1>
-      <div class="espacio"></div>
-    <button class="button">
-      <span>
-        <img src="../../../assets/icons/SEO.png" alt="logo" width="350px" style="margin: 1em;">
-      </span>
-    </button>
-    <button class="button">
-      <span>
-        <img src="../../../assets/icons/DesignWeb-Custom.png" alt="logo" width="350px" style="margin: 1em;">
-      </span>
-    </button>
-    <button class="button">
-      <span>
-        <img src="../../../assets/icons/Responsividad.png" alt="logo" width="350px" style="margin: 1em;">
-      </span>
-    </button>
-    <button class="button">
-      <span>
-        <img src="../../../assets/icons/Blogs.png" alt="logo" width="350px" style="margin: 1em;">
-      </span>
-    </button>
-      <button class="button">
-        <span>
-          <img src="../../../assets/icons/RedesSociales.png" alt="logo" width="350px" style="margin: 1em;">
-        </span>
+      <div class="contenedor-titulo">
+      </div>
+      <h1 style="font-size: 2rem;">ESTOS SON LOS SERVICIOS QUE TE PUEDEN INTERESAR</h1>
+
+
+      <button class="button" *ngIf="!muestraSEO" (click)="this.muestraSEO = !this.muestraSEO">
+          <img src="../../../assets/icons/SEO.png" alt="logo" width="250px" style="margin: 1em;" *ngIf="!this.muestraSEO">
       </button>
+      <mat-card class="tarjetas-servicios" *ngIf="this.muestraSEO">
+        <mat-card-header>
+          <mat-card-title style="color: black;">Optimización del SEO</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p>
+            Optimización para motores de búsqueda (SEO) como Google, Bing y Yahoo para mejorar tu visibilidad online.
+          </p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-flat-button color="primary" (click)="this.muestraSEO = !this.muestraSEO">Cerrar</button>
+        </mat-card-actions>
+      </mat-card>
+
+      <button class="button" *ngIf="!this.muestraDisenioWeb" (click)="this.muestraDisenioWeb = !this.muestraDisenioWeb">
+          <img src="../../../assets/icons/DesignWeb-Custom.png" alt="logo" width="250px" style="margin: 1em;">
+      </button>
+      <mat-card class="tarjetas-servicios" *ngIf="this.muestraDisenioWeb">
+        <mat-card-header>
+          <mat-card-title style="color: black;">Diseño Web</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p>
+            Diseño personalizado y exclusivo adaptado a la identidad de tu marca, evitando el uso de plantillas genéricas.
+          </p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-flat-button color="primary" (click)="this.muestraDisenioWeb = !this.muestraDisenioWeb">Cerrar</button>
+        </mat-card-actions>
+      </mat-card>
+
+      <button class="button" *ngIf="!this.muestraResponsividad" (click)="this.muestraResponsividad = !this.muestraResponsividad">
+        <img src="../../../assets/icons/Responsividad.png" alt="logo" width="250px" style="margin: 1em;">
+      </button>
+      <mat-card class="tarjetas-servicios" *ngIf="this.muestraResponsividad">
+        <mat-card-header>
+          <mat-card-title style="color: black;">Responsividad</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p>
+            Garantía de funcionamiento óptimo en dispositivos móviles, tablets y computadoras de escritorio.
+          </p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-flat-button color="primary" (click)="this.muestraResponsividad = !this.muestraResponsividad">Cerrar</button>
+        </mat-card-actions>
+      </mat-card>
+
+      <button class="button" *ngIf="!this.muestraBlogs" (click)="this.muestraBlogs = !this.muestraBlogs">
+          <img src="../../../assets/icons/Blogs.png" alt="logo" width="250px" style="margin: 1em;">
+      </button>
+      <mat-card class="tarjetas-servicios" *ngIf="this.muestraBlogs">
+        <mat-card-header>
+          <mat-card-title style="color: black;">Blogs</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p>
+            Blog en el que puedes publicar artículos, galerías y otros contenidos.
+          </p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-flat-button color="primary" (click)="this.muestraBlogs = !this.muestraBlogs">Cerrar</button>
+        </mat-card-actions>
+      </mat-card>
+
+
+      <button class="button" *ngIf="!this.muestraIntegracionRedes" (click)="this.muestraIntegracionRedes = !this.muestraIntegracionRedes">
+          <img src="../../../assets/icons/RedesSociales.png" alt="logo" width="250px" style="margin: 1em;">
+      </button>
+      <mat-card class="tarjetas-servicios" *ngIf="this.muestraIntegracionRedes">
+        <mat-card-header>
+          <mat-card-title style="color: black;">Integración en redes sociales</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p>
+            Integración fluida con redes sociales y otras plataformas relevantes para maximizar tu alcance digital.
+          </p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-flat-button color="primary" (click)="this.muestraIntegracionRedes = !this.muestraIntegracionRedes">Cerrar</button>
+        </mat-card-actions>
+      </mat-card>
+
+
+      <button class="button" *ngIf="!this.muestraContenidoIlimitado" (click)="this.muestraContenidoIlimitado = !this.muestraContenidoIlimitado">
+          <img src="../../../assets/icons/ContenidoIlimitado.png" alt="logo" width="250px" style="margin: 1em;">
+      </button>
+      <mat-card class="tarjetas-servicios" *ngIf="this.muestraContenidoIlimitado">
+        <mat-card-header>
+          <mat-card-title style="color: black;">Secciones y contenidos ilimitados</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p>
+            Creación de secciones y contenidos ilimitados para que puedas mostrar todo lo que tu negocio ofrece.
+          </p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-flat-button color="primary" (click)="this.muestraContenidoIlimitado = !this.muestraContenidoIlimitado">Cerrar</button>
+        </mat-card-actions>
+      </mat-card>
     </div>
   </mat-grid-tile>
-<mat-grid-tile id="lateral-izquierdo" [colspan]="colsPanLateralIzquierdo"></mat-grid-tile>
+<!-- <mat-grid-tile id="lateral-izquierdo" [colspan]="colsPanLateralIzquierdo"></mat-grid-tile>
 <mat-grid-tile id="descripcion" [colspan]="colsPanDescripcion" style="padding: 1em; max-height: 100%;">
   <div class="contenedor-lateral-izquierdo">
     <h1 style="font-size: 36px; line-height: 45px; text-align: left">Forja el éxito de tu negocio</h1>
@@ -122,7 +203,7 @@
   </div>
 </div>
 </mat-grid-tile>
-<mat-grid-tile id="lateral-derecho" [colspan]="colsPanLateralDerecho"></mat-grid-tile>
+<mat-grid-tile id="lateral-derecho" [colspan]="colsPanLateralDerecho"></mat-grid-tile> -->
 <!-- <mat-grid-tile id="galeria" [colspan]="colsPanGaleria">
   <div class="container-fluid contenedor-central alterno" style="padding: 1em;">
     <h1 style="font-size: 4.5rem;">Lo que ofrecemos</h1>
@@ -139,7 +220,7 @@
     </div>
   </div>
 </mat-grid-tile> -->
-<mat-grid-tile id="formulario" [colspan]="colsPanFormulario" style="background-color: var(--color-palette-quinary);  max-height: 60% !important;">
+<mat-grid-tile id="formulario" [colspan]="colsPanFormulario" style="background-color: var(--color-palette-quinary);  max-height: 75% !important;">
   <div class="container-fluid" style="padding: 0em; margin-right: 4em;">
     <div class="mat-elevation-z8 formulario">
       <b> <h2 style="font-size: 32px;">Proporcione sus datos y lo contactaremos</h2> </b>
@@ -201,7 +282,7 @@
     </div>
   </div>
 </mat-grid-tile>
-<mat-grid-tile id="complemento-formulario" [colspan]="colsPanComplementoFormulario" style="background-color: var(--color-palette-quinary); max-height: 60% !important;">
+<mat-grid-tile id="complemento-formulario" [colspan]="colsPanComplementoFormulario" style="background-color: var(--color-palette-quinary); max-height: 75% !important;">
   <div class="complemento">
     <h2 style="font-size: 32px;">
       ¿Listo para hablar con un experto?

@@ -12,6 +12,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 import { MatIcon } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
 @Component({
   selector: 'app-arrival-page',
   standalone: true,
@@ -26,7 +27,8 @@ import { MatIcon } from '@angular/material/icon';
     MatButtonModule,
     CommonModule,
     NgxMaskDirective,
-    MatIcon
+    MatIcon,
+    MatCardModule
   ],
   providers: [provideNgxMask()],
   templateUrl: './arrival-page.component.html',
@@ -59,7 +61,7 @@ export class ArrivalPageComponent implements OnInit {
   errorMessage = '';
 
   // Variables generales
-  rowHeight = '60%';
+  rowHeight = '85%';
 
   colsPanServicios = 12;
   colsPanDescripcion = 12;
@@ -71,6 +73,15 @@ export class ArrivalPageComponent implements OnInit {
   colsPanLateralDerecho = 0;
   colsPanComplementoFormulario = 6;
   mostraImagenesLogos = true;
+
+  // Variables para los servicios
+  muestraSEO = false;
+  muestraDisenioWeb = false;
+  muestraBlogs = false;
+  muestraResponsividad = false;
+  muestraCreacionSecciones = false;
+  muestraIntegracionRedes = false;
+  muestraContenidoIlimitado = false;
   constructor(private _formBuilder: FormBuilder) {
     merge(this.email.statusChanges, this.email.valueChanges)
       .pipe(takeUntilDestroyed())
@@ -105,7 +116,7 @@ export class ArrivalPageComponent implements OnInit {
   adjustStyles() {
     const grid = document.getElementById('grid') as any as MatGridList;
     if (window.innerWidth <= 430) {
-      this.rowHeight = '50%';
+      this.rowHeight = '75%';
       this.colsPanServicios = 12;
       this.colsPanDescripcion = 12;
       this.colsPanGaleria = 12;
@@ -116,7 +127,7 @@ export class ArrivalPageComponent implements OnInit {
       this.colsPanComplementoFormulario = 12;
       this.mostraImagenesLogos = false;
     }else {
-      this.rowHeight = '60%';
+      this.rowHeight = '85%';
 
       this.colsPanServicios = 12;
       this.colsPanDescripcion = 12;
