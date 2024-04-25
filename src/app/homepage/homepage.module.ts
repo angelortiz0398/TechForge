@@ -7,6 +7,7 @@ import { DropfileDirective } from './Dropfile.directive';
 import { ProgressComponent } from './progress/progress.component';
 
 
+
 @NgModule({
   declarations: [
    ],
@@ -18,6 +19,8 @@ import { ProgressComponent } from './progress/progress.component';
     ProgressComponent,
     DropfileDirective
   ],
-  exports:[DropfileDirective]
+  exports:[
+    DropfileDirective
+  ]
 })
 export class HomepageModule { }

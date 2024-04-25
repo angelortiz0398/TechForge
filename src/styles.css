@@ -20,7 +20,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;}
   label{
     color: light-dark(black,white);
   }
-  --color-palette-primary: #abdfff;
+  --color-palette-primary: #aad3ec;
   --color-palette-secondary: #5ccdff;
   --color-palette-terciary: 	#0091e4;
   --color-palette-cuaternary: #0048a7;

@@ -111,6 +111,10 @@ export class AppComponent  implements PreloadingStrategy, OnInit {
   redireccionarHome() {
     window.location.replace('/home/');
   }
+
+  redireccionarPrincipal() {
+    window.location.replace('/');
+  }
   redireccionarConversorXMLToXLSX() {
     window.location.replace('/conversion-xml-to-xlsx/');
   }

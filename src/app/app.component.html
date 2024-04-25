@@ -1,11 +1,11 @@
 
 <mat-toolbar class="toolbar-fixed">
-  <div  (click)="redireccionarHome()">
+  <button mat-button (click)="redireccionarPrincipal()" style="margin-top: 8px;">
     <img class="docs-footer-angular-logo"
     src="../../../assets/img/logo.png"
     width="36px"
     alt="Angular icon">
-  </div>
+  </button>
   <h1 style="color: black;" (click)="redireccionarHome()">TECHFORGE</h1>
   <span class="example-spacer"></span>
   <div class="menu-herramientas">
@@ -17,7 +17,7 @@
     </button>
     <mat-menu #tools="matMenu" xPosition="after">
       <button mat-menu-item [matMenuTriggerFor]="finances">
-        Financieras
+        Contables
       </button>
     </mat-menu>
     <mat-menu #finances="matMenu" yPosition="below" xPosition="after">

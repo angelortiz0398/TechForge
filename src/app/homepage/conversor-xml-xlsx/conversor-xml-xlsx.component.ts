@@ -610,6 +610,7 @@ export class ConversorXmlXlsxComponent implements AfterViewInit {
 
   CleanFiles(): void {
     location.reload();
+    window.location.replace('/conversion-xml-to-xlsx/');
   }
 
   CargarArchivos(event: any): void {

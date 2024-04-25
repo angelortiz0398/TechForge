@@ -1,49 +1,229 @@
-<div class="contenedor-imagen">
-  <img class="imagen" src="../../../assets/img/homepage/banner.png" alt="banner">
-</div>
-<mat-grid-list cols="12" style="background-color: var(--color-palette-quinary);" rowHeight="1:8">
-  <mat-grid-tile colspan="2"></mat-grid-tile>
-  <mat-grid-tile colspan="8">
-    <div class="contenedor-lateral-izquierdo">
-      <h1 style="font-size: 36px; line-height: 45px; text-align: left">Forja el éxito de tu negocio</h1>
-      <h2 style="font-size: 22px; line-height: 1.3em;text-align: left">Acelera el crecimiento de tu marca mediante un diseño web y desarrollo profesional.</h2>
-      <br/>
-      <p style="font-size: 17px; text-align: left">TechForge se distingue como una agencia líder en marketing digital, con más de una década de experiencia en el desarrollo web. </p>
-      <br/>
-      <p style="font-size: 17px; text-align: left">Nos comprometemos a potenciar la presencia online de tu marca, brindándote acceso a nuestra sólida experiencia y conocimientos en el diseño y desarrollo de páginas web de última generación, respaldadas por tecnología avanzada y una variedad de herramientas de marketing.</p>
-    </div>
-    <div class="contenedor-lateral-derecho">
-      <h3 style="font-size: 36px;;line-height: 32px;text-align: center">
-        NUESTROS SERVICIOS DE DESARROLLO WEB INCLUYEN:
-      </h3>
-      <div class="celdas">
-        <p>Creación de secciones y contenidos ilimitados para que puedas mostrar todo lo que tu negocio ofrece.</p>
+<mat-grid-list id="grid" cols="12" style="background-color: var(--color-palette-quinary); height: 100vh;" [rowHeight]="rowHeight">
+  <mat-grid-tile id="banner" [colspan]="colsPanBanner" style="padding: 1em;">
+    <div class="contenedor-banner">
+      <span class="fuente-mision">En nuestra empresa, visualizamos un mundo donde cada idea, cada sueño, se convierte en una realidad tangible a
+        través del poder de la codificación. Nos esforzamos por ser líderes en el desarrollo de software, transformando las aspiraciones de nuestros
+        clientes en soluciones innovadoras que inspiran y marcan la diferencia en la vida de las personas.
+        <br>
+        <br>
+        Empecemos hoy, contáctenos, está a nada de forjar su sueño
+      </span>
+
+      <div class="mat-elevation-z8 formulario-banner">
+        <mat-form-field appearance="fill" style="margin: 0.5em;">
+          <mat-label>Nombre completo</mat-label>
+          <input matInput [formControl]="nombre" [(ngModel)]="nombreCompleto" required >
+          <mat-error *ngIf="nombre.hasError('required')">El nombre es requerido</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill" style="margin: 0.5em;">
+          <mat-label>Correo electrónico</mat-label>
+          <input matInput
+                 placeholder="pat@example.com"
+                 [formControl]="email"
+                 [(ngModel)]="correoElectronico"
+                 (blur)="updateErrorMessage()"
+                 required>
+          @if (email.invalid) {
+            <mat-error>{{errorMessage}}</mat-error>
+          }
+        </mat-form-field>
+        <mat-form-field appearance="fill" style="margin: 0.5em;">
+          <mat-label>Numero telefónico</mat-label>
+          <input matInput
+            placeholder="55-55-55-55-55"
+            type="text"
+            [formControl]="telefono"
+            minlength="10"
+            maxlength="15"
+            mask="00-00-00-00-00"
+            [dropSpecialCharacters]="true"
+            [(ngModel)]="telefonoFormateado"
+            required>
+          <mat-error *ngIf="telefono.hasError('required')">El teléfono es requerido</mat-error>
+          <mat-error *ngIf="telefono.hasError('maxlength')">El teléfono no puede ser de mas de 13 digitos</mat-error>
+          <mat-error *ngIf="telefono.hasError('minlength')">El teléfono no puede ser de menos de 10 digitos</mat-error>
+          <mat-error *ngIf="telefono.hasError('pattern')">El teléfono no tiene un formato válido</mat-error>
+        </mat-form-field>
+        <button mat-flat-button color="warn" style="margin: 0.5em;">Enviar</button>
       </div>
-      <div class="celdas">
-        <p>Plataforma autoadministrable que te permite editar y gestionar fácilmente el contenido de tu página web.</p>
-      </div>
-      <div class="celdas">
-        <p>Análisis detallado del tráfico web con Google Analytics y Facebook Pixel para optimizar tus estrategias de marketing.</p>
-      </div>
-      <div class="celdas">
-        <p>Diseño personalizado y exclusivo adaptado a la identidad de tu marca, evitando el uso de plantillas genéricas.</p>
-      </div>
-      <div class="celdas">
-        <p>Optimización para motores de búsqueda (SEO) como Google, Bing y Yahoo para mejorar tu visibilidad online.</p>
-      </div>
-      <div class="celdas">
-        <p>Garantía de funcionamiento óptimo en dispositivos móviles, tablets y computadoras de escritorio.</p>
-      </div>
-      <div class="celdas">
-        <p>Integración fluida con redes sociales y otras plataformas relevantes para maximizar tu alcance digital.</p>
-      </div>
-      <div class="celdas">
-        <p>Blog en el que puedes publicar artículos, galerías y otros contenidos.</p>
-      </div>
-      <div class="celdas">
-        <p>Capacitación personalizada para que tu equipo pueda administrar eficazmente la página web de tu negocio.</p>
-      </div>
+      <span class="fuente-slogan-titulo">Codificando sus sueños en realidad.</span>
+
     </div>
   </mat-grid-tile>
-  <mat-grid-tile colspan="2"></mat-grid-tile>
+  <mat-grid-tile id="servicios" [colspan]="colsPanServicios" style="padding: 1em;">
+    <div class="container-fluid contenedor-central">
+      <h1 style="font-size: 4.5rem;">Lo que ofrecemos</h1>
+      <div class="espacio"></div>
+    <button class="button">
+      <span>
+        <img src="../../../assets/icons/SEO.png" alt="logo" width="350px" style="margin: 1em;">
+      </span>
+    </button>
+    <button class="button">
+      <span>
+        <img src="../../../assets/icons/DesignWeb-Custom.png" alt="logo" width="350px" style="margin: 1em;">
+      </span>
+    </button>
+    <button class="button">
+      <span>
+        <img src="../../../assets/icons/Responsividad.png" alt="logo" width="350px" style="margin: 1em;">
+      </span>
+    </button>
+    <button class="button">
+      <span>
+        <img src="../../../assets/icons/Blogs.png" alt="logo" width="350px" style="margin: 1em;">
+      </span>
+    </button>
+      <button class="button">
+        <span>
+          <img src="../../../assets/icons/RedesSociales.png" alt="logo" width="350px" style="margin: 1em;">
+        </span>
+      </button>
+    </div>
+  </mat-grid-tile>
+<mat-grid-tile id="lateral-izquierdo" [colspan]="colsPanLateralIzquierdo"></mat-grid-tile>
+<mat-grid-tile id="descripcion" [colspan]="colsPanDescripcion" style="padding: 1em; max-height: 100%;">
+  <div class="contenedor-lateral-izquierdo">
+    <h1 style="font-size: 36px; line-height: 45px; text-align: left">Forja el éxito de tu negocio</h1>
+    <h2 style="font-size: 22px; line-height: 1.3em;text-align: left">Acelera el crecimiento de tu marca mediante un diseño web y desarrollo profesional.</h2>
+    <p style="font-size: 17px; text-align: left">TechForge se distingue como una agencia líder en marketing digital, con más de una década de experiencia en el desarrollo web. </p>
+    <p style="font-size: 17px; text-align: left">Nos comprometemos a potenciar la presencia online de tu marca, brindándote acceso a nuestra sólida experiencia y conocimientos en el diseño y desarrollo de páginas web de última generación, respaldadas por tecnología avanzada y una variedad de herramientas de marketing.</p>
+  </div>
+  <div class="contenedor-lateral-derecho" style="position: relative;">
+    <h3 style="font-size: 36px;;line-height: 32px;text-align: center">
+      <b>
+        Nuestros servicios de desarrollo WEB incluyen:
+      </b>
+    </h3>
+    <div class="celdas">
+      <p>Creación de secciones y contenidos ilimitados para que puedas mostrar todo lo que tu negocio ofrece.</p>
+    </div>
+    <div class="celdas">
+      <p>Diseño personalizado y exclusivo adaptado a la identidad de tu marca, evitando el uso de plantillas genéricas.</p>
+    </div>
+    <div class="celdas">
+      <p>Optimización para motores de búsqueda (SEO) como Google, Bing y Yahoo para mejorar tu visibilidad online.</p>
+    </div>
+    <div class="celdas">
+      <p>Garantía de funcionamiento óptimo en dispositivos móviles, tablets y computadoras de escritorio.</p>
+    </div>
+    <div class="celdas">
+      <p>Integración fluida con redes sociales y otras plataformas relevantes para maximizar tu alcance digital.</p>
+    </div>
+  <div class="celdas">
+    <p>Blog en el que puedes publicar artículos, galerías y otros contenidos.</p>
+  </div>
+</div>
+</mat-grid-tile>
+<mat-grid-tile id="lateral-derecho" [colspan]="colsPanLateralDerecho"></mat-grid-tile>
+<mat-grid-tile id="galeria" [colspan]="colsPanGaleria">
+  <div class="container-fluid contenedor-central alterno" style="padding: 1em;">
+    <h1 style="font-size: 4.5rem;">Lo que ofrecemos</h1>
+    <div class="espacio"></div>
+
+    <div class="carrousel">
+      <section>
+        <img src="../../../assets/icons/SEO.png" alt="logo" width="300px">
+        <img src="../../../assets/icons/DesignWeb-Custom.png" alt="logo" width="300px">
+        <img src="../../../assets/icons/Responsividad.png" alt="logo" width="300px">
+        <img src="../../../assets/icons/Blogs.png" alt="logo" width="300px">
+        <img src="../../../assets/icons/RedesSociales.png" alt="logo" width="300px">
+      </section>
+    </div>
+  </div>
+</mat-grid-tile>
+<mat-grid-tile id="formulario" [colspan]="colsPanFormulario" style="background-color: var(--color-palette-quinary);  max-height: 45% !important;">
+  <div class="container-fluid" style="padding: 0em; margin-right: 4em;">
+    <div class="mat-elevation-z8 formulario">
+      <b> <h2 style="font-size: 32px;">Proporcione sus datos y lo contactaremos</h2> </b>
+      <mat-form-field appearance="fill" style="margin-top: 1em;">
+        <mat-label>Nombre completo</mat-label>
+        <input matInput [formControl]="nombre" [(ngModel)]="nombreCompleto" required >
+        <mat-error *ngIf="nombre.hasError('required')">El nombre es requerido</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Correo electrónico</mat-label>
+        <input matInput
+               placeholder="pat@example.com"
+               [formControl]="email"
+               [(ngModel)]="correoElectronico"
+               (blur)="updateErrorMessage()"
+               required>
+        @if (email.invalid) {
+          <mat-error>{{errorMessage}}</mat-error>
+        }
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Numero telefónico</mat-label>
+        <input matInput
+          placeholder="55-55-55-55-55"
+          type="text"
+          [formControl]="telefono"
+          minlength="10"
+          maxlength="15"
+          mask="00-00-00-00-00"
+          [dropSpecialCharacters]="true"
+          [(ngModel)]="telefonoFormateado"
+          required>
+        <mat-error *ngIf="telefono.hasError('required')">El teléfono es requerido</mat-error>
+        <mat-error *ngIf="telefono.hasError('maxlength')">El teléfono no puede ser de mas de 13 digitos</mat-error>
+        <mat-error *ngIf="telefono.hasError('minlength')">El teléfono no puede ser de menos de 10 digitos</mat-error>
+        <mat-error *ngIf="telefono.hasError('pattern')">El teléfono no tiene un formato válido</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Nombre de la compañía</mat-label>
+        <input matInput
+          [formControl]="compania"
+          [(ngModel)]="nombreCompania">
+      </mat-form-field>
+      <mat-form-field appearance="fill" [floatLabel]="getFloatLabelValue()">
+        <mat-label>Servicios de su interes</mat-label>
+        <mat-select [slot]="" [formControl]="servicios"  multiple>
+          <mat-option value="1">Diseño y desarrollo del sitio web</mat-option>
+          <mat-option value="2">Optimización del motor de búsqueda (SEO)</mat-option>
+          <mat-option value="3">Administración de las redes sociales</mat-option>
+          <mat-option value="4">Otros</mat-option>
+        </mat-select>
+        <mat-error *ngIf="servicios.hasError('required')">Los servicios son requeridos</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" >
+        <textarea [placeholder]="'¿En qué le podemos ayudar?'" [formControl]="ayuda" matInput rows="5"></textarea>
+      </mat-form-field>
+      <button mat-flat-button color="primary">Enviar información</button>
+    </div>
+  </div>
+</mat-grid-tile>
+<mat-grid-tile id="complemento-formulario" [colspan]="colsPanComplementoFormulario" style="background-color: var(--color-palette-quinary); max-height: 45% !important;">
+  <div class="complemento">
+    <h2 style="font-size: 32px;">
+      ¿Listo para hablar con un experto?
+    </h2>
+    <br>
+    <h2 style="font-size: 32px;">
+      Márcanos al (+52)55-84-93-51-23
+    </h2>
+    <br>
+    <mat-list dense>
+        <mat-list-item>
+          <p>
+            <mat-icon matListItemIcon>done_outline</mat-icon>
+            Expertos en la creación de sitios web
+          </p>
+        </mat-list-item>
+        <mat-list-item>
+          <p>
+            <mat-icon matListItemIcon>done_outline</mat-icon>
+            Múltiples sitios ya desarrollados
+          </p>
+        </mat-list-item>
+        <mat-list-item>
+          <p>
+            <mat-icon matListItemIcon>done_outline</mat-icon>
+            Muchos clientes satisfechos
+          </p>
+        </mat-list-item>
+    </mat-list>
+  </div>
+</mat-grid-tile>
 </mat-grid-list>

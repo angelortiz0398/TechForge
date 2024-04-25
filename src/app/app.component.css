@@ -4,7 +4,7 @@
 
 main {
   min-height: 60%; /* El contenido de main ocupa el 100% del alto disponible */
-  height: 71%;
+  height: 70%;
   margin: 0 auto; /* Centra el contenido horizontalmente */
   margin-bottom: 10%;
 }

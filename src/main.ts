@@ -1,20 +1,12 @@
 import { bootstrapApplication } from '@angular/platform-browser';
 import { appConfig } from './app/app.config';
 import { AppComponent } from './app/app.component';
-import { HomepageModule } from './app/homepage/homepage.module';
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { IConfig, provideEnvironmentNgxMask } from 'ngx-mask'
 
-bootstrapApplication(AppComponent, appConfig)
-  .catch((err) => console.error(err));
+var config = appConfig;
+const maskConfig: Partial<IConfig> = {
+  validation: false,
+};
+config.providers.push(provideEnvironmentNgxMask(maskConfig));
 
-
-
-// platformBrowserDynamic().bootstrapModule(HomepageModule).then(ref => {
-//   // Ensure Angular destroys itself on hot reloads.
-//   // if (window['ngRef']) {
-//   //   window['ngRef'].destroy();
-//   // }
-//   // window['ngRef'] = ref;
-
-//   // Otherise, log the boot error
-// }).catch(err => console.error(err));
+bootstrapApplication(AppComponent, config).catch((err) => console.error(err));
