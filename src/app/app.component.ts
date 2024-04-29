@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { Component, HostListener, Inject, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import { HomepageModule } from './homepage/homepage.module';
 import { MainLayoutComponent } from './homepage/main-layout/main-layout.component';
@@ -33,8 +33,14 @@ export interface Tile {
 })
 export class AppComponent  implements PreloadingStrategy, OnInit {
 
+      // Suscribe adjustStyles al evento resize de la ventana
+      @HostListener('window:resize', ['$event'])
+      onResize($event: any) {
+        this.adjustStyles();
+      }
   routeA : ActivatedRoute | undefined;
   OscuroActivado = true;
+  iconosEnToolbar = false;
   constructor(_routeA: ActivatedRoute, private _snackBar: MatSnackBar, private router: Router, @Inject(DOCUMENT) private document: Document) {
     this.routeA = _routeA;
   }
@@ -117,5 +123,13 @@ export class AppComponent  implements PreloadingStrategy, OnInit {
   }
   redireccionarConversorXMLToXLSX() {
     window.location.replace('/conversion-xml-to-xlsx/');
+  }
+
+  adjustStyles() {
+    if (window.innerWidth <= 600) {
+      this.iconosEnToolbar = true;
+    } else {
+      this.iconosEnToolbar = false;
+    }
   }
 }
