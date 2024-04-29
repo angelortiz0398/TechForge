@@ -1,3 +1,4 @@
+import { Contacto } from './../../entities/Contacto';
 import { Component, HostListener, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatDividerModule } from '@angular/material/divider';
@@ -13,6 +14,7 @@ import { CommonModule } from '@angular/common';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 import { MatIcon } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
+import { HttpClientModule, HttpHeaders } from '@angular/common/http';
 @Component({
   selector: 'app-arrival-page',
   standalone: true,
@@ -28,13 +30,15 @@ import { MatCardModule } from '@angular/material/card';
     CommonModule,
     NgxMaskDirective,
     MatIcon,
-    MatCardModule
+    MatCardModule,
+    HttpClientModule
   ],
   providers: [provideNgxMask()],
   templateUrl: './arrival-page.component.html',
   styleUrl: './arrival-page.component.css'
 })
 export class ArrivalPageComponent implements OnInit {
+  HttpClient: any;
     // Suscribe adjustStyles al evento resize de la ventana
     @HostListener('window:resize', ['$event'])
     onResize($event: any) {
@@ -82,7 +86,7 @@ export class ArrivalPageComponent implements OnInit {
   muestraCreacionSecciones = false;
   muestraIntegracionRedes = false;
   muestraContenidoIlimitado = false;
-  constructor(private _formBuilder: FormBuilder) {
+  constructor(private _formBuilder: FormBuilder, private http: HttpClientModule) {
     merge(this.email.statusChanges, this.email.valueChanges)
       .pipe(takeUntilDestroyed())
       .subscribe(() => this.updateErrorMessage());
@@ -143,5 +147,56 @@ export class ArrivalPageComponent implements OnInit {
     if(window.innerWidth >= 1280) {
       this.mostraImagenesLogos = true;
     }
+  }
+
+  // Método para realizar la solicitud POST
+  enviarFormulario() {
+    this.nombre.markAsTouched();
+    this.compania.markAsTouched();
+    this.email.markAsTouched();
+    this.telefono.markAsTouched();
+    this.servicios.markAsTouched();
+    this.ayuda.markAsTouched();
+    let contacto: Contacto;
+    if(this.nombre.invalid || this.compania.invalid || this.email.invalid || this.telefono.invalid || this.servicios.invalid || this.ayuda.invalid) {
+      console.log("Invalido");
+      return;
+    }
+    else{
+      contacto = {
+        id: 0,
+        nombre: this.nombre.value!,
+        email: this.email.value!,
+        telefono: this.telefono.value!,
+        nombreCompania: this.compania.value!,
+        servicioInteres: this.servicios.value!.toString(),
+        comentarioAyuda: this.ayuda.value!
+      }
+    }
+    console.log("contacto: ", contacto);
+
+    // URL a la que enviarás la solicitud POST
+    const url = 'https://techforge-api.somee.com/Contacto/Guardar';
+
+    const headers: Headers = new Headers()
+    headers.set('Content-Type', 'application/json')
+    // We also need to set the `Accept` header to `application/json`
+    // to tell the server that we expect JSON in response
+    headers.set('Accept', 'application/json')
+    headers.set('Access-Control-Allow-Origin', '*')
+
+    const request: RequestInfo = new Request(url, {
+      // We need to set the `method` to `POST` and assign the headers
+      method: 'POST',
+      headers: headers,
+      // Convert the user object to JSON and pass it as the body
+      body: JSON.stringify(contacto)
+    })
+
+    // Send the request and print the response
+    return fetch(request)
+      .then(res => {
+        console.log("got response:", res)
+      })
   }
 }

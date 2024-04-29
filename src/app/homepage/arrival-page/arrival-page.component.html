@@ -278,7 +278,7 @@
       <mat-form-field appearance="fill" >
         <textarea [placeholder]="'¿En qué le podemos ayudar?'" [formControl]="ayuda" matInput rows="5"></textarea>
       </mat-form-field>
-      <button mat-flat-button color="primary">Enviar información</button>
+      <button mat-flat-button color="primary" (click)="enviarFormulario()">Enviar información</button>
     </div>
   </div>
 </mat-grid-tile>
