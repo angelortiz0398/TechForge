@@ -9,11 +9,17 @@
   <h1 style="color: black;" (click)="redireccionarHome()">TECHFORGE</h1>
   <span class="example-spacer"></span>
   <div class="menu-herramientas">
-    <button style="margin-right: 16px;" mat-button (click)="redireccionarHome()">
+    <button *ngIf="!this.iconosEnToolbar" mat-button (click)="redireccionarHome()">
       <mat-icon>home</mat-icon> Home
     </button>
-    <button style="margin-right: 16px;" mat-button [matMenuTriggerFor]="tools">
-      <mat-icon>menu</mat-icon> Herramientas
+    <button *ngIf="this.iconosEnToolbar" mat-button (click)="redireccionarHome()">
+      <mat-icon>home</mat-icon>
+    </button>
+    <button *ngIf="!this.iconosEnToolbar" mat-button [matMenuTriggerFor]="tools">
+      <mat-icon>menu</mat-icon>Herramientas
+    </button>
+    <button *ngIf="this.iconosEnToolbar" mat-button [matMenuTriggerFor]="tools">
+      <mat-icon>menu</mat-icon>
     </button>
     <mat-menu #tools="matMenu" xPosition="after">
       <button mat-menu-item [matMenuTriggerFor]="finances">
@@ -25,11 +31,11 @@
       <button mat-menu-item>Convertidor de facturas (CFDI) a PDF</button>
     </mat-menu>
   </div>
-  <mat-slide-toggle [checked]="!this.OscuroActivado" (toggleChange)="CambioModoOscuro()" color="primary" style="margin-right: 10px;">
-    <button mat-icon-button disabled aria-label="Example icon button with a open in new tab icon" *ngIf="!this.OscuroActivado">
+  <mat-slide-toggle [checked]="!this.OscuroActivado" (toggleChange)="CambioModoOscuro()" color="primary" style="margin-right: 10px;" *ngIf="!this.iconosEnToolbar">
+    <button  mat-icon-button disabled aria-label="Example icon button with a open in new tab icon" *ngIf="!this.OscuroActivado">
       <mat-icon>dark_mode</mat-icon>
     </button>
-    <button mat-icon-button disabled aria-label="Example icon button with a open in new tab icon" *ngIf="this.OscuroActivado">
+    <button  mat-icon-button disabled aria-label="Example icon button with a open in new tab icon" *ngIf="this.OscuroActivado">
       <mat-icon>light_mode</mat-icon>
     </button>
       <!-- <h4 style="color: black;" *ngIf="!this.OscuroActivado">

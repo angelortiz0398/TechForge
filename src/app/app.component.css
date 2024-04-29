@@ -15,6 +15,7 @@ main {
   z-index: 9999; /* Asegura que esté por encima del contenido */
   pointer-events: none; /* Evita que los eventos de clic y toque se propaguen al toolbar */
   height: 50px;
+  padding: 0px;
 }
 
 /* Estilo opcional para los elementos hijos del toolbar que necesitan ser clicables */
