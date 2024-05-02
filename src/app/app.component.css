@@ -16,6 +16,9 @@ main {
   pointer-events: none; /* Evita que los eventos de clic y toque se propaguen al toolbar */
   height: 50px;
   padding: 0px;
+  backdrop-filter: blur(3rem);
+  /* border: 2px solid rgba(255, 255, 255, 0.7); */
+  background-color: transparent;
 }
 
 /* Estilo opcional para los elementos hijos del toolbar que necesitan ser clicables */

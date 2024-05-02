@@ -15,6 +15,7 @@ import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 import { MatIcon } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { HttpClientModule, HttpHeaders } from '@angular/common/http';
+import { Resend } from 'resend';
 @Component({
   selector: 'app-arrival-page',
   standalone: true,
@@ -65,7 +66,7 @@ export class ArrivalPageComponent implements OnInit {
   errorMessage = '';
 
   // Variables generales
-  rowHeight = '85%';
+  rowHeight = '75%';
 
   colsPanServicios = 12;
   colsPanDescripcion = 12;
@@ -86,6 +87,8 @@ export class ArrivalPageComponent implements OnInit {
   muestraCreacionSecciones = false;
   muestraIntegracionRedes = false;
   muestraContenidoIlimitado = false;
+  muestraDescripcionServicios = false;
+  mostrarResumenConSlogan = true;
   constructor(private _formBuilder: FormBuilder, private http: HttpClientModule) {
     merge(this.email.statusChanges, this.email.valueChanges)
       .pipe(takeUntilDestroyed())
@@ -118,9 +121,9 @@ export class ArrivalPageComponent implements OnInit {
 
 // Función para aplicar o quitar la clase según el tamaño de la pantalla
   adjustStyles() {
-    const grid = document.getElementById('grid') as any as MatGridList;
+    const titulo = document.getElementById('titulo');
     if (window.innerWidth <= 430) {
-      this.rowHeight = '75%';
+      this.rowHeight = '65%';
       this.colsPanServicios = 12;
       this.colsPanDescripcion = 12;
       this.colsPanGaleria = 12;
@@ -130,8 +133,11 @@ export class ArrivalPageComponent implements OnInit {
       this.colsPanLateralDerecho = 0;
       this.colsPanComplementoFormulario = 12;
       this.mostraImagenesLogos = false;
+      this.mostrarResumenConSlogan = false;
+      titulo!.style.fontSize = '1.5rem';
+      this.muestraDescripcionServicios = true;
     }else {
-      this.rowHeight = '85%';
+      this.rowHeight = '75%';
 
       this.colsPanServicios = 12;
       this.colsPanDescripcion = 12;
@@ -142,10 +148,13 @@ export class ArrivalPageComponent implements OnInit {
       this.colsPanLateralDerecho = 0;
       this.colsPanComplementoFormulario = 6;
       this.mostraImagenesLogos = false;
+      this.muestraDescripcionServicios = false;
     }
 
     if(window.innerWidth >= 1280) {
       this.mostraImagenesLogos = true;
+      titulo!.style.fontSize = '3.5rem';
+      this.mostrarResumenConSlogan = true;
     }
   }
 
@@ -197,6 +206,35 @@ export class ArrivalPageComponent implements OnInit {
     return fetch(request)
       .then(res => {
         console.log("got response:", res)
+        if  (res.status === 200) {
+          console.log("enviado");
+          alert("Se ha enviado la solicitud correctamente. En breve nos pondremos en contacto con usted.");
+        }
       })
+  }
+
+  pruebaEnvioEmail(){
+    const resend = new Resend('re_49o4EzEW_7LQpogVAuDvbs8gkTLoHBSPJ');
+          (async function () {
+            const { data, error } = await resend.emails.send({
+              headers: {
+                // 'Access-Control-Allow-Origin': '*',
+                // 'Access-Control-Allow-Headers': 'X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method',
+                // 'Access-Control-Allow-Methods': 'GET, POST, OPTIONS, PUT, DELETE',
+                // 'Allow': 'GET, POST, OPTIONS, PUT, DELETE',
+                'X-Entity-Ref-ID': '49o4EzEW_7LQpogVAuDvbs8gkTLoHBSPJ'
+              },
+              from: 'TechForge <onboarding@resend.dev>',
+              to: ['angelortiz0398@gmail.com'],
+              subject: 'Hola, en un momento te contactamos por TechForge',
+              html: '<strong>Se ha enviado la solicitud correctamente. En breve nos pondremos en contacto con usted.!</strong>',
+            });
+
+            if (error) {
+              return console.error({ error });
+            }
+
+            // console.log({ data });
+          })();
   }
 }

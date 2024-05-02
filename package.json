@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --proxy-config proxy.conf.json",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
@@ -26,6 +26,7 @@
     "cors": "^2.8.5",
     "express": "^4.18.2",
     "ngx-mask": "^17.0.7",
+    "resend": "^3.2.0",
     "rxjs": "~7.8.0",
     "timers": "^0.1.1",
     "tslib": "^2.3.0",

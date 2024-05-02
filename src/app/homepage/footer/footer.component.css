@@ -95,10 +95,21 @@ footer {
   width: 100%;
   background-color: #333; /* Color de fondo del footer */
   color: #fff; /* Color del texto del footer */
-  padding: 10px; /* Espacio interior del footer */
-  z-index: 9999; /* Asegura que esté por encima del contenido */
+  padding: 10px;
+  z-index: 9999;
 }
 
+.logos{
+  img{
+    margin: 5px;
+    cursor: pointer;
+    background-color: white;
+    border-radius: 50%;
+    &:hover{
+      background-color: var(--color-palette-ten);
+    }
+  };
+}
 @media screen and (max-width: 884px){
   .docs-footer-list {
     flex-direction: column;
