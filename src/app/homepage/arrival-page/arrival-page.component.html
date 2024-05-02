@@ -1,16 +1,25 @@
 <mat-grid-list id="grid" cols="12" style="background-color: var(--color-palette-quinary); height: 100vh;" [rowHeight]="rowHeight">
   <mat-grid-tile id="banner" [colspan]="colsPanBanner">
     <div class="contenedor-banner">
-      <div style="text-align: -webkit-center;">
-        <span class="fuente-mision">En nuestra empresa, visualizamos un mundo donde cada idea, cada sueño, se convierte en una realidad tangible a
-          través del poder de la codificación. Nos esforzamos por ser líderes en el desarrollo de software, transformando las aspiraciones de nuestros
-          clientes en soluciones innovadoras que inspiran y marcan la diferencia en la vida de las personas.
+      <div style=" margin-top: 1em;;
+        text-align: -webkit-center; border-radius: 1em; -webkit-backdrop-filter: blur(1.5rem); backdrop-filter: blur(3rem);
+        border: 2px solid rgba(255, 255, 255, 0.7); padding: 1em;">
+        <span class="fuente-mision">
+          <b id="titulo" style="font-size: 3.5rem;"> Somos una empresa líder en desarrollo de software que transforma ideas en realidad a través de la codificación. </b>
           <br>
           <br>
-          Empecemos hoy, contáctenos, está a nada de forjar su sueño
-        </span>
-
-        <div class="mat-elevation-z8 formulario-banner">
+          <div *ngIf="this.mostrarResumenConSlogan">
+            Ofrecemos una amplia gama de servicios que incluyen desarrollo full-stack, diseño de experiencia de usuario, procesamiento de grandes volúmenes de datos y
+            sistemas de gestión de información, entre otros.
+            Nuestro equipo está compuesto por profesionales apasionados y dedicados que se comprometen a entender las necesidades de
+            sus clientes y ofrecer soluciones personalizadas que impulsen el éxito y crecimiento.
+            Con el enfoque en la innovación y la calidad, nos destacamos por superar
+            las expectativas de los clientes en cada proyecto, manteniendo nuestro lema de:
+            <span class="fuente-slogan-titulo">Codificar tus sueños en la realidad</span>
+          </div>
+          </span>
+        <br>
+        <div class="mat-elevation-z0 formulario-banner">
           <mat-form-field appearance="fill" style="margin: 0.5em;">
             <mat-label>Nombre completo</mat-label>
             <input matInput [formControl]="nombre" [(ngModel)]="nombreCompleto" required >
@@ -45,14 +54,7 @@
             <mat-error *ngIf="telefono.hasError('minlength')">El teléfono no puede ser de menos de 10 digitos</mat-error>
             <mat-error *ngIf="telefono.hasError('pattern')">El teléfono no tiene un formato válido</mat-error>
           </mat-form-field>
-          <button mat-flat-button color="warn" style="margin: 0.5em;">Enviar</button>
-        </div>
-        <span class="fuente-slogan-titulo">Codificando sus sueños en realidad.</span>
-        <div *ngIf="this.mostraImagenesLogos" class="logos">
-          <img src="../../../assets/icons/facebook_icon.png" alt="facebook" width="80px">
-          <img src="../../../assets/icons/whatsapp_icon.png" alt="whatsapp" width="80px">
-          <img src="../../../assets/icons/linkedin_icon.png" alt="linkedin" width="80px">
-          <img src="../../../assets/icons/x_icon.png" alt="x" width="80px">
+          <button mat-flat-button color="warn" (click)="enviarFormulario()" style="margin: 0.5em;">Enviar</button>
         </div>
       </div>
   </div>
@@ -63,110 +65,92 @@
       </div>
       <h1 style="font-size: 2rem;">ESTOS SON LOS SERVICIOS QUE TE PUEDEN INTERESAR</h1>
 
-
-      <button class="button" *ngIf="!muestraSEO" (click)="this.muestraSEO = !this.muestraSEO">
-          <img src="../../../assets/icons/SEO.png" alt="logo" width="250px" style="margin: 1em;" *ngIf="!this.muestraSEO">
-      </button>
-      <mat-card class="tarjetas-servicios" *ngIf="this.muestraSEO">
-        <mat-card-header>
-          <mat-card-title style="color: black;">Optimización del SEO</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <p>
-            Optimización para motores de búsqueda (SEO) como Google, Bing y Yahoo para mejorar tu visibilidad online.
-          </p>
-        </mat-card-content>
-        <mat-card-actions>
-          <button mat-flat-button color="primary" (click)="this.muestraSEO = !this.muestraSEO">Cerrar</button>
-        </mat-card-actions>
-      </mat-card>
-
-      <button class="button" *ngIf="!this.muestraDisenioWeb" (click)="this.muestraDisenioWeb = !this.muestraDisenioWeb">
-          <img src="../../../assets/icons/DesignWeb-Custom.png" alt="logo" width="250px" style="margin: 1em;">
-      </button>
-      <mat-card class="tarjetas-servicios" *ngIf="this.muestraDisenioWeb">
-        <mat-card-header>
-          <mat-card-title style="color: black;">Diseño Web</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <p>
-            Diseño personalizado y exclusivo adaptado a la identidad de tu marca, evitando el uso de plantillas genéricas.
-          </p>
-        </mat-card-content>
-        <mat-card-actions>
-          <button mat-flat-button color="primary" (click)="this.muestraDisenioWeb = !this.muestraDisenioWeb">Cerrar</button>
-        </mat-card-actions>
-      </mat-card>
-
-      <button class="button" *ngIf="!this.muestraResponsividad" (click)="this.muestraResponsividad = !this.muestraResponsividad">
-        <img src="../../../assets/icons/Responsividad.png" alt="logo" width="250px" style="margin: 1em;">
-      </button>
-      <mat-card class="tarjetas-servicios" *ngIf="this.muestraResponsividad">
-        <mat-card-header>
-          <mat-card-title style="color: black;">Responsividad</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <p>
-            Garantía de funcionamiento óptimo en dispositivos móviles, tablets y computadoras de escritorio.
-          </p>
-        </mat-card-content>
-        <mat-card-actions>
-          <button mat-flat-button color="primary" (click)="this.muestraResponsividad = !this.muestraResponsividad">Cerrar</button>
-        </mat-card-actions>
-      </mat-card>
-
-      <button class="button" *ngIf="!this.muestraBlogs" (click)="this.muestraBlogs = !this.muestraBlogs">
-          <img src="../../../assets/icons/Blogs.png" alt="logo" width="250px" style="margin: 1em;">
-      </button>
-      <mat-card class="tarjetas-servicios" *ngIf="this.muestraBlogs">
-        <mat-card-header>
-          <mat-card-title style="color: black;">Blogs</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <p>
-            Blog en el que puedes publicar artículos, galerías y otros contenidos.
-          </p>
-        </mat-card-content>
-        <mat-card-actions>
-          <button mat-flat-button color="primary" (click)="this.muestraBlogs = !this.muestraBlogs">Cerrar</button>
-        </mat-card-actions>
-      </mat-card>
-
-
-      <button class="button" *ngIf="!this.muestraIntegracionRedes" (click)="this.muestraIntegracionRedes = !this.muestraIntegracionRedes">
-          <img src="../../../assets/icons/RedesSociales.png" alt="logo" width="250px" style="margin: 1em;">
-      </button>
-      <mat-card class="tarjetas-servicios" *ngIf="this.muestraIntegracionRedes">
-        <mat-card-header>
-          <mat-card-title style="color: black;">Integración en redes sociales</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <p>
-            Integración fluida con redes sociales y otras plataformas relevantes para maximizar tu alcance digital.
-          </p>
-        </mat-card-content>
-        <mat-card-actions>
-          <button mat-flat-button color="primary" (click)="this.muestraIntegracionRedes = !this.muestraIntegracionRedes">Cerrar</button>
-        </mat-card-actions>
-      </mat-card>
-
-
-      <button class="button" *ngIf="!this.muestraContenidoIlimitado" (click)="this.muestraContenidoIlimitado = !this.muestraContenidoIlimitado">
-          <img src="../../../assets/icons/ContenidoIlimitado.png" alt="logo" width="250px" style="margin: 1em;">
-      </button>
-      <mat-card class="tarjetas-servicios" *ngIf="this.muestraContenidoIlimitado">
-        <mat-card-header>
-          <mat-card-title style="color: black;">Secciones y contenidos ilimitados</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <p>
-            Creación de secciones y contenidos ilimitados para que puedas mostrar todo lo que tu negocio ofrece.
-          </p>
-        </mat-card-content>
-        <mat-card-actions>
-          <button mat-flat-button color="primary" (click)="this.muestraContenidoIlimitado = !this.muestraContenidoIlimitado">Cerrar</button>
-        </mat-card-actions>
-      </mat-card>
+      <!-- SEO -->
+      <div class="contenedor" *ngIf="!this.muestraDescripcionServicios">
+        <a href="#">
+             <figure>
+                 <img src="../../../assets/icons/SEO.png">
+                 <div class="capa">
+                     <h3>Optimización del SEO</h3>
+                     <p>Optimización para motores de búsqueda (SEO) como Google, Bing y Yahoo para mejorar tu visibilidad online.</p>
+                 </div>
+             </figure>
+         </a>
+          <!-- Diseño Web -->
+          <a href="#">
+            <figure>
+                <img src="../../../assets/icons/DesignWeb-Custom.png">
+                <div class="capa">
+                    <h3>Diseño Web</h3>
+                    <p>Diseño personalizado y exclusivo adaptado a la identidad de tu marca, evitando el uso de plantillas genéricas.</p>
+                </div>
+            </figure>
+        </a>
+      <!-- Responsividad -->
+        <a href="#">
+            <figure>
+                <img src="../../../assets/icons/Responsividad.png">
+                <div class="capa">
+                    <h3>Responsividad</h3>
+                    <p>Garantía de funcionamiento óptimo en dispositivos móviles, tablets y computadoras de escritorio.</p>
+                </div>
+            </figure>
+        </a>
+      <!-- Blogs -->
+        <a href="#">
+            <figure>
+                <img src="../../../assets/icons/Blogs.png">
+                <div class="capa">
+                    <h3>Blogs</h3>
+                    <p>Blog en el que puedes publicar artículos, galerías y otros contenidos.</p>
+                </div>
+            </figure>
+        </a>
+    <!-- Integración -->
+      <a href="#">
+          <figure>
+              <img src="../../../assets/icons/RedesSociales.png">
+              <div class="capa">
+                  <h3>Integración en redes sociales</h3>
+                  <p>Integración fluida con redes sociales y otras plataformas relevantes para maximizar tu alcance digital.</p>
+              </div>
+          </figure>
+      </a>
+    <!-- Secciones y contenidos ilimitados -->
+      <a href="#">
+          <figure>
+              <img src="../../../assets/icons/ContenidoIlimitado.png">
+              <div class="capa">
+                  <h3>Secciones y contenidos ilimitados</h3>
+                  <p>Creación de secciones y contenidos ilimitados para que puedas mostrar todo lo que tu negocio ofrece.</p>
+              </div>
+          </figure>
+      </a>
+      </div>
+      <div style=" margin: 1em;;
+      text-align: -webkit-center; border-radius: 1em; -webkit-backdrop-filter: blur(1.5rem); backdrop-filter: blur(3rem);
+      border: 2px solid rgba(255, 255, 255, 0.7); padding: 1em;"  *ngIf="this.muestraDescripcionServicios">
+        <ul>
+          <li>
+            <span>Optimización para motores de búsqueda (SEO) como Google, Bing y Yahoo para mejorar tu visibilidad online.</span>
+          </li>
+          <li>
+            <span>Diseño personalizado y exclusivo adaptado a la identidad de tu marca, evitando el uso de plantillas genéricas.</span>
+          </li>
+          <li>
+            <span>Garantía de funcionamiento óptimo en dispositivos móviles, tablets y computadoras de escritorio.</span>
+          </li>
+          <li>
+            <span>Blog en el que puedes publicar artículos, galerías y otros contenidos.</span>
+          </li>
+          <li>
+            <span>Integración fluida con redes sociales y otras plataformas relevantes para maximizar tu alcance digital.</span>
+          </li>
+          <li>
+            <span>Creación de secciones y contenidos ilimitados para que puedas mostrar todo lo que tu negocio ofrece.</span>
+          </li>
+        </ul>
+      </div>
     </div>
   </mat-grid-tile>
 <!-- <mat-grid-tile id="lateral-izquierdo" [colspan]="colsPanLateralIzquierdo"></mat-grid-tile>
