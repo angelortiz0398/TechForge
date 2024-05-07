@@ -1,7 +1,7 @@
 <mat-grid-list id="grid" cols="12" style="background-color: var(--color-palette-quinary); height: 100vh;" [rowHeight]="rowHeight">
   <mat-grid-tile id="banner" [colspan]="colsPanBanner">
     <div class="contenedor-banner">
-      <div style=" margin-top: 1em;;
+      <div style=" margin-top: 1em;
         text-align: -webkit-center; border-radius: 1em; -webkit-backdrop-filter: blur(1.5rem); backdrop-filter: blur(3rem);
         border: 2px solid rgba(255, 255, 255, 0.7); padding: 1em;">
         <span class="fuente-mision">
@@ -58,6 +58,9 @@
         </div>
       </div>
   </div>
+  </mat-grid-tile>
+  <mat-grid-tile id="sobre-nosotros" [colspan]="colsPanSobreNosotros" rowspan="1" style="padding: 1em;">
+    <app-about-us style="width: 100%; height: 100%;"></app-about-us>
   </mat-grid-tile>
   <mat-grid-tile id="servicios" [colspan]="colsPanServicios" style="padding: 1em;">
     <div class="container-fluid contenedor-central">
@@ -268,29 +271,29 @@
 </mat-grid-tile>
 <mat-grid-tile id="complemento-formulario" [colspan]="colsPanComplementoFormulario" style="background-color: var(--color-palette-quinary); max-height: 75% !important;">
   <div class="complemento">
-    <h2 style="font-size: 32px;">
+    <h2 style="font-size: 32px; color: white;">
       ¿Listo para hablar con un experto?
     </h2>
     <br>
-    <h2 style="font-size: 32px;">
+    <h2 style="font-size: 32px; color: white;">
       Márcanos al (+52)55-84-93-51-23
     </h2>
     <br>
     <mat-list dense>
         <mat-list-item>
-          <p>
+          <p style="color: white;">
             <mat-icon matListItemIcon>done_outline</mat-icon>
             Expertos en la creación de sitios web
           </p>
         </mat-list-item>
         <mat-list-item>
-          <p>
+          <p style="color: white;">
             <mat-icon matListItemIcon>done_outline</mat-icon>
             Múltiples sitios ya desarrollados
           </p>
         </mat-list-item>
         <mat-list-item>
-          <p>
+          <p style="color: white;">
             <mat-icon matListItemIcon>done_outline</mat-icon>
             Muchos clientes satisfechos
           </p>

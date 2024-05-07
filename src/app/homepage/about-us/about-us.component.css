@@ -1,0 +1,124 @@
+*,*:after,*:before{
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-ms-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+.wrapper_outer{
+	height: 100%;
+	overflow: hidden;
+}
+.wrapper{
+	height: 100%;
+  width: 100%;
+	overflow-x: hidden;
+
+	perspective: 1px;
+}
+
+.parallax_section{
+	box-sizing: border-box;
+	min-height: 100%;
+	/* padding: 10vh 10vh; */
+	position: relative;
+	width: 100%;
+  height: 100%;
+	display: flex;
+	align-items: right;
+	justify-content: center;
+	z-index: 1;
+
+	overflow: hidden;
+
+	transform-style: preserve-3d;
+}
+.parallax_bg{
+	position: absolute;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	background-size: cover;
+	background-position: center center;
+	z-index: -1;
+	min-height: 100%;
+
+	transform: translate3d(0,0,-1px)  !important;
+}
+h2{
+	color: black!important;
+	margin: 0 0 10px !important;
+	font-size: 50px !important;
+	text-shadow: 2px 2px 2px rgba(0,0,0,0.4) !important;
+	text-align: center !important;
+	/* text-transform: uppercase !important; */
+}
+
+.contenedor-about{
+  margin: 3em; text-align: -webkit-center;
+  padding: 1em; height: fit-content;
+  .fuente-titulo-acerca{
+    font-size: 18px;
+    line-height: 1.1;
+  }
+  .fuente-cuerpo-acerca{
+    font-size: 16px;
+  }
+}
+
+.full-width-tile {
+  background-color: #E0E1DC;
+  position: absolute;
+}
+
+.full-width-tile::after {
+  content: ''; /* Añadimos un pseudo-elemento ::after para crear el degradado */
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100px; /* Altura del degradado, ajusta este valor según tus necesidades */
+  background-image: linear-gradient(to bottom, rgba(224, 225, 220, 0), rgba(224, 225, 220, 1)); /* Degradado transparente a color de fondo */
+}
+
+/* Estilo para pantallas más pequeñas que 420px */
+@media screen and (max-width: 420px) {
+  .full-width-tile {
+      grid-column: span 12;
+  }
+  .contenedor-about{
+    .fuente-titulo-acerca{
+      font-size: 10px !important;
+      line-height: 0.5 !important;
+    }
+    .fuente-cuerpo-acerca{
+      font-size: 9px !important;
+    }
+  }
+}
+/* Estilo para pantallas más pequeñas que 420px */
+@media screen and (max-width: 720px) {
+  .contenedor-about{
+    .fuente-titulo-acerca{
+      font-size: 16px !important;
+      line-height: 0.9 !important;
+    }
+    .fuente-cuerpo-acerca{
+      font-size: 14px !important;
+    }
+  }
+}
+
+/* Estilo para pantallas más pequeñas que 420px */
+@media screen and (max-width: 1280px) {
+  .contenedor-about{
+    .fuente-titulo-acerca{
+      font-size: 19px !important;
+      line-height: 1.1 !important;
+    }
+    .fuente-cuerpo-acerca{
+      font-size: 17px !important;
+    }
+  }
+}
