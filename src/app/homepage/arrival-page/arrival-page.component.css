@@ -383,7 +383,7 @@ mat-form-field{
       top: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0,103,123,0.7);
+      background: rgba(0, 78, 123, 0.877);
       transition: all 400ms ease-out;
       opacity: 0;
       visibility: hidden;

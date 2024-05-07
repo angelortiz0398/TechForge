@@ -16,6 +16,7 @@ import { MatIcon } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { Resend } from 'resend';
+import { AboutUsComponent } from '../about-us/about-us.component';
 @Component({
   selector: 'app-arrival-page',
   standalone: true,
@@ -32,7 +33,8 @@ import { Resend } from 'resend';
     NgxMaskDirective,
     MatIcon,
     MatCardModule,
-    HttpClientModule
+    HttpClientModule,
+    AboutUsComponent
   ],
   providers: [provideNgxMask()],
   templateUrl: './arrival-page.component.html',
@@ -69,6 +71,7 @@ export class ArrivalPageComponent implements OnInit {
   rowHeight = '75%';
 
   colsPanServicios = 12;
+  colsPanSobreNosotros = 12;
   colsPanDescripcion = 12;
   colsPanGaleria = 12;
   colsPanFormulario = 6;
