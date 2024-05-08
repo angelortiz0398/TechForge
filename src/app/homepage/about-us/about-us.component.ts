@@ -1,5 +1,5 @@
-import { Component, HostListener } from '@angular/core';
-import {MatGridListModule} from '@angular/material/grid-list';
+import { Component, HostListener, OnInit } from '@angular/core';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 @Component({
   selector: 'app-about-us',
@@ -8,18 +8,22 @@ import {MatGridListModule} from '@angular/material/grid-list';
   templateUrl: './about-us.component.html',
   styleUrl: './about-us.component.css'
 })
-export class AboutUsComponent {
+export class AboutUsComponent implements OnInit {
+  @HostListener('window:resize', ['$event'])
+
+  ngOnInit(): void {
+    this.onResize(); // No es necesario pasar ningún argumento aquí
+  }
   colspanIzquierda: number = 6;
   colspanDerecha: number = 6;
 
-  @HostListener('window:resize', ['$event'])
-  onResize(event: any) {
-    if (event.target.innerWidth <= 1280) {
+  onResize(event?: any) { // Evento es opcional aquí
+    if (window.innerWidth <= 1280) { // Accediendo directamente al ancho de la ventana
       this.colspanIzquierda = 0;
-      this.colspanDerecha = 12; // Cambia a 12 columna cuando el ancho de la ventana es menor a 420px
+      this.colspanDerecha = 12;
     } else {
-      this.colspanIzquierda = 6; // Cambia a 6 columnas por defecto
-      this.colspanDerecha = 6; // Cambia a 6 columnas por defecto
+      this.colspanIzquierda = 6;
+      this.colspanDerecha = 6;
     }
   }
 }

@@ -33,11 +33,11 @@ export interface Tile {
 })
 export class AppComponent  implements PreloadingStrategy, OnInit {
 
-      // Suscribe adjustStyles al evento resize de la ventana
-      @HostListener('window:resize', ['$event'])
-      onResize($event: any) {
-        this.adjustStyles();
-      }
+  // Suscribe adjustStyles al evento resize de la ventana
+  @HostListener('window:resize', ['$event'])
+  onResize($event?: any) {
+    this.adjustStyles();
+  }
   routeA : ActivatedRoute | undefined;
   OscuroActivado = true;
   iconosEnToolbar = false;
@@ -48,6 +48,7 @@ export class AppComponent  implements PreloadingStrategy, OnInit {
     // console.log('this.routeA!.routeConfig?.path: ', this.routeA);
     this.routeActual = this.routeA!.routeConfig?.path as string;
     this.CambioModoOscuro();
+    this.onResize();
   }
 
 
@@ -126,10 +127,12 @@ export class AppComponent  implements PreloadingStrategy, OnInit {
   }
 
   adjustStyles() {
-    if (window.innerWidth <= 600) {
-      this.iconosEnToolbar = true;
-    } else {
-      this.iconosEnToolbar = false;
+    if(typeof window !== 'undefined') {
+      if (window.innerWidth <= 600) {
+        this.iconosEnToolbar = true;
+      } else {
+        this.iconosEnToolbar = false;
+      }
     }
   }
 }
