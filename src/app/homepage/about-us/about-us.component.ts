@@ -14,16 +14,16 @@ export class AboutUsComponent implements OnInit {
   ngOnInit(): void {
     this.onResize(); // No es necesario pasar ningún argumento aquí
   }
-  colspanIzquierda: number = 6;
-  colspanDerecha: number = 6;
+  colspanIzquierda: number = 5;
+  colspanDerecha: number = 7;
 
   onResize(event?: any) { // Evento es opcional aquí
     if (window.innerWidth <= 1280) { // Accediendo directamente al ancho de la ventana
       this.colspanIzquierda = 0;
       this.colspanDerecha = 12;
     } else {
-      this.colspanIzquierda = 6;
-      this.colspanDerecha = 6;
+      this.colspanIzquierda = 5;
+      this.colspanDerecha = 7;
     }
   }
 }
