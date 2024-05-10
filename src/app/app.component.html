@@ -1,19 +1,20 @@
 
 <mat-toolbar class="toolbar-fixed">
-  <button mat-button (click)="redireccionarPrincipal()" style="margin-top: 8px;">
+  <button mat-button (click)="redireccionarPrincipal()" >
     <img class="docs-footer-angular-logo"
     src="../../../assets/img/logo.png"
     width="36px"
-    alt="Angular icon">
+    alt="Angular icon"
+    loading="lazy">
   </button>
-  <h1 style="color: black;" (click)="redireccionarHome()">TECHFORGE</h1>
+  <h1 style="color: black;">TECHFORGE</h1>
   <span class="example-spacer"></span>
   <div class="menu-herramientas">
-    <button *ngIf="!this.iconosEnToolbar" mat-button (click)="redireccionarHome()">
-      <mat-icon>home</mat-icon> Home
+    <button *ngIf="!this.iconosEnToolbar" mat-button (click)="redireccionarPrincipal()">
+      <mat-icon>more_vert</mat-icon> Inicio
     </button>
-    <button *ngIf="this.iconosEnToolbar" mat-button (click)="redireccionarHome()">
-      <mat-icon>home</mat-icon>
+    <button *ngIf="this.iconosEnToolbar" mat-button (click)="redireccionarPrincipal()">
+      <mat-icon>more_vert</mat-icon>
     </button>
     <button *ngIf="!this.iconosEnToolbar" mat-button [matMenuTriggerFor]="tools">
       <mat-icon>menu</mat-icon>Herramientas

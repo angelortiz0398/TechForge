@@ -1,9 +1,16 @@
-<mat-grid-list id="grid" cols="12" style="background-color: var(--color-palette-quinary); height: 100vh;" [rowHeight]="rowHeight">
+<mat-grid-list id="grid" cols="12" style="background-color: var(--color-palette-quinary); height: 100%;" [rowHeight]="rowHeight">
   <mat-grid-tile id="banner" [colspan]="colsPanBanner">
     <div class="contenedor-banner">
       <div style=" margin-top: 1em;
-        text-align: -webkit-center; border-radius: 1em; -webkit-backdrop-filter: blur(1.5rem); backdrop-filter: blur(3rem);
-        border: 2px solid rgba(255, 255, 255, 0.7); padding: 1em;">
+      height: 80%;
+      text-align: -webkit-center;
+      border-radius: 1em;
+      backdrop-filter: blur(1rem);
+      border: 2px solid rgba(255, 255, 255, 0.7);
+      padding: 1em;
+      display: grid;
+      align-content: center;
+      justify-content: space-around;">
         <span class="fuente-mision">
           <b id="titulo" style="font-size: 3.5rem;"> Somos una empresa líder en desarrollo de software que transforma ideas en realidad a través de la codificación. </b>
           <br>
@@ -54,113 +61,19 @@
             <mat-error *ngIf="telefono.hasError('minlength')">El teléfono no puede ser de menos de 10 digitos</mat-error>
             <mat-error *ngIf="telefono.hasError('pattern')">El teléfono no tiene un formato válido</mat-error>
           </mat-form-field>
-          <button mat-flat-button color="warn" (click)="enviarFormulario()" style="margin: 0.5em;">Enviar</button>
+          <button mat-flat-button color="warn" (click)="enviarFormulario()" style="margin: 0.5em; height: 56px; margin-bottom: 18px; margin-left: 0; margin-right: 0; margin-top: 0px;">Enviar</button>
         </div>
       </div>
   </div>
   </mat-grid-tile>
-  <mat-grid-tile id="sobre-nosotros" [colspan]="colsPanSobreNosotros" rowspan="1" style="padding: 1em;">
+  <mat-grid-tile id="sobre-nosotros" [colspan]="colsPanSobreNosotros" rowspan="1">
     <app-about-us style="width: 100%; height: 100%;"></app-about-us>
   </mat-grid-tile>
-  <mat-grid-tile id="servicios" [colspan]="colsPanServicios" style="padding: 1em;">
-    <div class="container-fluid contenedor-central">
-      <div class="contenedor-titulo">
-      </div>
-      <h1 style="font-size: 2rem;">ESTOS SON LOS SERVICIOS QUE TE PUEDEN INTERESAR</h1>
 
-      <!-- SEO -->
-      <div class="contenedor" *ngIf="!this.muestraDescripcionServicios">
-        <a href="#">
-             <figure>
-                 <img src="../../../assets/icons/SEO.png">
-                 <div class="capa">
-                     <h3>Optimización del SEO</h3>
-                     <p>Optimización para motores de búsqueda (SEO) como Google, Bing y Yahoo para mejorar tu visibilidad online.</p>
-                 </div>
-             </figure>
-         </a>
-          <!-- Diseño Web -->
-          <a href="#">
-            <figure>
-                <img src="../../../assets/icons/DesignWeb-Custom.png">
-                <div class="capa">
-                    <h3>Diseño Web</h3>
-                    <p>Diseño personalizado y exclusivo adaptado a la identidad de tu marca, evitando el uso de plantillas genéricas.</p>
-                </div>
-            </figure>
-        </a>
-      <!-- Responsividad -->
-        <a href="#">
-            <figure>
-                <img src="../../../assets/icons/Responsividad.png">
-                <div class="capa">
-                    <h3>Responsividad</h3>
-                    <p>Garantía de funcionamiento óptimo en dispositivos móviles, tablets y computadoras de escritorio.</p>
-                </div>
-            </figure>
-        </a>
-      <!-- Blogs -->
-        <a href="#">
-            <figure>
-                <img src="../../../assets/icons/Blogs.png">
-                <div class="capa">
-                    <h3>Blogs</h3>
-                    <p>Blog en el que puedes publicar artículos, galerías y otros contenidos.</p>
-                </div>
-            </figure>
-        </a>
-    <!-- Integración -->
-      <a href="#">
-          <figure>
-              <img src="../../../assets/icons/RedesSociales.png">
-              <div class="capa">
-                  <h3>Integración en redes sociales</h3>
-                  <p>Integración fluida con redes sociales y otras plataformas relevantes para maximizar tu alcance digital.</p>
-              </div>
-          </figure>
-      </a>
-    <!-- Secciones y contenidos ilimitados -->
-      <a href="#">
-          <figure>
-              <img src="../../../assets/icons/ContenidoIlimitado.png">
-              <div class="capa">
-                  <h3>Secciones y contenidos ilimitados</h3>
-                  <p>Creación de secciones y contenidos ilimitados para que puedas mostrar todo lo que tu negocio ofrece.</p>
-              </div>
-          </figure>
-      </a>
-      </div>
-      <div style=" margin: 1em;;
-      text-align: -webkit-center; border-radius: 1em; -webkit-backdrop-filter: blur(1.5rem); backdrop-filter: blur(3rem);
-      border: 2px solid rgba(255, 255, 255, 0.7); padding: 1em;"  *ngIf="this.muestraDescripcionServicios">
-        <ul [type]="'none'" style="padding: 0px;">
-          <li>
-            <span>Optimización para motores de búsqueda (SEO) como Google, Bing y Yahoo para mejorar tu visibilidad online.</span>
-          </li>
-          <br>
-          <li>
-            <span>Diseño personalizado y exclusivo adaptado a la identidad de tu marca, evitando el uso de plantillas genéricas.</span>
-          </li>
-          <br>
-          <li>
-            <span>Garantía de funcionamiento óptimo en dispositivos móviles, tablets y computadoras de escritorio.</span>
-          </li>
-          <br>
-          <li>
-            <span>Blog en el que puedes publicar artículos, galerías y otros contenidos.</span>
-          </li>
-          <br>
-          <li>
-            <span>Integración fluida con redes sociales y otras plataformas relevantes para maximizar tu alcance digital.</span>
-          </li>
-          <br>
-          <li>
-            <span>Creación de secciones y contenidos ilimitados para que puedas mostrar todo lo que tu negocio ofrece.</span>
-          </li>
-        </ul>
-      </div>
-    </div>
+  <mat-grid-tile id="nuestros-servicios" [colspan]="colsPanNuestrosServicios">
+    <app-our-services style="width: 100%; height: 100%;"></app-our-services>
   </mat-grid-tile>
+
 <!-- <mat-grid-tile id="lateral-izquierdo" [colspan]="colsPanLateralIzquierdo"></mat-grid-tile>
 <mat-grid-tile id="descripcion" [colspan]="colsPanDescripcion" style="padding: 1em; max-height: 100%;">
   <div class="contenedor-lateral-izquierdo">
@@ -195,6 +108,7 @@
   </div>
 </div>
 </mat-grid-tile>
+
 <mat-grid-tile id="lateral-derecho" [colspan]="colsPanLateralDerecho"></mat-grid-tile> -->
 <!-- <mat-grid-tile id="galeria" [colspan]="colsPanGaleria">
   <div class="container-fluid contenedor-central alterno" style="padding: 1em;">

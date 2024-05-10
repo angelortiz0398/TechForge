@@ -1,0 +1,113 @@
+<div class="wrapper_outer">
+	<div class="wrapper">
+
+		<section class="parallax_section">
+			<div class="parallax_bg"  loading="lazy"></div>
+      <mat-grid-list cols="12" rowHeight="100%" style="height: 110rem; width: 100%;">
+          <mat-grid-tile class="full-width-tile" [colspan]="this.colspanDerecha" style="background-image: url(https://images.unsplash.com/photo-1714346573183-fe4f11813b86);">
+            <div class="contenedor-about">
+              <h2 class="fuente-titulo-acerca">
+                Estos son los servicios que te pueden interesar
+                <br>
+              </h2>
+              <div class="contenedor" *ngIf="!this.muestraDescripcionServicios">
+                <a href="#">
+                     <figure>
+                         <img src="../../../assets/icons/SEO.png"  loading="lazy">
+                         <div class="capa">
+                             <h3>Optimización del SEO</h3>
+                             <p>Optimización para motores de búsqueda (SEO) como Google, Bing y Yahoo para mejorar tu visibilidad online.</p>
+                         </div>
+                     </figure>
+                 </a>
+                  <!-- Diseño Web -->
+                  <a href="#">
+                    <figure>
+                        <img src="../../../assets/icons/DesignWeb-Custom.png" loading="lazy">
+                        <div class="capa">
+                            <h3>Diseño Web</h3>
+                            <p>Diseño personalizado y exclusivo adaptado a la identidad de tu marca, evitando el uso de plantillas genéricas.</p>
+                        </div>
+                    </figure>
+                </a>
+              <!-- Responsividad -->
+                <a href="#">
+                    <figure>
+                        <img src="../../../assets/icons/Responsividad.png" loading="lazy">
+                        <div class="capa">
+                            <h3>Responsividad</h3>
+                            <p>Garantía de funcionamiento óptimo en dispositivos móviles, tablets y computadoras de escritorio.</p>
+                        </div>
+                    </figure>
+                </a>
+              <!-- Blogs -->
+                <a href="#">
+                    <figure>
+                        <img src="../../../assets/icons/Blogs.png" loading="lazy">
+                        <div class="capa">
+                            <h3>Blogs</h3>
+                            <p>Blog en el que puedes publicar artículos, galerías y otros contenidos.</p>
+                        </div>
+                    </figure>
+                </a>
+            <!-- Integración -->
+              <a href="#">
+                  <figure>
+                      <img src="../../../assets/icons/RedesSociales.png" loading="lazy">
+                      <div class="capa">
+                          <h3>Integración en redes sociales</h3>
+                          <p>Integración fluida con redes sociales y otras plataformas relevantes para maximizar tu alcance digital.</p>
+                      </div>
+                  </figure>
+              </a>
+            <!-- Secciones y contenidos ilimitados -->
+              <a href="#">
+                  <figure>
+                      <img src="../../../assets/icons/ContenidoIlimitado.png" loading="lazy">
+                      <div class="capa">
+                          <h3>Secciones y contenidos ilimitados</h3>
+                          <p>Creación de secciones y contenidos ilimitados para que puedas mostrar todo lo que tu negocio ofrece.</p>
+                      </div>
+                  </figure>
+              </a>
+              </div>
+              <div style=" margin: 1em; background-color: white;
+              text-align: -webkit-center; border-radius: 1em; -webkit-backdrop-filter: blur(1.5rem); backdrop-filter: blur(3rem);
+              border: 2px solid rgba(0, 0, 0, 0.7); padding: 1em;"  *ngIf="this.muestraDescripcionServicios">
+                <ul [type]="'none'" style="padding: 0px;">
+                  <li>
+                    <span style="color: black;">Optimización para motores de búsqueda (SEO) como Google, Bing y Yahoo para mejorar tu visibilidad online.</span>
+                  </li>
+                  <br>
+                  <li>
+                    <span style="color: black;">Diseño personalizado y exclusivo adaptado a la identidad de tu marca, evitando el uso de plantillas genéricas.</span>
+                  </li>
+                  <br>
+                  <li>
+                    <span style="color: black;">Garantía de funcionamiento óptimo en dispositivos móviles, tablets y computadoras de escritorio.</span>
+                  </li>
+                  <br>
+                  <li>
+                    <span style="color: black;">Blog en el que puedes publicar artículos, galerías y otros contenidos.</span>
+                  </li>
+                  <br>
+                  <li>
+                    <span style="color: black;">Integración fluida con redes sociales y otras plataformas relevantes para maximizar tu alcance digital.</span>
+                  </li>
+                  <br>
+                  <li>
+                    <span style="color: black;">Creación de secciones y contenidos ilimitados para que puedas mostrar todo lo que tu negocio ofrece.</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </mat-grid-tile>
+          <mat-grid-tile [colspan]="this.colspanIzquierda" style="background-image: url(https://images.unsplash.com/photo-1714346573183-fe4f11813b86);   background-attachment: fixed;
+          background-size: cover !important;
+          background-position: center !important;" loading="lazy">
+          </mat-grid-tile>
+      </mat-grid-list>
+		</section>
+	</div>
+</div>
+

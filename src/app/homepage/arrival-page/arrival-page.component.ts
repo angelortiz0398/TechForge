@@ -17,6 +17,7 @@ import { MatCardModule } from '@angular/material/card';
 import { HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { Resend } from 'resend';
 import { AboutUsComponent } from '../about-us/about-us.component';
+import { OurServicesComponent } from '../our-services/our-services.component';
 @Component({
   selector: 'app-arrival-page',
   standalone: true,
@@ -34,7 +35,8 @@ import { AboutUsComponent } from '../about-us/about-us.component';
     MatIcon,
     MatCardModule,
     HttpClientModule,
-    AboutUsComponent
+    AboutUsComponent,
+    OurServicesComponent
   ],
   providers: [provideNgxMask()],
   templateUrl: './arrival-page.component.html',
@@ -68,10 +70,11 @@ export class ArrivalPageComponent implements OnInit {
   errorMessage = '';
 
   // Variables generales
-  rowHeight = '75%';
+  rowHeight = '85%';
 
   colsPanServicios = 12;
   colsPanSobreNosotros = 12;
+  colsPanNuestrosServicios = 12;
   colsPanDescripcion = 12;
   colsPanGaleria = 12;
   colsPanFormulario = 6;
@@ -140,7 +143,7 @@ export class ArrivalPageComponent implements OnInit {
       titulo!.style.fontSize = '1.5rem';
       this.muestraDescripcionServicios = true;
     }else {
-      this.rowHeight = '75%';
+      this.rowHeight = '85%';
 
       this.colsPanServicios = 12;
       this.colsPanDescripcion = 12;
