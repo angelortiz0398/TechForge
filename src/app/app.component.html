@@ -2,19 +2,31 @@
 <mat-toolbar class="toolbar-fixed">
   <button mat-button (click)="redireccionarPrincipal()" >
     <img class="docs-footer-angular-logo"
-    src="../../../assets/img/logo.png"
-    width="36px"
-    alt="Angular icon"
-    loading="lazy">
+      src="../../../assets/img/logo.png"
+      width="36px"
+      alt="logo-simple"
+      loading="lazy">
   </button>
-  <h1 style="color: black;">TECHFORGE</h1>
+  <h1 style="color: #fa1b1b">TECHFORGE</h1>
   <span class="example-spacer"></span>
   <div class="menu-herramientas">
-    <button *ngIf="!this.iconosEnToolbar" mat-button (click)="redireccionarPrincipal()">
-      <mat-icon>more_vert</mat-icon> Inicio
+    <button matButton *ngIf="!this.iconosEnToolbar" mat-button (click)="redireccionarPrincipal()">
+      <mat-icon>home</mat-icon> Inicio
     </button>
     <button *ngIf="this.iconosEnToolbar" mat-button (click)="redireccionarPrincipal()">
-      <mat-icon>more_vert</mat-icon>
+      <mat-icon>home</mat-icon>
+    </button>
+    <button *ngIf="!this.iconosEnToolbar" mat-button (click)="redireccionarPrincipal()">
+      <mat-icon>groups</mat-icon> Sobre nosotros
+    </button>
+    <button *ngIf="this.iconosEnToolbar" mat-button (click)="redireccionarPrincipal()">
+      <mat-icon>groups</mat-icon>
+    </button>
+    <button *ngIf="!this.iconosEnToolbar" mat-button (click)="redireccionarPrincipal()">
+      <mat-icon>linked_services</mat-icon> Nuestros servicios
+    </button>
+    <button *ngIf="this.iconosEnToolbar" mat-button (click)="redireccionarPrincipal()">
+      <mat-icon>linked_services</mat-icon>
     </button>
     <button *ngIf="!this.iconosEnToolbar" mat-button [matMenuTriggerFor]="tools">
       <mat-icon>menu</mat-icon>Herramientas
@@ -32,7 +44,7 @@
       <button mat-menu-item>Convertidor de facturas (CFDI) a PDF</button>
     </mat-menu>
   </div>
-  <mat-slide-toggle [checked]="!this.OscuroActivado" (toggleChange)="CambioModoOscuro()" color="primary" style="margin-right: 10px;" *ngIf="!this.iconosEnToolbar">
+  <mat-slide-toggle [checked]="!this.OscuroActivado" (toggleChange)="CambioModoOscuro()" color="warn" style="margin-right: 10px;" *ngIf="!this.iconosEnToolbar">
     <button  mat-icon-button disabled aria-label="Example icon button with a open in new tab icon" *ngIf="!this.OscuroActivado">
       <mat-icon>dark_mode</mat-icon>
     </button>
