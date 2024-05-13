@@ -25,3 +25,18 @@ main {
 .toolbar-fixed button, .toolbar-fixed a {
   pointer-events: auto; /* Habilita los eventos de clic y toque en los elementos hijos */
 }
+
+.menu-herramientas{
+  /* button{
+    max-width: 48px;
+  } */
+  button{
+    span{
+      color: var(light-dark(white,dark)) !important;
+    };
+  }
+}
+
+.mat-mdc-button:not(:disabled) {
+  color: #fa1b1b
+}
