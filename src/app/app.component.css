@@ -16,9 +16,9 @@ main {
   pointer-events: none; /* Evita que los eventos de clic y toque se propaguen al toolbar */
   height: 50px;
   padding: 0px;
-  backdrop-filter: blur(3rem);
+  backdrop-filter: blur(5rem);
   /* border: 2px solid rgba(255, 255, 255, 0.7); */
-  background-color: transparent;
+  background-color: black;
 }
 
 /* Estilo opcional para los elementos hijos del toolbar que necesitan ser clicables */
@@ -38,5 +38,9 @@ main {
 }
 
 .mat-mdc-button:not(:disabled) {
-  color: #fa1b1b
+  color: #ffffff
+}
+
+.docs-footer-angular-logo{
+  filter: invert(80%) sepia(103%) saturate(20000%) hue-rotate(360deg) brightness(67%) contrast(83%);
 }
