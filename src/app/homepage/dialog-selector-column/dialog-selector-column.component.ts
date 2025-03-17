@@ -23,31 +23,30 @@ export interface DialogData {
 }
 
 @Component({
-  selector: 'app-dialog-selector-column',
-  standalone: true,
-  imports: [
-    MatInputModule,
-    FormsModule,
-    MatButtonModule,
-    MatDialogTitle,
-    MatDialogContent,
-    MatDialogActions,
-    MatDialogClose,
-    CommonModule,
-    MatCheckboxModule,
-    MatButtonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatCheckboxModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
-    MatIconModule,
-    CdkDropList,
-    CdkDrag
-  ],
-  templateUrl: './dialog-selector-column.component.html',
-  styleUrl: './dialog-selector-column.component.css'
+    selector: 'app-dialog-selector-column',
+    imports: [
+        MatInputModule,
+        FormsModule,
+        MatButtonModule,
+        MatDialogTitle,
+        MatDialogContent,
+        MatDialogActions,
+        MatDialogClose,
+        CommonModule,
+        MatCheckboxModule,
+        MatButtonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MatCheckboxModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatSelectModule,
+        MatIconModule,
+        CdkDropList,
+        CdkDrag
+    ],
+    templateUrl: './dialog-selector-column.component.html',
+    styleUrl: './dialog-selector-column.component.css'
 })
 export class DialogSelectorColumnComponent {
   isVisibleColumnControl  = new FormControl<boolean[]>([...this.data.columnSelectedBoolean]);

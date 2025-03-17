@@ -2,11 +2,10 @@ import { Component, HostListener, OnInit } from '@angular/core';
 import { MatGridListModule } from '@angular/material/grid-list';
 
 @Component({
-  selector: 'app-about-us',
-  standalone: true,
-  imports: [MatGridListModule],
-  templateUrl: './about-us.component.html',
-  styleUrl: './about-us.component.css'
+    selector: 'app-about-us',
+    imports: [MatGridListModule],
+    templateUrl: './about-us.component.html',
+    styleUrl: './about-us.component.css'
 })
 export class AboutUsComponent implements OnInit {
   @HostListener('window:resize', ['$event'])

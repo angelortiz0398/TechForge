@@ -29,28 +29,27 @@ interface Fila {
   [key: string]: any;
 }
 @Component({
-  selector: 'app-main-layout',
-  standalone: true,
-  imports: [
-    RouterOutlet,
-    ProgressComponent,
-    CommonModule,
-    MatTableModule,
-    MatSortModule,
-    MatButtonModule,
-    DropfileDirective,
-    MatDividerModule,
-    MatCardModule,
-    DialogSelectorColumnComponent,
-    MatIconModule,
-    MatPaginatorModule,
-    ProgressComponent,
-    HomeComponent,
-    ConversorXmlXlsxComponent,
-    ArrivalPageComponent
-  ],
-  templateUrl: './main-layout.component.html',
-  styleUrl: './main-layout.component.css',
+    selector: 'app-main-layout',
+    imports: [
+        RouterOutlet,
+        ProgressComponent,
+        CommonModule,
+        MatTableModule,
+        MatSortModule,
+        MatButtonModule,
+        DropfileDirective,
+        MatDividerModule,
+        MatCardModule,
+        DialogSelectorColumnComponent,
+        MatIconModule,
+        MatPaginatorModule,
+        ProgressComponent,
+        HomeComponent,
+        ConversorXmlXlsxComponent,
+        ArrivalPageComponent
+    ],
+    templateUrl: './main-layout.component.html',
+    styleUrl: './main-layout.component.css'
 })
 export class MainLayoutComponent implements PreloadingStrategy, OnInit{
 

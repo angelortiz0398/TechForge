@@ -3,11 +3,10 @@ import { Component, HostListener, OnInit } from '@angular/core';
 import { MatGridListModule } from '@angular/material/grid-list';
 
 @Component({
-  selector: 'app-our-services',
-  standalone: true,
-  imports: [MatGridListModule, CommonModule],
-  templateUrl: './our-services.component.html',
-  styleUrl: './our-services.component.css'
+    selector: 'app-our-services',
+    imports: [MatGridListModule, CommonModule],
+    templateUrl: './our-services.component.html',
+    styleUrl: './our-services.component.css'
 })
 export class OurServicesComponent implements OnInit {
   @HostListener('window:resize', ['$event'])
