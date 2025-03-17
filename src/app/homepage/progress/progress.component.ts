@@ -4,11 +4,10 @@ import {MatDividerModule} from '@angular/material/divider';
 import {MatCardModule} from '@angular/material/card';
 
 @Component({
-  selector: 'app-progress',
-  standalone: true,
-  imports: [MatProgressBarModule, MatCardModule, MatDividerModule],
-  templateUrl: './progress.component.html',
-  styleUrl: './progress.component.css'
+    selector: 'app-progress',
+    imports: [MatProgressBarModule, MatCardModule, MatDividerModule],
+    templateUrl: './progress.component.html',
+    styleUrl: './progress.component.css'
 })
 export class ProgressComponent implements OnInit {
   @Input() progress = 0;

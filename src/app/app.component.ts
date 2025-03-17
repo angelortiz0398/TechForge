@@ -23,13 +23,12 @@ export interface Tile {
   text?: string;
 }
 @Component({
-  selector: 'app-root',
-  standalone: true,
-  imports: [MatToolbarModule, RouterOutlet, HomepageModule, MainLayoutComponent, FooterComponent, MatSidenavModule,
-    MatButtonModule, MatDividerModule, MatIconModule, MatGridListModule, CommonModule, MatSlideToggleModule, MatMenuModule],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.css',
-  providers: [DropfileDirective]
+    selector: 'app-root',
+    imports: [MatToolbarModule, RouterOutlet, HomepageModule, MainLayoutComponent, FooterComponent, MatSidenavModule,
+        MatButtonModule, MatDividerModule, MatIconModule, MatGridListModule, CommonModule, MatSlideToggleModule, MatMenuModule],
+    templateUrl: './app.component.html',
+    styleUrl: './app.component.css',
+    providers: [DropfileDirective]
 })
 export class AppComponent  implements PreloadingStrategy, OnInit {
 

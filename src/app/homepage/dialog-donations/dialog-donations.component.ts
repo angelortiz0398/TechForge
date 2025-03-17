@@ -5,16 +5,16 @@ import { DialogData } from '../dialog-selector-column/dialog-selector-column.com
 import { MatButtonModule } from '@angular/material/button';
 
 @Component({
-  selector: 'app-dialog-donations',
-  standalone: true,
-  imports: [
-    MatButtonModule,
-    MatDialogTitle,
-    MatDialogContent,
-    MatDialogActions,
-    MatDialogClose],
-  templateUrl: './dialog-donations.component.html',
-  styleUrl: './dialog-donations.component.css'
+    selector: 'app-dialog-donations',
+    imports: [
+        MatButtonModule,
+        MatDialogTitle,
+        MatDialogContent,
+        MatDialogActions,
+        MatDialogClose
+    ],
+    templateUrl: './dialog-donations.component.html',
+    styleUrl: './dialog-donations.component.css'
 })
 export class DialogDonationsComponent {
   constructor(

@@ -19,28 +19,27 @@ import { Resend } from 'resend';
 import { AboutUsComponent } from '../about-us/about-us.component';
 import { OurServicesComponent } from '../our-services/our-services.component';
 @Component({
-  selector: 'app-arrival-page',
-  standalone: true,
-  imports: [MatGridListModule,
-    MatDividerModule,
-    MatListModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatButtonModule,
-    CommonModule,
-    NgxMaskDirective,
-    MatIcon,
-    MatCardModule,
-    HttpClientModule,
-    AboutUsComponent,
-    OurServicesComponent
-  ],
-  providers: [provideNgxMask()],
-  templateUrl: './arrival-page.component.html',
-  styleUrl: './arrival-page.component.css'
+    selector: 'app-arrival-page',
+    imports: [MatGridListModule,
+        MatDividerModule,
+        MatListModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatSelectModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MatButtonModule,
+        CommonModule,
+        NgxMaskDirective,
+        MatIcon,
+        MatCardModule,
+        HttpClientModule,
+        AboutUsComponent,
+        OurServicesComponent
+    ],
+    providers: [provideNgxMask()],
+    templateUrl: './arrival-page.component.html',
+    styleUrl: './arrival-page.component.css'
 })
 export class ArrivalPageComponent implements OnInit {
   HttpClient: any;

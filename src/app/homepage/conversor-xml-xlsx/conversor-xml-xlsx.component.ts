@@ -34,25 +34,24 @@ interface Fila {
   [key: string]: any;
 }
 @Component({
-  selector: 'app-conversor-xml-xlsx',
-  standalone: true,
-  imports: [
-    RouterOutlet,
-    ProgressComponent,
-    CommonModule,
-    MatTableModule,
-    MatSortModule,
-    MatButtonModule,
-    DropfileDirective,
-    MatDividerModule,
-    MatCardModule,
-    DialogSelectorColumnComponent,
-    MatIconModule,
-    MatPaginatorModule,
-    ProgressComponent
-  ],
-  templateUrl: './conversor-xml-xlsx.component.html',
-  styleUrl: './conversor-xml-xlsx.component.css'
+    selector: 'app-conversor-xml-xlsx',
+    imports: [
+        RouterOutlet,
+        ProgressComponent,
+        CommonModule,
+        MatTableModule,
+        MatSortModule,
+        MatButtonModule,
+        DropfileDirective,
+        MatDividerModule,
+        MatCardModule,
+        DialogSelectorColumnComponent,
+        MatIconModule,
+        MatPaginatorModule,
+        ProgressComponent
+    ],
+    templateUrl: './conversor-xml-xlsx.component.html',
+    styleUrl: './conversor-xml-xlsx.component.css'
 })
 export class ConversorXmlXlsxComponent implements AfterViewInit {
 

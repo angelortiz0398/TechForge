@@ -5,11 +5,10 @@ import { DialogDonationsComponent } from '../dialog-donations/dialog-donations.c
 import { MatIconModule } from '@angular/material/icon';
 import {MatGridListModule} from '@angular/material/grid-list';
 @Component({
-  selector: 'app-footer',
-  standalone: true,
-  imports: [MatButtonModule, MatIconModule, MatGridListModule],
-  templateUrl: './footer.component.html',
-  styleUrl: './footer.component.css'
+    selector: 'app-footer',
+    imports: [MatButtonModule, MatIconModule, MatGridListModule],
+    templateUrl: './footer.component.html',
+    styleUrl: './footer.component.css'
 })
 export class FooterComponent {
   constructor(public dialog: MatDialog) {}
