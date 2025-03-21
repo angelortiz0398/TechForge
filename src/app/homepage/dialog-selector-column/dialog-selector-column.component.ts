@@ -31,7 +31,6 @@ export interface DialogData {
         MatDialogTitle,
         MatDialogContent,
         MatDialogActions,
-        MatDialogClose,
         CommonModule,
         MatCheckboxModule,
         MatButtonModule,

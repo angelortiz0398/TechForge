@@ -67,7 +67,7 @@
   padding: 3em;
   width: 100%;
   height: 100%;
-  background-image: url('../../../assets/img/homepage/banner.png'); /* Ruta de la imagen de fondo */
+  background-image: url('../../../assets/img/homepage/banner.webp'); /* Ruta de la imagen de fondo */
 
   background-size: cover; /* Escalar la imagen para que cubra todo el div */
   background-position: center; /* Posición de la imagen centrada */
@@ -132,7 +132,7 @@
   padding-top: 3em;
   width: 100%;
   height: 100%;
-  background-image: url('../../../assets/img/homepage/FondoB.png'); /* Ruta de la imagen de fondo */
+  background-image: url('../../../assets/img/homepage/FondoB.webp'); /* Ruta de la imagen de fondo */
 
   background-size: cover; /* Escalar la imagen para que cubra todo el div */
   background-position: center; /* Posición de la imagen centrada */
@@ -192,7 +192,7 @@
   padding: 2em;
   width: 100%;
   height: 100%;
-  background-image: url('../../../assets/img/homepage/VoxelFondoCompleto.jpg');
+  /* background-image: url('../../../assets/img/homepage/VoxelFondoCompleto.webp'); */
   background-size: cover;
   background-position: center;
   background-blend-mode: darken;
@@ -349,9 +349,9 @@ mat-form-field{
   white-space: nowrap;
   border-right: 4px solid;
   width: 35ch;
-  animation: typing-with-delay 4s steps(20) infinite, blink .5s infinite;
+  /* animation: typing-with-delay 4s steps(20) infinite, blink .5s infinite;
   animation-delay: 2s !important;
-  animation-iteration-count: infinite;
+  animation-iteration-count: infinite; */
   overflow: hidden;
 }
 
