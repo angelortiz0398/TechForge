@@ -8,8 +8,6 @@ import { MatButtonModule } from '@angular/material/button';
     selector: 'app-dialog-donations',
     imports: [
         MatButtonModule,
-        MatDialogTitle,
-        MatDialogContent,
         MatDialogActions,
         MatDialogClose
     ],

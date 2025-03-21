@@ -24,7 +24,7 @@ export interface Tile {
 }
 @Component({
     selector: 'app-root',
-    imports: [MatToolbarModule, RouterOutlet, HomepageModule, MainLayoutComponent, FooterComponent, MatSidenavModule,
+    imports: [MatToolbarModule, HomepageModule, MainLayoutComponent, FooterComponent, MatSidenavModule,
         MatButtonModule, MatDividerModule, MatIconModule, MatGridListModule, CommonModule, MatSlideToggleModule, MatMenuModule],
     templateUrl: './app.component.html',
     styleUrl: './app.component.css',

@@ -31,19 +31,14 @@ interface Fila {
 @Component({
     selector: 'app-main-layout',
     imports: [
-        RouterOutlet,
-        ProgressComponent,
         CommonModule,
         MatTableModule,
         MatSortModule,
         MatButtonModule,
-        DropfileDirective,
         MatDividerModule,
         MatCardModule,
-        DialogSelectorColumnComponent,
         MatIconModule,
         MatPaginatorModule,
-        ProgressComponent,
         HomeComponent,
         ConversorXmlXlsxComponent,
         ArrivalPageComponent

@@ -36,7 +36,6 @@ interface Fila {
 @Component({
     selector: 'app-conversor-xml-xlsx',
     imports: [
-        RouterOutlet,
         ProgressComponent,
         CommonModule,
         MatTableModule,
@@ -45,7 +44,6 @@ interface Fila {
         DropfileDirective,
         MatDividerModule,
         MatCardModule,
-        DialogSelectorColumnComponent,
         MatIconModule,
         MatPaginatorModule,
         ProgressComponent
